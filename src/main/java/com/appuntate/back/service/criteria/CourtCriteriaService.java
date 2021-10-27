@@ -2,9 +2,11 @@ package com.appuntate.back.service.criteria;
 
 import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.model.dto.CourtFilterDTO;
+import com.appuntate.back.service.HourConverter;
 
 import org.springframework.stereotype.Service;
 
+import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 @Service
@@ -47,8 +49,10 @@ public class CourtCriteriaService implements CriteriaService<CourtCriteria, Cour
     private CourtCriteria addHourFilter(CourtCriteria courtCriteria, CourtFilterDTO filterDTO) {
         
         if(filterDTO.getHour() != null) {
-            StringFilter filter = new StringFilter();
-            filter.setContains(filterDTO.getHour());
+            int hour = HourConverter.stringToHour(filterDTO.getHour());
+            
+            IntegerFilter filter = new IntegerFilter();
+            filter.setGreaterThanOrEqual(hour);
             courtCriteria.setHour(filter);
         }
 

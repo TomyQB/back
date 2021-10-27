@@ -23,9 +23,10 @@ public class Center {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long codCenter;
 
+    private String name;
     private String adress;
-    private String startHour;
-    private String endHour;
+    private int startHour;
+    private int endHour;
     
     @ManyToOne
     @JoinColumn(name = "cod_townHall")

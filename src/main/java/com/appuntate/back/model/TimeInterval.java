@@ -18,7 +18,7 @@ public class TimeInterval {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long codTimeInterval;
 
-    private String startHour;
-    private String endHour;
+    private int startHour;
+    private int endHour;
     
 }

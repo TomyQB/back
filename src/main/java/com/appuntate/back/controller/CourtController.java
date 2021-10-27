@@ -26,9 +26,10 @@ public class CourtController {
 
     @PostMapping("/getCourtsByFilters")
     public List<Court> getCourtsByFilters(@RequestBody String s) {
-        CourtFilterDTO courtFilterDTO = new CourtFilterDTO();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        CourtFilterDTO courtFilterDTO = new CourtFilterDTO("Valencia", "Tenis", null);
         CourtCriteria courtCriteria = courtCriteriaService.createCriteria(courtFilterDTO);
-        return null;
+        return this.courtService.getCourtsByFilters(courtCriteria);
     }
     
 }
