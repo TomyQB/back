@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Booking {
     @JoinColumn(name = "DNI_user")
     private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "cod_timeInterval")
     private TimeInterval timeInterval;
     

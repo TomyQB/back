@@ -14,6 +14,7 @@ import com.appuntate.back.model.Town_;
 import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.repository.CourtRepository;
 
+import org.hibernate.criterion.Distinct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class CourtService extends QueryService<Court> {
 
     private Specification<Court> createSpecification(CourtCriteria courtCriteria) {
         
-        Specification<Court> specification = Specification.where(null);
+        Specification<Court> specification = (root, query, cb) -> { query.distinct(true); return null; };
 
         if(courtCriteria.getTown() != null) 
             specification = specification.and(buildSpecification(courtCriteria.getTown(), root -> root
@@ -53,6 +54,13 @@ public class CourtService extends QueryService<Court> {
             specification = specification.and(buildSpecification(courtCriteria.getHour(), root -> root
                 .join(Court_.timeIntervals, JoinType.LEFT)
                     .get(TimeInterval_.startHour)));
+                    
+        // if(courtCriteria.getHour() != null) 
+        //     specification = specification.and(buildSpecification(courtCriteria.getHour(), root -> root
+        //         .join(Court_.timeIntervals, JoinType.LEFT)
+        //             .join(TimeInterval_.codTimeInterval)
+        //                 .join(collection)));
+
 
         return specification;
     }

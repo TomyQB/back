@@ -14,7 +14,7 @@ public class HourConverter {
     }
 
     public static int stringToHour(String hour) {
-        hour.replace(":", "");
+        hour = hour.replace(":", "");
         return Integer.parseInt(hour);
     }
     
