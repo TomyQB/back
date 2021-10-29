@@ -5,7 +5,7 @@ import io.github.jhipster.service.filter.StringFilter;
 import lombok.Data;
 
 @Data
-public class CourtCriteria {
+public class CenterCriteria {
     
     private StringFilter town;
     private StringFilter sport;
