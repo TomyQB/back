@@ -8,6 +8,8 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TimeIntervalRepository extends JpaRepository<TimeInterval, Long> {
+
+    TimeInterval findByStartHourAndEndHour(int startHour, int endHour);
     
-    List<TimeInterval> findByCourtCodCourtAndBookingDate(long codCourt, String date);
+    List<TimeInterval> findByCourtsCodCourtAndBookingDate(long codCourt, String date);
 }

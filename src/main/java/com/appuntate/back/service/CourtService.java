@@ -30,8 +30,11 @@ public class CourtService extends QueryService<Court> {
     @Transactional
     public void saveCourt(CourtDTO courtDTO) {
         Court court = courtMapper.DtoToEntity(courtDTO);
-        timeIntervalService.setCourtToTimeInterval(court);
-        courtRepository.save(courtMapper.DtoToEntity(courtDTO));
+        
+        if(!court.getTimeIntervals().isEmpty()) {
+            timeIntervalService.setCourtToTimeInterval(court);
+            courtRepository.save(court);
+        }
     }
 
 }

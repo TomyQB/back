@@ -18,17 +18,23 @@ public class TimeIntervalService {
     private TimeIntervalRepository timeIntervalRepository;
 
     public List<TimeInterval> getTimeIntervalsReservedByCourtId(long courtId, String date) {
-        return timeIntervalRepository.findByCourtCodCourtAndBookingDate(courtId, date);
+        return timeIntervalRepository.findByCourtsCodCourtAndBookingDate(courtId, date);
+        // return null;
     }
 
     public void setCourtToTimeInterval(Court court) {
         for (TimeInterval timeInterval : court.getTimeIntervals()) {
-            timeInterval.setCourt(court);
+            timeInterval.addCourt(court);
         }
     }
 
     public List<TimeInterval> saveTimeInterval(CourtDTO dto, Court court) {
-        return timeIntervalRepository.saveAll(createTimeIntervalByHours(dto, court));
+        List<TimeInterval> timeIntervals = createTimeIntervalByHours(dto, court);
+
+        if(!timeIntervals.isEmpty())
+            timeIntervalRepository.saveAll(timeIntervals);
+
+        return timeIntervals;
     }
 
     public List<TimeInterval> createTimeIntervalByHours(CourtDTO dto, Court court) {
@@ -39,16 +45,19 @@ public class TimeIntervalService {
         int intervalInt = HourConverter.stringToHour(dto.getInterval());
 
         while(startHourInt < endHourInt) {
-            TimeInterval timeInterval = new TimeInterval();
-
-            timeInterval.setStartHour(startHourInt);
-
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);
-            timeInterval.setEndHour(auxEnHour);
+            TimeInterval timeInterval = timeIntervalRepository.findByStartHourAndEndHour(startHourInt, auxEnHour);
 
-            timeInterval.setCourt(court);
+            // timeInterval.setStartHour(startHourInt);
+            if(timeInterval != null && timeInterval.getEndHour() < endHourInt)
+                timeIntervals.add(timeInterval);
 
-            timeIntervals.add(timeInterval);
+            // int auxEnHour = calculateEndHour(startHourInt, intervalInt);
+            // timeInterval.setEndHour(auxEnHour);
+
+            // timeInterval.setCourt(court);
+
+            // timeIntervals.add(timeInterval);
 
             startHourInt = auxEnHour;
         }

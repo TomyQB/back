@@ -1,5 +1,6 @@
 package com.appuntate.back.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -7,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,9 +36,21 @@ public class TimeInterval {
     @JsonIgnore
     private List<Booking> booking;
 
-    @ManyToOne
-    @JoinColumn(name = "cod_court")
+    @JoinTable(
+        name = "timeinterval_court",
+        joinColumns = @JoinColumn(name = "cod_timeinterval"),
+        inverseJoinColumns = @JoinColumn(name = "cod_court")
+    )
+    @ManyToMany
     @JsonIgnore
-    private Court court;
+    private List<Court> courts;
+
+    public void addCourt(Court court){
+        if(courts == null){
+            courts = new ArrayList<>();
+        }
+        
+        courts.add(court);
+    }
     
 }

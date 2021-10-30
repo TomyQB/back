@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,7 +34,11 @@ public class Court {
     @JsonIgnore
     private Sport sport;
 
-    @OneToMany(mappedBy = "court", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "court")
+    @JsonIgnore
+    private List<Booking> bookings;
+    
+    @ManyToMany(mappedBy = "courts", cascade = CascadeType.ALL)
     private List<TimeInterval> timeIntervals;
     
 }
