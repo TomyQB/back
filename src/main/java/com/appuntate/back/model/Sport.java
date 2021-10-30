@@ -24,8 +24,6 @@ public class Sport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long codSport;
-
-    private String name;
     
     @ManyToOne
     @JoinColumn(name = "cod_center")
@@ -34,5 +32,9 @@ public class Sport {
 
     @OneToMany(mappedBy = "sport")
     private List<Court> courts;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_name")
+    private SportsNames sportsNames;
 
 }

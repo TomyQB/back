@@ -41,7 +41,7 @@ public class CenterService {
     private List<Center> deleteNoInterestedSports(List<Center> centers, String sportName) {
 
         for (Center center : centers) {
-            center.getSports().removeIf(s -> !s.getName().equals(sportName));       
+            center.getSports().removeIf(s -> !s.getSportsNames().getName().equals(sportName));       
         }
         return centers;
     }
@@ -62,7 +62,7 @@ public class CenterService {
         
         for (Center center : centers) {
             for (Court court : center.getSports().get(0).getCourts()) {
-                List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsNoReservedByCourtId(court.getCodCourt(), centerFilterDTO.getDate());
+                List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), centerFilterDTO.getDate());
                 for (TimeInterval timeInterval : timeIntervals) {
                     court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
                 }

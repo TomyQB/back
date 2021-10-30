@@ -29,7 +29,7 @@ public class CourtMapper implements Mapper<Court, CourtDTO> {
 
         if(dto.getId() != 0) court.setCodCourt(dto.getId());
         court.setName(dto.getName());
-        court.setSport(sportService.getSportById(dto.getSportId()));
+        court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSportName(), dto.getCodCenter()));
         court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
 
 

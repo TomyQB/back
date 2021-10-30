@@ -7,6 +7,7 @@ import com.appuntate.back.model.Center;
 import com.appuntate.back.model.Center_;
 import com.appuntate.back.model.Court_;
 import com.appuntate.back.model.Sport_;
+import com.appuntate.back.model.SportsNames_;
 import com.appuntate.back.model.TimeInterval_;
 import com.appuntate.back.model.TownHall_;
 import com.appuntate.back.model.Town_;
@@ -34,7 +35,8 @@ public class CenterSpecificationService extends QueryService<Center> implements 
         if(criteria.getSport() != null)
             specification = specification.and(buildSpecification(criteria.getSport(), root -> root
                 .join(Center_.sports, JoinType.LEFT)
-                    .get(Sport_.name)));
+                    .join(Sport_.sportsNames, JoinType.LEFT)
+                        .get(SportsNames_.name)));
 
         if(criteria.getHour() != null)
             specification = specification.and(buildSpecification(criteria.getHour(), root -> root

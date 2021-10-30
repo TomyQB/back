@@ -1,7 +1,5 @@
 package com.appuntate.back.service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.appuntate.back.model.Sport;
 import com.appuntate.back.repository.SportRepository;
@@ -19,16 +17,8 @@ public class SportService {
         return sportRepository.getById(sportId);
     }
 
-    public List<String> getSportsNames() {
-        List<String> names = new ArrayList<>();
-        
-        List<Sport> sports = sportRepository.findAll();
-        for (Sport sport : sports) {
-            if(!names.contains(sport.getName()))
-                names.add(sport.getName());
-        }
-
-        return names;
+    public Sport getSportBySportNameAndCodCenter(String sportName, long codCenter) {
+        return sportRepository.findBySportsNamesNameAndCenterCodCenter(sportName, codCenter);
     }
     
 }

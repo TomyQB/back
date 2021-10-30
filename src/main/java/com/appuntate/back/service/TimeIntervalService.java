@@ -17,7 +17,7 @@ public class TimeIntervalService {
     @Autowired
     private TimeIntervalRepository timeIntervalRepository;
 
-    public List<TimeInterval> getTimeIntervalsNoReservedByCourtId(long courtId, String date) {
+    public List<TimeInterval> getTimeIntervalsReservedByCourtId(long courtId, String date) {
         return timeIntervalRepository.findByCourtCodCourtAndBookingDate(courtId, date);
     }
 

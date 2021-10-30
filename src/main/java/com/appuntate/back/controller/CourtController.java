@@ -19,7 +19,7 @@ public class CourtController {
 
     @PostMapping("/saveCourt")
     public void saveCourt(@RequestBody String s) {
-        CourtDTO courtDTO = new CourtDTO(0, 4, "Pista club", "09:00", "23:00", "01:00");
+        CourtDTO courtDTO = new CourtDTO(0, 1, "TENIS", "Pista tenis", "09:00", "23:00", "01:00");
         courtService.saveCourt(courtDTO);
     }
     

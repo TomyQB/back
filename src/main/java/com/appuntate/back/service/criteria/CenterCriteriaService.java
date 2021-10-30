@@ -28,7 +28,7 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
 
         if(filterDTO.getTown() != null) {
             StringFilter filter = new StringFilter();
-            filter.setContains(filterDTO.getTown());
+            filter.setEquals(filterDTO.getTown());
             centerCriteria.setTown(filter);
         }
 
@@ -39,7 +39,7 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
         
         if(filterDTO.getSport() != null) {
             StringFilter filter = new StringFilter();
-            filter.setContains(filterDTO.getSport());
+            filter.setEquals(filterDTO.getSport());
             centerCriteria.setSport(filter);
         }
 

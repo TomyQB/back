@@ -1,9 +1,8 @@
 package com.appuntate.back.controller;
 
-
 import java.util.List;
 
-import com.appuntate.back.service.SportService;
+import com.appuntate.back.service.SportsNamesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-public class SportController {
-    
+public class SportNamesController {
+
     @Autowired
-    private SportService sportService;
+    private SportsNamesService sportsNamesService;
 
     @GetMapping("/getSportsNames")
     public List<String> getSportsNames() {
-        return sportService.getSportsNames();
+        return sportsNamesService.getSportsNames();
     }
+    
 }
