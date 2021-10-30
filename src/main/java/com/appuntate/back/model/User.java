@@ -10,18 +10,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 
 @Entity
 @Data
-@Table(name = "USUARIO")
+@Table(name = "usuario")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JoinColumn(name = "dni")
-    private long dni;
+    private long codUsuario;
 
     private String name;
     private String lastName;
@@ -32,7 +34,8 @@ public class User {
     private String image;
     private String userName;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Booking> bookings;
     
 }

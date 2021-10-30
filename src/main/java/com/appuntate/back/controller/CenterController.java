@@ -3,10 +3,8 @@ package com.appuntate.back.controller;
 import java.util.List;
 
 import com.appuntate.back.model.Center;
-import com.appuntate.back.model.criteria.CenterCriteria;
 import com.appuntate.back.model.dto.CenterFilterDTO;
 import com.appuntate.back.service.CenterService;
-import com.appuntate.back.service.criteria.CenterCriteriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,7 +23,7 @@ public class CenterController {
     @PostMapping("/getCentersByFilters")
     public List<Center> getCenterssByFilters(@RequestBody String s) {
         System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        CenterFilterDTO centerFilterDTO = new CenterFilterDTO("Valencia", "Padel", null);
+        CenterFilterDTO centerFilterDTO = new CenterFilterDTO(null, "PADEL", "21:00", "29/10/2021");
         return this.centerService.getCentersByFilters(centerFilterDTO);
     }
     

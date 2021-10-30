@@ -16,11 +16,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "CENTER")
+@Table(name = "center")
 public class Center {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codCenter;
 
     private String name;
@@ -32,10 +32,10 @@ public class Center {
     @JoinColumn(name = "cod_townHall")
     private TownHall townHall;
 
-    @OneToMany
+    @OneToMany(mappedBy = "center")
     private List<Sport> sports;
 
-    @OneToMany
+    @OneToMany(mappedBy = "center")
     private List<Festive> festives;
     
 }

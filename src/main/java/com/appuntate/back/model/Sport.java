@@ -18,11 +18,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "SPORT")
+@Table(name = "sport")
 public class Sport {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codSport;
 
     private String name;
@@ -32,7 +32,7 @@ public class Sport {
     @JsonIgnore
     private Center center;
 
-    @OneToMany
+    @OneToMany(mappedBy = "sport")
     private List<Court> courts;
 
 }

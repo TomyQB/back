@@ -12,25 +12,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 
 @Entity
 @Data
-@Table(name = "COURT")
+@Table(name = "court")
 public class Court {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codCourt;
 
     private String name;
     
     @ManyToOne
     @JoinColumn(name = "cod_sport")
+    @JsonIgnore
     private Sport sport;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "court", cascade = CascadeType.ALL)
     private List<TimeInterval> timeIntervals;
     
 }

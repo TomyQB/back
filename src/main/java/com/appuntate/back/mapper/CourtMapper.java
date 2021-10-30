@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CourtMapper extends AbstractMapper<Court, CourtDTO> {
+public class CourtMapper implements Mapper<Court, CourtDTO> {
 
     @Autowired
     private SportService sportService;
@@ -30,7 +30,9 @@ public class CourtMapper extends AbstractMapper<Court, CourtDTO> {
         if(dto.getId() != 0) court.setCodCourt(dto.getId());
         court.setName(dto.getName());
         court.setSport(sportService.getSportById(dto.getSportId()));
-        court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto.getStartHour(), dto.getEndHour(), dto.getInterval()));
+        court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
+
+
 
         return court;
     }

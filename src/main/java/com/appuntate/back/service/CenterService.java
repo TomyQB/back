@@ -2,26 +2,21 @@ package com.appuntate.back.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.JoinType;
-
 import com.appuntate.back.model.Center;
-import com.appuntate.back.model.Center_;
-import com.appuntate.back.model.Sport_;
-import com.appuntate.back.model.TownHall_;
-import com.appuntate.back.model.Town_;
+import com.appuntate.back.model.Court;
+import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.criteria.CenterCriteria;
 import com.appuntate.back.model.dto.CenterFilterDTO;
 import com.appuntate.back.repository.CenterRepository;
 import com.appuntate.back.service.criteria.CenterCriteriaService;
+import com.appuntate.back.service.specification.CenterSpecificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import io.github.jhipster.service.QueryService;
 
 @Service
-public class CenterService extends QueryService<Center> {
+public class CenterService {
     
     @Autowired
     private CenterRepository centerRepository;
@@ -29,41 +24,53 @@ public class CenterService extends QueryService<Center> {
     @Autowired
     private CenterCriteriaService centerCriteriaService;
 
+    @Autowired
+    private CenterSpecificationService centerSpecificationService;
+
+    @Autowired
+    private TimeIntervalService timeIntervalService;
+
     public List<Center> getCentersByFilters(CenterFilterDTO centerFilterDTO) {
-        
         CenterCriteria centerCriteria = centerCriteriaService.createCriteria(centerFilterDTO);
-        Specification<Center> specification = createSpecification(centerCriteria);
-        return centerRepository.findAll(specification);
+        List<Center> centers = centerRepository.findAll(centerSpecificationService.createSpecification(centerCriteria));
+        centers = deleteNoInterestedSports(centers, centerFilterDTO.getSport());
+        centers = deleteNotInterestedHours(centers, centerFilterDTO);
+        return deleteReserveddHours(centers, centerFilterDTO);
     }
 
-    private Specification<Center> createSpecification(CenterCriteria centerCriteria) {
+    private List<Center> deleteNoInterestedSports(List<Center> centers, String sportName) {
+
+        for (Center center : centers) {
+            center.getSports().removeIf(s -> !s.getName().equals(sportName));       
+        }
+        return centers;
+    }
+
+    private List<Center> deleteNotInterestedHours(List<Center> centers, CenterFilterDTO centerFilterDTO) {
         
-        Specification<Center> specification = (root, query, cb) -> { query.distinct(true); return null; };
+        for (Center center : centers) {
+            for (Court court : center.getSports().get(0).getCourts()) {
+                if(centerFilterDTO.getHour() != null)
+                    court.getTimeIntervals().removeIf(t -> t.getStartHour() < HourConverter.stringToHour(centerFilterDTO.getHour()));
+            }
+        }
 
-        if(centerCriteria.getTown() != null)
-            specification = specification.and(buildSpecification(centerCriteria.getTown(), root -> root
-                .join(Center_.townHall, JoinType.LEFT)
-                    .join(TownHall_.town, JoinType.LEFT)
-                        .get(Town_.name)));
-            
-        if(centerCriteria.getSport() != null)
-            specification = specification.and(buildSpecification(centerCriteria.getSport(), root -> root
-                .join(Center_.sports, JoinType.LEFT)
-                    .get(Sport_.name)));
+        return centers;
+    }
 
-        // if(centerCriteria.getHour() != null)
-        //     specification = specification.and(buildSpecification(centerCriteria.getHour(), root -> root
-        //         .join(Court_.timeIntervals, JoinType.LEFT)
-        //             .get(TimeInterval_.startHour)));
-                    
-        // if(courtCriteria.getHour() != null) 
-        //     specification = specification.and(buildSpecification(courtCriteria.getHour(), root -> root
-        //         .join(Court_.timeIntervals, JoinType.LEFT)
-        //             .join(TimeInterval_.codTimeInterval)
-        //                 .join(collection)));
+    private List<Center> deleteReserveddHours(List<Center> centers, CenterFilterDTO centerFilterDTO) {
+        
+        for (Center center : centers) {
+            for (Court court : center.getSports().get(0).getCourts()) {
+                List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsNoReservedByCourtId(court.getCodCourt(), centerFilterDTO.getDate());
+                for (TimeInterval timeInterval : timeIntervals) {
+                    court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
+                }
+            }
+        }
 
+        return centers;
 
-        return specification;
     }
     
 }

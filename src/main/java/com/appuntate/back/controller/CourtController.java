@@ -1,8 +1,6 @@
 package com.appuntate.back.controller;
 
-import java.util.List;
 
-import com.appuntate.back.model.Court;
 import com.appuntate.back.model.dto.CourtDTO;
 import com.appuntate.back.service.CourtService;
 
@@ -19,11 +17,10 @@ public class CourtController {
     @Autowired
     private CourtService courtService;
 
-    @PostMapping("/addCourt")
-    public void addCourt(@RequestBody String s) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        CourtDTO courtDTO = new CourtDTO(0, 1, "Nueva pista de padel", "09:30", "22:00", "01:30");
-        courtService.addCourt(courtDTO);
+    @PostMapping("/saveCourt")
+    public void saveCourt(@RequestBody String s) {
+        CourtDTO courtDTO = new CourtDTO(0, 4, "Pista club", "09:00", "23:00", "01:00");
+        courtService.saveCourt(courtDTO);
     }
     
 }

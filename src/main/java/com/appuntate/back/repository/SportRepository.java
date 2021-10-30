@@ -1,5 +1,6 @@
 package com.appuntate.back.repository;
 
+
 import com.appuntate.back.model.Sport;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -11,16 +11,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 
 @Entity
 @Data
-@Table(name = "CITY")
+@Table(name = "city")
 public class City {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codCity;
 
     private String name;
@@ -29,7 +31,8 @@ public class City {
     @JoinColumn(name = "cod_country")
     private Country country;
 
-    @OneToMany
+    @OneToMany(mappedBy = "city")
+    @JsonIgnore
     private List<Town> towns;
     
 }

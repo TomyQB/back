@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -11,15 +13,19 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "FESTIVE")
+@Table(name = "festive")
 public class Festive {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codFestive;
 
     private String day;
     private String month;
     private String year;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_center")
+    private Center center;
     
 }

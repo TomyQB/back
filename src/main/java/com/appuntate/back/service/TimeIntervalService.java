@@ -3,8 +3,10 @@ package com.appuntate.back.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.CourtDTO;
+import com.appuntate.back.repository.TimeIntervalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +14,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimeIntervalService {
 
-    public List<TimeInterval> createTimeIntervalByHours(String startHour, String endHour, String interval) {
+    @Autowired
+    private TimeIntervalRepository timeIntervalRepository;
+
+    public List<TimeInterval> getTimeIntervalsNoReservedByCourtId(long courtId, String date) {
+        return timeIntervalRepository.findByCourtCodCourtAndBookingDate(courtId, date);
+    }
+
+    public void setCourtToTimeInterval(Court court) {
+        for (TimeInterval timeInterval : court.getTimeIntervals()) {
+            timeInterval.setCourt(court);
+        }
+    }
+
+    public List<TimeInterval> saveTimeInterval(CourtDTO dto, Court court) {
+        return timeIntervalRepository.saveAll(createTimeIntervalByHours(dto, court));
+    }
+
+    public List<TimeInterval> createTimeIntervalByHours(CourtDTO dto, Court court) {
         List<TimeInterval> timeIntervals = new ArrayList<>();
 
-        int startHourInt = HourConverter.stringToHour(startHour);
-        int endHourInt = HourConverter.stringToHour(endHour);
-        int intervalInt = HourConverter.stringToHour(interval);
+        int startHourInt = HourConverter.stringToHour(dto.getStartHour());
+        int endHourInt = HourConverter.stringToHour(dto.getEndHour());
+        int intervalInt = HourConverter.stringToHour(dto.getInterval());
 
         while(startHourInt < endHourInt) {
             TimeInterval timeInterval = new TimeInterval();
@@ -26,6 +45,8 @@ public class TimeIntervalService {
 
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);
             timeInterval.setEndHour(auxEnHour);
+
+            timeInterval.setCourt(court);
 
             timeIntervals.add(timeInterval);
 

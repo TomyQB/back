@@ -9,21 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 
 @Entity
 @Data
-@Table(name = "COUNTRY")
+@Table(name = "country")
 public class Country {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codCountry;
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "country")
+    @JsonIgnore
     private List<City> cities;
     
 }

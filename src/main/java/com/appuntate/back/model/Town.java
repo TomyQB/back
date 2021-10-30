@@ -13,11 +13,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "TOWN")
+@Table(name = "town")
 public class Town {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long codTown;
 
     private String name;
