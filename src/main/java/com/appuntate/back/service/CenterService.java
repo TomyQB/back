@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.appuntate.back.model.Center;
 import com.appuntate.back.model.Court;
+import com.appuntate.back.model.Sport;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.criteria.CenterCriteria;
 import com.appuntate.back.model.dto.CenterFilterDTO;
@@ -33,7 +34,10 @@ public class CenterService {
     public List<Center> getCentersByFilters(CenterFilterDTO centerFilterDTO) {
         CenterCriteria centerCriteria = centerCriteriaService.createCriteria(centerFilterDTO);
         List<Center> centers = centerRepository.findAll(centerSpecificationService.createSpecification(centerCriteria));
-        centers = deleteNoInterestedSports(centers, centerFilterDTO.getSport());
+
+        if(centerFilterDTO.getSport() != null)
+            centers = deleteNoInterestedSports(centers, centerFilterDTO.getSport());
+
         centers = deleteNotInterestedHours(centers, centerFilterDTO);
         return deleteReserveddHours(centers, centerFilterDTO);
     }
@@ -49,9 +53,11 @@ public class CenterService {
     private List<Center> deleteNotInterestedHours(List<Center> centers, CenterFilterDTO centerFilterDTO) {
         
         for (Center center : centers) {
-            for (Court court : center.getSports().get(0).getCourts()) {
-                if(centerFilterDTO.getHour() != null)
-                    court.getTimeIntervals().removeIf(t -> t.getStartHour() < HourConverter.stringToHour(centerFilterDTO.getHour()));
+            for (Sport sport : center.getSports()) {
+                for (Court court : sport.getCourts()) {
+                    if(centerFilterDTO.getHour() != null)
+                        court.getTimeIntervals().removeIf(t -> t.getStartHour() < HourConverter.stringToHour(centerFilterDTO.getHour()));                    
+                }
             }
         }
 
