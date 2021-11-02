@@ -17,24 +17,18 @@ public class TimeIntervalService {
     @Autowired
     private TimeIntervalRepository timeIntervalRepository;
 
+    public TimeInterval getTimeIntervalByCodTimeInterval(long codTimeInterval) {
+        return timeIntervalRepository.getById(codTimeInterval);
+    }
+
     public List<TimeInterval> getTimeIntervalsReservedByCourtId(long courtId, String date) {
-        return timeIntervalRepository.findByCourtsCodCourtAndBookingDate(courtId, date);
-        // return null;
+        return timeIntervalRepository.findByBookingCourtCodCourtAndBookingDate(courtId, date);
     }
 
     public void setCourtToTimeInterval(Court court) {
         for (TimeInterval timeInterval : court.getTimeIntervals()) {
             timeInterval.addCourt(court);
         }
-    }
-
-    public List<TimeInterval> saveTimeInterval(CourtDTO dto, Court court) {
-        List<TimeInterval> timeIntervals = createTimeIntervalByHours(dto, court);
-
-        if(!timeIntervals.isEmpty())
-            timeIntervalRepository.saveAll(timeIntervals);
-
-        return timeIntervals;
     }
 
     public List<TimeInterval> createTimeIntervalByHours(CourtDTO dto, Court court) {
@@ -48,16 +42,8 @@ public class TimeIntervalService {
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);
             TimeInterval timeInterval = timeIntervalRepository.findByStartHourAndEndHour(startHourInt, auxEnHour);
 
-            // timeInterval.setStartHour(startHourInt);
             if(timeInterval != null && timeInterval.getEndHour() < endHourInt)
                 timeIntervals.add(timeInterval);
-
-            // int auxEnHour = calculateEndHour(startHourInt, intervalInt);
-            // timeInterval.setEndHour(auxEnHour);
-
-            // timeInterval.setCourt(court);
-
-            // timeIntervals.add(timeInterval);
 
             startHourInt = auxEnHour;
         }

@@ -27,6 +27,10 @@ public class CourtService extends QueryService<Court> {
     @Autowired
     private CourtMapper courtMapper;
 
+    public Court getCourtByCodCourt(long codCourt) {
+        return courtRepository.getById(codCourt);
+    }
+
     @Transactional
     public void saveCourt(CourtDTO courtDTO) {
         Court court = courtMapper.DtoToEntity(courtDTO);

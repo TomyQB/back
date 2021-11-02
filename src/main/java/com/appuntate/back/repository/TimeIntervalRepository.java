@@ -11,5 +11,5 @@ public interface TimeIntervalRepository extends JpaRepository<TimeInterval, Long
 
     TimeInterval findByStartHourAndEndHour(int startHour, int endHour);
     
-    List<TimeInterval> findByCourtsCodCourtAndBookingDate(long codCourt, String date);
+    List<TimeInterval> findByBookingCourtCodCourtAndBookingDate(long codCourt, String date);
 }

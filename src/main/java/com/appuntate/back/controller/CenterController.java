@@ -22,7 +22,7 @@ public class CenterController {
 
     @PostMapping("/getCentersByFilters")
     public List<Center> getCenterssByFilters(@RequestBody String s) {
-        CenterFilterDTO centerFilterDTO = new CenterFilterDTO("MURCIA", "PADEL", "12:00", "29/10/2021");
+        CenterFilterDTO centerFilterDTO = new CenterFilterDTO("VALENCIA", "TENIS", "01:00", "03/11/2021");
         return this.centerService.getCentersByFilters(centerFilterDTO);
     }
     
