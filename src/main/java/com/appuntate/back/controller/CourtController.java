@@ -21,20 +21,8 @@ public class CourtController {
     private CourtService courtService;
 
     @PostMapping("/saveCourt")
-    public void saveCourt(@RequestBody String s) {
-        List<CourtDTO> courtDTOs = new ArrayList<>();
-        // courtDTOs.add(new CourtDTO(0, 1, "PADEL", "Pista 1", "09:00", "23:30", "01:30"));
-        // courtDTOs.add(new CourtDTO(0, 1, "PADEL", "Pista 2", "09:00", "23:30", "01:30"));
-        // courtDTOs.add(new CourtDTO(0, 1, "PADEL", "Pista 3", "09:00", "23:30", "01:30"));
-        // courtDTOs.add(new CourtDTO(0, 1, "TENIS", "Pista central", "09:00", "22:00", "01:00"));
-        // courtDTOs.add(new CourtDTO(0, 1, "TENIS", "Pista lateral", "09:00", "22:00", "01:00"));
-        // courtDTOs.add(new CourtDTO(0, 2, "PADEL", "Pista 1", "08:00", "23:30", "01:30"));
-        // courtDTOs.add(new CourtDTO(0, 2, "PADEL", "Pista 2", "08:00", "23:30", "01:30"));
-        courtDTOs.add(new CourtDTO(0, 2, "PADEL", "Pista 3", "09:00", "22:00", "01:30"));
-
-        for (CourtDTO courtDTO : courtDTOs) {
-            courtService.saveCourt(courtDTO);
-        }
+    public void saveCourt(@RequestBody CourtDTO courtDTO) {
+        courtService.saveCourt(courtDTO);
     }
     
 }

@@ -17,8 +17,7 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping("/makeBooking")
-    public void madeBooking(@RequestBody String s) {
-        BookingDTO bookingDTO = new BookingDTO("02/11/2021", "03/11/2021", true, 32, 3, 1);
+    public void madeBooking(@RequestBody BookingDTO bookingDTO) {
         bookingService.saveBooking(bookingDTO);
     }
 
