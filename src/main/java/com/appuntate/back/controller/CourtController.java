@@ -4,6 +4,7 @@ package com.appuntate.back.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.CourtDTO;
 import com.appuntate.back.service.CourtService;
 
@@ -21,8 +22,8 @@ public class CourtController {
     private CourtService courtService;
 
     @PostMapping("/saveCourt")
-    public void saveCourt(@RequestBody CourtDTO courtDTO) {
-        courtService.saveCourt(courtDTO);
+    public ConfirmationOutputMap saveCourt(@RequestBody CourtDTO courtDTO) {
+        return courtService.saveCourt(courtDTO);
     }
     
 }
