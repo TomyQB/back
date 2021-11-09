@@ -31,6 +31,10 @@ public class CenterService {
     @Autowired
     private TimeIntervalService timeIntervalService;
 
+    public Center getCenterById(long centerId) {
+        return centerRepository.getById(centerId);
+    }
+
     public List<Center> getCentersByFilters(CenterFilterDTO centerFilterDTO) {
         CenterCriteria centerCriteria = centerCriteriaService.createCriteria(centerFilterDTO);
         List<Center> centers = centerRepository.findAll(centerSpecificationService.createSpecification(centerCriteria));
