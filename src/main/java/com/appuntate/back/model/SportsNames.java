@@ -20,6 +20,7 @@ public class SportsNames {
     private long id;
 
     private String name;
+    private String image;
 
     @OneToMany(mappedBy = "sportsNames")
     @JsonIgnore

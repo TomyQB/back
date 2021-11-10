@@ -27,6 +27,7 @@ public class Center {
     private String adress;
     private int startHour;
     private int endHour;
+    private String image;
     
     @ManyToOne
     @JoinColumn(name = "cod_townHall")
