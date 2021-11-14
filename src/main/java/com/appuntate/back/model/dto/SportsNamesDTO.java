@@ -7,6 +7,13 @@ import lombok.Data;
 @Data
 public class SportsNamesDTO {
 
-    private List<String> names;
+    private String name;
+    private String image;
+
+    
+    public SportsNamesDTO(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
 
 }

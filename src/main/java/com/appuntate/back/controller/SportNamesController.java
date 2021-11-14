@@ -2,6 +2,7 @@ package com.appuntate.back.controller;
 
 import java.util.List;
 
+import com.appuntate.back.model.dto.SportsNamesDTO;
 import com.appuntate.back.service.SportsNamesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class SportNamesController {
     private SportsNamesService sportsNamesService;
 
     @GetMapping("/getSportsNames")
-    public List<String> getSportsNames() {
+    public List<SportsNamesDTO> getSportsNames() {
         return sportsNamesService.getSportsNames();
     }
     

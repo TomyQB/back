@@ -4,27 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.appuntate.back.model.SportsNames;
+import com.appuntate.back.model.dto.SportsNamesDTO;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class SportsNamesMapper implements Mapper<List<SportsNames>, List<String>> {
+public class SportsNamesMapper implements Mapper<List<SportsNames>, List<SportsNamesDTO>> {
 
     @Override
-    public List<String> entityToDTO(List<SportsNames> entity) {
+    public List<SportsNamesDTO> entityToDTO(List<SportsNames> entity) {
 
-        List<String> names = new ArrayList<>();
+        List<SportsNamesDTO> sportsNamesDTOs = new ArrayList<>();
 
         for (SportsNames sportsNames : entity) {
-            names.add(sportsNames.getName());
+            SportsNamesDTO sportsNamesDTO = new SportsNamesDTO(sportsNames.getName(), sportsNames.getImage());
+            sportsNamesDTOs.add(sportsNamesDTO);
         }
 
-        return names;
+        return sportsNamesDTOs;
     }
 
     @Override
-    public List<SportsNames> DtoToEntity(List<String> dto) {
-        // TODO Auto-generated method stub
+    public List<SportsNames> DtoToEntity(List<SportsNamesDTO> dto) {
         return null;
     }
     
