@@ -24,6 +24,7 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
 
         return centerCriteria;
     }
+    
     private CenterCriteria addTownFilter(CenterCriteria centerCriteria, CenterFilterDTO filterDTO) {
 
         if(filterDTO.getTown() != null) {

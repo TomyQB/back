@@ -17,5 +17,14 @@ public class HourConverter {
         hour = hour.replace(":", "");
         return Integer.parseInt(hour);
     }
+
+    public static String dateToHours(String date){
+        int ini = date.indexOf("T");
+        return date.substring(ini + 1, ini + 6);
+    }
+
+    public static String dateToDate(String date) {
+        return date.substring(0, 10);
+    }
     
 }
