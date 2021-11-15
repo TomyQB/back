@@ -9,7 +9,8 @@ public class SportsNamesDTO {
 
     private String name;
     private String image;
-
+    
+    public SportsNamesDTO() { }
     
     public SportsNamesDTO(String name, String image) {
         this.name = name;

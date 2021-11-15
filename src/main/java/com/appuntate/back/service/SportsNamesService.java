@@ -1,5 +1,6 @@
 package com.appuntate.back.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.appuntate.back.mapper.SportsNamesMapper;
@@ -18,8 +19,13 @@ public class SportsNamesService {
     @Autowired
     private SportsNamesMapper sportsNamesMapper;
 
+    private static List<SportsNamesDTO> instanceSingleton = new ArrayList<>();
+
     public List<SportsNamesDTO> getSportsNames() {
-        return sportsNamesMapper.entityToDTO(sportsNamesRepository.findAll());
+        if(instanceSingleton != null)
+            instanceSingleton = sportsNamesMapper.entityToDTO(sportsNamesRepository.findAll());
+        
+        return instanceSingleton;
     }
     
 }
