@@ -49,8 +49,8 @@ public class CourtCriteriaService implements CriteriaService<CourtCriteria, Cour
     
     private CourtCriteria addHourFilter(CourtCriteria courtCriteria, CourtFilterDTO filterDTO) {
         
-        if(filterDTO.getDateTime() != null) {
-            int hour = HourConverter.stringToHour(HourConverter.dateToHours(filterDTO.getDateTime()));
+        if(filterDTO.getHour() != null) {
+            int hour = HourConverter.stringToHour(filterDTO.getHour());
             
             
             IntegerFilter filter = new IntegerFilter();

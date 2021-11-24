@@ -6,6 +6,19 @@ import org.springframework.stereotype.Service;
 public class HourConverter {
 
     public static String hourToString(int hour) {
+        if(hour / 1000 == 0) return converterThreeDigit(hour);
+        return converterFourDigit(hour);
+    }
+
+    private static String converterThreeDigit(int hour) {
+        String s = hour + "";
+        String h = s.substring(0, 1);
+        String m = s.substring(1);
+        s = "0" + h + ":" + m;
+        return s;
+    }
+    
+    private static String converterFourDigit(int hour) {
         String s = hour + "";
         String h = s.substring(0, 2);
         String m = s.substring(2);

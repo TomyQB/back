@@ -5,11 +5,13 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.appuntate.back.mapper.CourtMapper;
+import com.appuntate.back.mapper.CourtSaveMapper;
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.CourtDTO;
+import com.appuntate.back.model.dto.CourtSaveDTO;
 import com.appuntate.back.model.dto.CourtFilterDTO;
 import com.appuntate.back.repository.CourtRepository;
 import com.appuntate.back.service.criteria.CourtCriteriaService;
@@ -30,6 +32,9 @@ public class CourtService extends QueryService<Court> {
     private TimeIntervalService timeIntervalService;
 
     @Autowired
+    private CourtSaveMapper courtSaveMapper;
+
+    @Autowired
     private CourtMapper courtMapper;
 
     @Autowired
@@ -43,8 +48,8 @@ public class CourtService extends QueryService<Court> {
     }
 
     @Transactional
-    public ConfirmationOutputMap saveCourt(CourtDTO courtDTO) {
-        Court court = courtMapper.DtoToEntity(courtDTO);
+    public ConfirmationOutputMap saveCourt(CourtSaveDTO courtDTO) {
+        Court court = courtSaveMapper.DtoToEntity(courtDTO);
         ConfirmationOutputMap confirmationOutputMap = new ConfirmationOutputMap(false, "Error al crear la pista");
         
         if(!court.getTimeIntervals().isEmpty()) {
@@ -58,19 +63,21 @@ public class CourtService extends QueryService<Court> {
         
     }
 
-    public List<Court> getCourtsByFilter(CourtFilterDTO courtFilterDTO) {
+    public List<CourtDTO> getCourtsByFilter(CourtFilterDTO courtFilterDTO) {
         CourtCriteria courtCriteria = courtCriteriaService.createCriteria(courtFilterDTO);
         List<Court> courts = courtRepository.findAll(courtSpecificationService.createSpecification(courtCriteria));
 
         courts = deleteNotInterestedHours(courts, courtFilterDTO);
-        return deleteReserveddHours(courts, courtFilterDTO);
+        courts = deleteReserveddHours(courts, courtFilterDTO);
+
+        return courtMapper.entityToDTO(courts);
     }
     
     private List<Court> deleteNotInterestedHours(List<Court> courts, CourtFilterDTO courtFilterDTO) {
         
         for (Court court : courts) {
-            if(courtFilterDTO.getDateTime() != null)
-                court.getTimeIntervals().removeIf(t -> t.getStartHour() < HourConverter.stringToHour(HourConverter.dateToHours(courtFilterDTO.getDateTime())));                    
+            if(courtFilterDTO.getHour() != null)
+                court.getTimeIntervals().removeIf(t -> t.getStartHour() < HourConverter.stringToHour(courtFilterDTO.getHour()));                 
         }
 
         return courts;
@@ -79,7 +86,7 @@ public class CourtService extends QueryService<Court> {
     private List<Court> deleteReserveddHours(List<Court> courts, CourtFilterDTO courtFilterDTO) {
         
         for (Court court : courts) {
-            List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), HourConverter.dateToDate(courtFilterDTO.getDateTime()));
+            List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), courtFilterDTO.getDate());
             for (TimeInterval timeInterval : timeIntervals) {
                 court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
             }

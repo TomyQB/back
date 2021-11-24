@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class CourtFilterDTO {
 
-    private String dateTime;
+    private String hour;
+    private String date;
     private String sport;
     private String town;
     

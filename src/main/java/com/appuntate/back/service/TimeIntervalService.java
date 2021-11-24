@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
-import com.appuntate.back.model.dto.CourtDTO;
+import com.appuntate.back.model.dto.CourtSaveDTO;
 import com.appuntate.back.repository.TimeIntervalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class TimeIntervalService {
         }
     }
 
-    public List<TimeInterval> createTimeIntervalByHours(CourtDTO dto, Court court) {
+    public List<TimeInterval> createTimeIntervalByHours(CourtSaveDTO dto, Court court) {
         List<TimeInterval> timeIntervals = new ArrayList<>();
 
         int startHourInt = HourConverter.stringToHour(HourConverter.dateToHours(dto.getStartHour()));

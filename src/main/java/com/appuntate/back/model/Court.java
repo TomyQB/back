@@ -28,6 +28,7 @@ public class Court {
     private long codCourt;
 
     private String name;
+    private int interval;
     
     @ManyToOne
     @JoinColumn(name = "cod_sport")

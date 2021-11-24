@@ -1,40 +1,43 @@
 package com.appuntate.back.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.dto.CourtDTO;
-import com.appuntate.back.service.SportService;
-import com.appuntate.back.service.TimeIntervalService;
+import com.appuntate.back.service.HourConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CourtMapper implements Mapper<Court, CourtDTO> {
+public class CourtMapper implements Mapper<List<Court>, List<CourtDTO>> {
 
     @Autowired
-    private SportService sportService;
-    
-    @Autowired
-    private TimeIntervalService timeIntervalService;
+    private TimeIntervalMapper timeIntervalMapper;
 
     @Override
-    public CourtDTO entityToDTO(Court entity) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<CourtDTO> entityToDTO(List<Court> entity) {
+        List<CourtDTO> courtDTOs = new ArrayList<>();
+
+        for (Court court : entity) {
+            CourtDTO courtDTO = new CourtDTO();
+    
+            courtDTO.setCodCourt(court.getCodCourt());
+            courtDTO.setInterval(HourConverter.hourToString(court.getInterval()));
+            courtDTO.setName(court.getName());
+            courtDTO.setTimeIntervals(timeIntervalMapper.entityToDTO(court.getTimeIntervals()));
+            
+            courtDTOs.add(courtDTO);
+        }
+
+        return courtDTOs;
     }
 
     @Override
-    public Court DtoToEntity(CourtDTO dto) {
-        Court court = new Court();
-
-        if(dto.getId() != 0) court.setCodCourt(dto.getId());
-        court.setName(dto.getName());
-        court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSportName(), dto.getCodCenter()));
-        court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
-
-
-
-        return court;
+    public List<Court> DtoToEntity(List<CourtDTO> dto) {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }
