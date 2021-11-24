@@ -34,9 +34,9 @@ public class TimeIntervalService {
     public List<TimeInterval> createTimeIntervalByHours(CourtSaveDTO dto, Court court) {
         List<TimeInterval> timeIntervals = new ArrayList<>();
 
-        int startHourInt = HourConverter.stringToHour(HourConverter.dateToHours(dto.getStartHour()));
-        int endHourInt = HourConverter.stringToHour(HourConverter.dateToHours(dto.getEndHour()));
-        int intervalInt = HourConverter.stringToHour(HourConverter.dateToHours(dto.getEndHour()));
+        int startHourInt = HourConverter.stringToHour(dto.getStartHour());
+        int endHourInt = HourConverter.stringToHour(dto.getEndHour());
+        int intervalInt = HourConverter.stringToHour(dto.getEndHour());
 
         while(startHourInt < endHourInt) {
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);

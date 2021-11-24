@@ -35,6 +35,10 @@ public class CenterService {
         return centerRepository.getById(centerId);
     }
 
+    public Center getCenterByCodCourt(long codCourt) {
+        return centerRepository.findBySportsCourtsCodCourt(codCourt);
+    }
+
     public List<Center> getCentersByFilters(CenterFilterDTO centerFilterDTO) {
         CenterCriteria centerCriteria = centerCriteriaService.createCriteria(centerFilterDTO);
         List<Center> centers = centerRepository.findAll(centerSpecificationService.createSpecification(centerCriteria));

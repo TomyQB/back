@@ -32,8 +32,6 @@ public class CourtSaveMapper implements Mapper<Court, CourtSaveDTO> {
         court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSportName(), dto.getCodCenter()));
         court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
 
-
-
         return court;
     }
     

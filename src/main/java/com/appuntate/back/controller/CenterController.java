@@ -27,6 +27,11 @@ public class CenterController {
         return this.centerService.getCentersByFilters(centerFilterDTO);
     }
 
+    @PostMapping("/getCenterByIdCourt")
+    public Center getCenterByIdCourt(@RequestBody long codCourt) {
+        return centerService.getCenterByCodCourt(codCourt);
+    }
+
     @GetMapping("admin/{centerId}")
     public Center getCenterById(@PathVariable String centerId) {
         return centerService.getCenterById(Integer.parseInt(centerId));
