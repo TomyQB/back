@@ -1,6 +1,9 @@
 package com.appuntate.back.service;
 
+import java.util.List;
+
 import com.appuntate.back.mapper.BookingMapper;
+import com.appuntate.back.model.Booking;
 import com.appuntate.back.model.dto.BookingDTO;
 import com.appuntate.back.repository.BookingRepository;
 
@@ -31,6 +34,10 @@ public class BookingService {
 
     public void deleteBooking(long codBooking) {
         bookingRepository.deleteById(codBooking);
+    }
+
+    public List<Booking> getBookingsByUser(long userId) {
+        return bookingRepository.findByUserCodUsuario(userId);
     }
     
 }

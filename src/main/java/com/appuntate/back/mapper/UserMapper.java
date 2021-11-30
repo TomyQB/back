@@ -10,8 +10,17 @@ public class UserMapper implements Mapper<User, UserDTO> {
 
     @Override
     public UserDTO entityToDTO(User entity) {
-        // TODO Auto-generated method stub
-        return null;
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setId(entity.getCodUsuario());
+        userDTO.setName(entity.getName());
+        userDTO.setLastName(entity.getLastName());
+        userDTO.setUserName(entity.getUserName());
+        userDTO.setEmail(entity.getEmail());
+        userDTO.setPhone(entity.getPhone());
+        userDTO.setPhoto(entity.getImage());
+
+        return userDTO;
     }
 
     @Override

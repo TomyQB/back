@@ -22,6 +22,10 @@ public class UserService {
     public User getUserByCodUser(long codUser) {
         return userRepository.getById(codUser);
     }
+    
+    public UserDTO getUserDTOByCodUser(long codUser) {
+        return userMapper.entityToDTO(userRepository.getById(codUser));
+    }
 
     public ConfirmationOutputMap login(LoginDTO loginDTO) {
         User user = this.userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());

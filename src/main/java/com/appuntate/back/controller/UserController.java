@@ -28,4 +28,9 @@ public class UserController {
         return userService.updateUser(userDTO);
     }
 
+    @PostMapping("/getUserInfo")
+    public UserDTO getUserInfo(@RequestBody long userId) {
+        return userService.getUserDTOByCodUser(userId);
+    }
+
 }

@@ -1,5 +1,10 @@
 package com.appuntate.back.controller;
 
+import java.util.List;
+
+import javax.websocket.server.PathParam;
+
+import com.appuntate.back.model.Booking;
 import com.appuntate.back.model.dto.BookingDTO;
 import com.appuntate.back.service.BookingService;
 
@@ -23,7 +28,13 @@ public class BookingController {
 
     @PostMapping("/cancelBooking")
     public void cancelBooking(@RequestBody long codBooking) {
-        bookingService.deleteBooking(1);
+        bookingService.deleteBooking(codBooking);
     }
+
+    @PostMapping("/getBookingByUser")
+    public List<Booking> getBookingByUser(@RequestBody long userId) {
+        return bookingService.getBookingsByUser(userId);
+    }
+    
     
 }
