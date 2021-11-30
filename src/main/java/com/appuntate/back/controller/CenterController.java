@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class CenterController {
-    
+
     @Autowired
     private CenterService centerService;
-
 
     @PostMapping("/getCentersByFilters")
     public List<Center> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) {
@@ -36,5 +35,5 @@ public class CenterController {
     public Center getCenterById(@PathVariable String centerId) {
         return centerService.getCenterById(Integer.parseInt(centerId));
     }
-    
+
 }

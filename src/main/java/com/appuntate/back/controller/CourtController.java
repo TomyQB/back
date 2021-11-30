@@ -1,10 +1,8 @@
 package com.appuntate.back.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.appuntate.back.model.Court;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.CourtDTO;
 import com.appuntate.back.model.dto.CourtSaveDTO;
