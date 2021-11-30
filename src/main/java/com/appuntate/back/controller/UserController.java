@@ -2,6 +2,7 @@ package com.appuntate.back.controller;
 
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.LoginDTO;
+import com.appuntate.back.model.dto.UserDTO;
 import com.appuntate.back.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ConfirmationOutputMap login(@RequestBody LoginDTO loginDTO) {
         return userService.login(loginDTO);
     }
     
+    @PostMapping("/updateUser")
+    public ConfirmationOutputMap updateUser(@RequestBody UserDTO userDTO) {
+        return userService.updateUser(userDTO);
+    }
+
 }
