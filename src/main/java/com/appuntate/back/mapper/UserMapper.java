@@ -22,9 +22,10 @@ public class UserMapper implements Mapper<User, UserDTO> {
         user.setName(dto.getName());
         user.setLastName(dto.getLastName());
         user.setUserName((dto.getUserName()));
+        user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
         user.setPassword(dto.getPassword());
-        user.setPhoto(dto.getPhoto());
+        user.setImage(dto.getPhoto());
 
         return user; 
     }
