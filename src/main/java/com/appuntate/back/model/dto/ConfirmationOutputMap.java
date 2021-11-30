@@ -7,11 +7,13 @@ public class ConfirmationOutputMap {
 
     private boolean isOk;
     private String message;
+    private long id;
 
 
-    public ConfirmationOutputMap(boolean isOk, String message) {
+    public ConfirmationOutputMap(boolean isOk, String message, long id) {
         this.isOk = isOk;
         this.message = message;
+        this.id = id;
     }
     
 }
