@@ -3,8 +3,11 @@ package com.appuntate.back.service;
 import java.util.List;
 
 import com.appuntate.back.mapper.BookingMapper;
+import com.appuntate.back.mapper.UserBookingMapper;
 import com.appuntate.back.model.Booking;
 import com.appuntate.back.model.dto.BookingDTO;
+import com.appuntate.back.model.dto.ConfirmationOutputMap;
+import com.appuntate.back.model.dto.UserBookingsDTO;
 import com.appuntate.back.repository.BookingRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +22,24 @@ public class BookingService {
     @Autowired
     private BookingMapper bookingMapper;
 
-    public void saveBooking(BookingDTO bookingDTO) {
-        if(isCourtEmpty(bookingDTO))
+    @Autowired
+    private UserBookingMapper userBookingMapper;
+
+    public ConfirmationOutputMap saveBooking(BookingDTO bookingDTO) {
+        ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error al reservar pista", 0);
+        if (isCourtEmpty(bookingDTO)) {
             bookingRepository.save(bookingMapper.DtoToEntity(bookingDTO));
+            confirmation.setOk(true);
+            confirmation.setMessage("Pista reservada correctamente");
+        }
+        
+        return confirmation;
     }
 
     private boolean isCourtEmpty(BookingDTO bookingDTO) {
-        if(bookingRepository.findByCourtCodCourtAndDateAndTimeIntervalCodTimeInterval
-            (bookingDTO.getCodCourt(), bookingDTO.getPlayDate(), bookingDTO.getCodTimeInterval()) != null)
-                return false;
+        if (bookingRepository.findByCourtCodCourtAndDateAndTimeIntervalCodTimeInterval(bookingDTO.getCodCourt(),
+                bookingDTO.getPlayDate(), bookingDTO.getCodTimeInterval()) != null)
+            return false;
 
         return true;
     }
@@ -36,8 +48,9 @@ public class BookingService {
         bookingRepository.deleteById(codBooking);
     }
 
-    public List<Booking> getBookingsByUser(long userId) {
-        return bookingRepository.findByUserCodUsuario(userId);
+    public List<UserBookingsDTO> getBookingsByUser(long userId) {
+        List<Booking> bookings = bookingRepository.findByUserCodUsuario(userId);
+        return userBookingMapper.entityToDTO(bookings);
     }
-    
+
 }

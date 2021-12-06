@@ -1,8 +1,5 @@
 package com.appuntate.back.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.TimeIntervalDTO;
 import com.appuntate.back.service.HourConverter;
@@ -10,27 +7,21 @@ import com.appuntate.back.service.HourConverter;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TimeIntervalMapper implements Mapper<List<TimeInterval>, List<TimeIntervalDTO>> {
+public class TimeIntervalMapper implements Mapper<TimeInterval, TimeIntervalDTO> {
 
     @Override
-    public List<TimeIntervalDTO> entityToDTO(List<TimeInterval> entity) {
-        List<TimeIntervalDTO> timeIntervalDTOs = new ArrayList<>();
+    public TimeIntervalDTO entityToDTO(TimeInterval entity) {
+        TimeIntervalDTO timeIntervalDTO = new TimeIntervalDTO();
 
-        for (TimeInterval timeInterval : entity) {
-            TimeIntervalDTO timeIntervalDTO = new TimeIntervalDTO();
+        timeIntervalDTO.setCodTimeInterval(entity.getCodTimeInterval());
+        timeIntervalDTO.setStartHour(HourConverter.hourToString(entity.getStartHour()));
+        timeIntervalDTO.setEndHour(HourConverter.hourToString(entity.getEndHour()));
 
-            timeIntervalDTO.setCodTimeInterval(timeInterval.getCodTimeInterval());
-            timeIntervalDTO.setStartHour(HourConverter.hourToString(timeInterval.getStartHour()));
-            timeIntervalDTO.setEndHour(HourConverter.hourToString(timeInterval.getEndHour()));
-
-            timeIntervalDTOs.add(timeIntervalDTO);
-        }
-
-        return timeIntervalDTOs;
+        return timeIntervalDTO;
     }
 
     @Override
-    public List<TimeInterval> DtoToEntity(List<TimeIntervalDTO> dto) {
+    public TimeInterval DtoToEntity(TimeIntervalDTO dto) {
         // TODO Auto-generated method stub
         return null;
     }

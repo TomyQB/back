@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CourtMapper implements Mapper<List<Court>, List<CourtDTO>> {
 
     @Autowired
-    private TimeIntervalMapper timeIntervalMapper;
+    private TimeIntervalsMapper timeIntervalMapper;
 
     @Override
     public List<CourtDTO> entityToDTO(List<Court> entity) {

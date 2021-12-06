@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -22,7 +22,7 @@ public class UserService {
     public User getUserByCodUser(long codUser) {
         return userRepository.getById(codUser);
     }
-    
+
     public UserDTO getUserDTOByCodUser(long codUser) {
         return userMapper.entityToDTO(userRepository.getById(codUser));
     }
@@ -32,7 +32,7 @@ public class UserService {
 
         ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el inicio de sesión", 0);
 
-        if(user != null) {
+        if (user != null) {
             confirmation.setId(user.getCodUsuario());
             confirmation.setOk(true);
             confirmation.setMessage("Inicio de sesión realizado correctamente");
@@ -44,18 +44,23 @@ public class UserService {
     }
 
     public ConfirmationOutputMap updateUser(UserDTO userDTO) {
-        User user = this.userRepository.save(userMapper.DtoToEntity(userDTO));
-        
         ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el registro", 0);
 
-        if(user != null) {
-            confirmation.setId(user.getCodUsuario());
-            confirmation.setOk(true);
-            confirmation.setMessage("Registro realizado correctamente");
+        if (this.userRepository.findByEmail(userDTO.getEmail()) != null) {
+
+            User user = this.userRepository.save(userMapper.DtoToEntity(userDTO));
+
+            if (user != null) {
+                confirmation.setId(user.getCodUsuario());
+                confirmation.setOk(true);
+                confirmation.setMessage("Registro realizado correctamente");
+
+                return confirmation;
+            }
 
             return confirmation;
         }
-
         return confirmation;
+
     }
 }

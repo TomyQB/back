@@ -2,10 +2,9 @@ package com.appuntate.back.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
-import com.appuntate.back.model.Booking;
 import com.appuntate.back.model.dto.BookingDTO;
+import com.appuntate.back.model.dto.ConfirmationOutputMap;
+import com.appuntate.back.model.dto.UserBookingsDTO;
 import com.appuntate.back.service.BookingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping("/makeBooking")
-    public void madeBooking(@RequestBody BookingDTO bookingDTO) {
-        bookingService.saveBooking(bookingDTO);
+    public ConfirmationOutputMap madeBooking(@RequestBody BookingDTO bookingDTO) {
+        return bookingService.saveBooking(bookingDTO);
     }
 
     @PostMapping("/cancelBooking")
@@ -31,10 +30,9 @@ public class BookingController {
         bookingService.deleteBooking(codBooking);
     }
 
-    @PostMapping("/getBookingByUser")
-    public List<Booking> getBookingByUser(@RequestBody long userId) {
+    @PostMapping("/getUserBookings")
+    public List<UserBookingsDTO> getBookingByUser(@RequestBody long userId) {
         return bookingService.getBookingsByUser(userId);
     }
-    
-    
+
 }
