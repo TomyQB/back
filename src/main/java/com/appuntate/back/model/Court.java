@@ -29,6 +29,7 @@ public class Court {
 
     private String name;
     private int interval;
+    private double price;
     
     @ManyToOne
     @JoinColumn(name = "cod_sport")

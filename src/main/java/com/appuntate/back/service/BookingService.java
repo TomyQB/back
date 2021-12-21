@@ -3,9 +3,11 @@ package com.appuntate.back.service;
 import java.util.List;
 
 import com.appuntate.back.mapper.BookingMapper;
+import com.appuntate.back.mapper.CenterBookingMapper;
 import com.appuntate.back.mapper.UserBookingMapper;
 import com.appuntate.back.model.Booking;
 import com.appuntate.back.model.dto.BookingDTO;
+import com.appuntate.back.model.dto.CenterBookingsDTO;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.UserBookingsDTO;
 import com.appuntate.back.repository.BookingRepository;
@@ -24,6 +26,10 @@ public class BookingService {
 
     @Autowired
     private UserBookingMapper userBookingMapper;
+
+    @Autowired
+    private CenterBookingMapper centerBookingMapper;
+
 
     public ConfirmationOutputMap saveBooking(BookingDTO bookingDTO) {
         ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error al reservar pista", 0);
@@ -53,4 +59,8 @@ public class BookingService {
         return userBookingMapper.entityToDTO(bookings);
     }
 
+    public List<CenterBookingsDTO> getBookingsByCenter(long userId) {
+        List<Booking> bookings = bookingRepository.findByCourtSportCenterCodCenter(userId);
+        return centerBookingMapper.entityToDTO(bookings);
+    }
 }
