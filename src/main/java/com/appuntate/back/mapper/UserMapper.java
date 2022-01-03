@@ -35,6 +35,7 @@ public class UserMapper implements Mapper<User, UserDTO> {
         user.setPhone(dto.getPhone());
         user.setPassword(dto.getPassword());
         user.setImage(dto.getPhoto());
+        user.setAdmin(dto.isAdmin());
 
         return user; 
     }

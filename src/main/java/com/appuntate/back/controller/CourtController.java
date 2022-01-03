@@ -7,6 +7,7 @@ import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.CourtDTO;
 import com.appuntate.back.model.dto.CourtSaveDTO;
 import com.appuntate.back.model.dto.CourtFilterDTO;
+import com.appuntate.back.model.dto.CourtInputDTO;
 import com.appuntate.back.service.CourtService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,8 @@ public class CourtController {
         return courtService.getCourtsByFilter(courtFilterDTO);
     }
     
+    @PostMapping("/getCourtByDate")
+    public CourtDTO getCourtByDate(@RequestBody CourtInputDTO courtInputDTO) {
+        return courtService.getCourtByDate(courtInputDTO);
+    }
 }

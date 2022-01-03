@@ -39,5 +39,16 @@ public class CourtMapper implements Mapper<List<Court>, List<CourtDTO>> {
         // TODO Auto-generated method stub
         return null;
     }
+
+    public CourtDTO eTd(Court entity) {
+        CourtDTO courtDTO = new CourtDTO();
+        
+        courtDTO.setCodCourt(entity.getCodCourt());
+        courtDTO.setInterval(HourConverter.hourToString(entity.getInterval()));
+        courtDTO.setName(entity.getName());
+        courtDTO.setTimeIntervals(timeIntervalMapper.entityToDTO(entity.getTimeIntervals()));
+
+        return courtDTO;
+    }
     
 }

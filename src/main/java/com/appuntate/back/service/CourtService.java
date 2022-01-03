@@ -13,6 +13,7 @@ import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.CourtDTO;
 import com.appuntate.back.model.dto.CourtSaveDTO;
 import com.appuntate.back.model.dto.CourtFilterDTO;
+import com.appuntate.back.model.dto.CourtInputDTO;
 import com.appuntate.back.repository.CourtRepository;
 import com.appuntate.back.service.criteria.CourtCriteriaService;
 import com.appuntate.back.service.specification.CourtSpecificationService;
@@ -68,9 +69,17 @@ public class CourtService extends QueryService<Court> {
         List<Court> courts = courtRepository.findAll(courtSpecificationService.createSpecification(courtCriteria));
 
         courts = deleteNotInterestedHours(courts, courtFilterDTO);
-        courts = deleteReserveddHours(courts, courtFilterDTO);
+        courts = deleteReserveddHoursList(courts, courtFilterDTO);
 
         return courtMapper.entityToDTO(courts);
+    }
+
+    public CourtDTO getCourtByDate(CourtInputDTO courtInputDTO) {
+        Court court = courtRepository.getById(courtInputDTO.getCodCourt());
+
+        court = deleteReservedHours(courtInputDTO.getDate(), court);
+
+        return courtMapper.eTd(court);
     }
     
     private List<Court> deleteNotInterestedHours(List<Court> courts, CourtFilterDTO courtFilterDTO) {
@@ -83,17 +92,23 @@ public class CourtService extends QueryService<Court> {
         return courts;
     }
 
-    private List<Court> deleteReserveddHours(List<Court> courts, CourtFilterDTO courtFilterDTO) {
+    private List<Court> deleteReserveddHoursList(List<Court> courts, CourtFilterDTO courtFilterDTO) {
         
         for (Court court : courts) {
-            List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), courtFilterDTO.getDate());
-            for (TimeInterval timeInterval : timeIntervals) {
-                court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
-            }
+            deleteReservedHours(courtFilterDTO.getDate(), court);
         }
 
         return courts;
 
+    }
+
+    private Court deleteReservedHours(String date, Court court) {
+        List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), date);
+        for (TimeInterval timeInterval : timeIntervals) {
+            court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
+        }
+
+        return court;
     }
 
 }

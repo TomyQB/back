@@ -8,6 +8,7 @@ public class CourtSaveDTO {
 
     private long id;
     private long codCenter;
+    private double price;
     private String sportName;
     private String name;
     private String startHour;

@@ -33,6 +33,7 @@ public class User {
     private String password;
     private String image;
     private String userName;
+    private boolean isAdmin;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore

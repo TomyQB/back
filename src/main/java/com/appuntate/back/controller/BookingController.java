@@ -37,8 +37,8 @@ public class BookingController {
         return bookingService.getBookingsByUser(userId);
     }
     
-    @PostMapping("/getCenterBookings/{centerId}")
-    public List<CenterBookingsDTO> getBookingByCenter(@PathVariable long centerId) {
+    @PostMapping("/getCenterBookings")
+    public List<CenterBookingsDTO> getBookingByCenter(@RequestBody long centerId) {
         return bookingService.getBookingsByCenter(centerId);
     }
 

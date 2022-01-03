@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.appuntate.back.model.Booking;
-import com.appuntate.back.model.dto.BookingDTO;
 import com.appuntate.back.model.dto.UserBookingsDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ public class UserBookingMapper implements Mapper<List<Booking>, List<UserBooking
         for (Booking booking : entity) {
             UserBookingsDTO userBookingDTO = new UserBookingsDTO();
 
+            userBookingDTO.setCodCourt(booking.getCourt().getCodCourt());
             userBookingDTO.setBookingDate(booking.getBookingDate());
             userBookingDTO.setCodBooking(booking.getCodBooking());
             userBookingDTO.setDate(booking.getDate());

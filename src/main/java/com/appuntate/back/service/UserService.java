@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public ConfirmationOutputMap login(LoginDTO loginDTO) {
-        User user = this.userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
+        User user = this.userRepository.findByEmailAndPasswordAndIsAdmin(loginDTO.getEmail(), loginDTO.getPassword(), loginDTO.isAdmin());
 
         ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el inicio de sesión", 0);
 

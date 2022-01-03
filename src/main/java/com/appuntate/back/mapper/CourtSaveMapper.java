@@ -28,6 +28,7 @@ public class CourtSaveMapper implements Mapper<Court, CourtSaveDTO> {
         Court court = new Court();
 
         if(dto.getId() != 0) court.setCodCourt(dto.getId());
+        court.setPrice(dto.getPrice());
         court.setName(dto.getName());
         court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSportName(), dto.getCodCenter()));
         court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
