@@ -13,6 +13,6 @@ public class UserDTO {
     private String email;
     private String password;
     private String photo;
-    private boolean isAdmin;
+    private String isAdmin;
 
 }

@@ -7,6 +7,6 @@ public class LoginDTO {
 
     private String email;
     private String password;
-    private boolean isAdmin;
+    private String isAdmin;
     
 }
