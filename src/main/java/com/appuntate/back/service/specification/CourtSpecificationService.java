@@ -44,6 +44,10 @@ public class CourtSpecificationService extends QueryService<Court> implements Sp
                 .join(Court_.timeIntervals, JoinType.LEFT)
                     .get(TimeInterval_.startHour)));
 
+        if(criteria.getValoration() != null) {
+            specification = specification.and(buildRangeSpecification(criteria.getValoration(), Court_.valoration));
+        }
+
 
         return specification;
     }

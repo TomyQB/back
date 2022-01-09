@@ -26,6 +26,7 @@ public class CourtMapper implements Mapper<List<Court>, List<CourtDTO>> {
             courtDTO.setCodCourt(court.getCodCourt());
             courtDTO.setInterval(HourConverter.hourToString(court.getInterval()));
             courtDTO.setName(court.getName());
+            courtDTO.setValoration(court.getValoration());
             courtDTO.setTimeIntervals(timeIntervalMapper.entityToDTO(court.getTimeIntervals()));
             
             courtDTOs.add(courtDTO);

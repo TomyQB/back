@@ -1,11 +1,13 @@
 package com.appuntate.back.service.criteria;
 
+import com.appuntate.back.model.Court;
 import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.model.dto.CourtFilterDTO;
 import com.appuntate.back.service.HourConverter;
 
 import org.springframework.stereotype.Service;
 
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
@@ -20,6 +22,7 @@ public class CourtCriteriaService implements CriteriaService<CourtCriteria, Cour
             courtCriteria = addTownFilter(courtCriteria, filterDTO);
             courtCriteria = addSportFilter(courtCriteria, filterDTO);
             courtCriteria = addHourFilter(courtCriteria, filterDTO);
+            courtCriteria = addValorationFilter(courtCriteria, filterDTO);
         }
 
         return courtCriteria;
@@ -60,6 +63,16 @@ public class CourtCriteriaService implements CriteriaService<CourtCriteria, Cour
 
         return courtCriteria;
     }
-    
+
+    private CourtCriteria addValorationFilter(CourtCriteria courtCriteria, CourtFilterDTO filterDTO) {
+
+        if(filterDTO.getValoration() != null) {
+            DoubleFilter filter = new DoubleFilter();
+            filter.setGreaterThanOrEqual(filterDTO.getValoration());
+            courtCriteria.setValoration(filter);
+        }
+
+        return courtCriteria;
+    }
     
 }

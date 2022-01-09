@@ -12,6 +12,7 @@ public class CourtDTO {
     private long codCourt;
     private String name;
     private String interval;
+    private Double valoration;
     private List<TimeIntervalDTO> timeIntervals;
     
 }

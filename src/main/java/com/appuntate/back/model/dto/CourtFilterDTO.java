@@ -9,5 +9,6 @@ public class CourtFilterDTO {
     private String date;
     private String sport;
     private String town;
+    private Double valoration;
     
 }
