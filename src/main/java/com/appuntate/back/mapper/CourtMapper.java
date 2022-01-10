@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.dto.CourtDTO;
+import com.appuntate.back.repository.CenterRepository;
+import com.appuntate.back.service.CenterService;
 import com.appuntate.back.service.HourConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class CourtMapper implements Mapper<List<Court>, List<CourtDTO>> {
 
     @Autowired
     private TimeIntervalsMapper timeIntervalMapper;
+
+    @Autowired
+    private CenterService centerService;
 
     @Override
     public List<CourtDTO> entityToDTO(List<Court> entity) {
@@ -28,6 +33,7 @@ public class CourtMapper implements Mapper<List<Court>, List<CourtDTO>> {
             courtDTO.setName(court.getName());
             courtDTO.setValoration(court.getValoration());
             courtDTO.setTimeIntervals(timeIntervalMapper.entityToDTO(court.getTimeIntervals()));
+            courtDTO.setCenterName(centerService.getCenterByCodCourt(court.getCodCourt()).getName());
             
             courtDTOs.add(courtDTO);
         }
