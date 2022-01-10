@@ -2,6 +2,7 @@ package com.appuntate.back.mapper;
 
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.dto.CourtSaveDTO;
+import com.appuntate.back.service.HourConverter;
 import com.appuntate.back.service.SportService;
 import com.appuntate.back.service.TimeIntervalService;
 
@@ -30,7 +31,7 @@ public class CourtSaveMapper implements Mapper<Court, CourtSaveDTO> {
         if(dto.getId() != 0) court.setCodCourt(dto.getId());
         court.setPrice(dto.getPrice());
         court.setName(dto.getName());
-        court.setInterval(Integer.parseInt(dto.getInterval()));
+        court.setInterval(HourConverter.stringToHour(dto.getInterval()));
         court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSportName(), dto.getCodCenter()));
         court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
 
