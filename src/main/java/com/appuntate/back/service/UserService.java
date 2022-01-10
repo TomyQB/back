@@ -47,7 +47,7 @@ public class UserService {
     public ConfirmationOutputMap updateUser(UserDTO userDTO) {
         ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el registro", 0);
 
-        if (this.userRepository.findByEmail(userDTO.getEmail()) != null) {
+        if (this.userRepository.findByEmail(userDTO.getEmail()) == null) {
 
             User user = this.userRepository.save(userMapper.DtoToEntity(userDTO));
 
