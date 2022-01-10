@@ -23,6 +23,11 @@ public class UserController {
         return userService.login(loginDTO);
     }
     
+    @PostMapping("/register")
+    public ConfirmationOutputMap register(@RequestBody UserDTO userDTO) {
+        return userService.register(userDTO);
+    }
+
     @PostMapping("/updateUser")
     public ConfirmationOutputMap updateUser(@RequestBody UserDTO userDTO) {
         return userService.updateUser(userDTO);

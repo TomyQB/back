@@ -44,7 +44,7 @@ public class UserService {
         return confirmation;
     }
 
-    public ConfirmationOutputMap updateUser(UserDTO userDTO) {
+    public ConfirmationOutputMap register(UserDTO userDTO) {
         ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el registro", 0);
 
         if (this.userRepository.findByEmail(userDTO.getEmail()) == null) {
@@ -55,6 +55,27 @@ public class UserService {
                 confirmation.setId(user.getCodUsuario());
                 confirmation.setOk(true);
                 confirmation.setMessage("Registro realizado correctamente");
+
+                return confirmation;
+            }
+
+            return confirmation;
+        }
+        return confirmation;
+
+    }
+
+    public ConfirmationOutputMap updateUser(UserDTO userDTO) {
+        ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error actualizando usuario", 0);
+
+        if (this.userRepository.findById(userDTO.getId()) != null) {
+
+            User user = this.userRepository.save(userMapper.DtoToEntity(userDTO));
+
+            if (user != null) {
+                confirmation.setId(user.getCodUsuario());
+                confirmation.setOk(true);
+                confirmation.setMessage("Usuario actualizado correctamente");
 
                 return confirmation;
             }
