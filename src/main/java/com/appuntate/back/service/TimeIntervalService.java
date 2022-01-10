@@ -36,7 +36,7 @@ public class TimeIntervalService {
 
         int startHourInt = HourConverter.stringToHour(dto.getStartHour());
         int endHourInt = HourConverter.stringToHour(dto.getEndHour());
-        int intervalInt = HourConverter.stringToHour(dto.getEndHour());
+        int intervalInt = HourConverter.stringToHour(dto.getInterval());
 
         while(startHourInt < endHourInt) {
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);
