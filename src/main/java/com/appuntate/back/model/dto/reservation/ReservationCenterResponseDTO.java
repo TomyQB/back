@@ -1,11 +1,11 @@
-package com.appuntate.back.model.dto.center;
+package com.appuntate.back.model.dto.reservation;
 
 import com.appuntate.back.model.dto.timeInterval.TimeIntervalDTO;
 
 import lombok.Data;
 
 @Data
-public class CenterReservationDTO {
+public class ReservationCenterResponseDTO {
    
     private String reservationDate;
     private long reservationId;

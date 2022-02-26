@@ -22,7 +22,7 @@ public class SportsNames {
     private String name;
     private String photo;
 
-    @OneToMany(mappedBy = "sportsNames")
+    @OneToMany(mappedBy = "sportName")
     @JsonIgnore
     private List<Sport> sports;
     

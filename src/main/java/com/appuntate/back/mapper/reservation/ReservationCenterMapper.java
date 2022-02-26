@@ -1,4 +1,4 @@
-package com.appuntate.back.mapper.center;
+package com.appuntate.back.mapper.reservation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,35 +6,35 @@ import java.util.List;
 import com.appuntate.back.mapper.IMapper;
 import com.appuntate.back.mapper.timeInterval.TimeIntervalMapper;
 import com.appuntate.back.model.Reservation;
-import com.appuntate.back.model.dto.center.CenterReservationDTO;
+import com.appuntate.back.model.dto.reservation.ReservationCenterResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CenterReservationMapper implements IMapper<Reservation, CenterReservationDTO> {
+public class ReservationCenterMapper implements IMapper<Reservation, ReservationCenterResponseDTO> {
     
     @Autowired
     private TimeIntervalMapper timeIntervalMapper;
 
     @Override
-    public CenterReservationDTO entityToDTO(Reservation entity) {
+    public ReservationCenterResponseDTO entityToDTO(Reservation entity) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Reservation DtoToEntity(CenterReservationDTO dto) {
+    public Reservation DtoToEntity(ReservationCenterResponseDTO dto) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<CenterReservationDTO> entitiesToDTOs(List<Reservation> entity) {
-        List<CenterReservationDTO> centerReservationsDTO = new ArrayList<>();
+    public List<ReservationCenterResponseDTO> entitiesToDTOs(List<Reservation> entity) {
+        List<ReservationCenterResponseDTO> centerReservationsDTO = new ArrayList<>();
 
         for (Reservation reservation : entity) {
-            CenterReservationDTO centerReservationDTO = new CenterReservationDTO();
+            ReservationCenterResponseDTO centerReservationDTO = new ReservationCenterResponseDTO();
 
             centerReservationDTO.setReservationDate(reservation.getReservationDate());
             centerReservationDTO.setReservationId(reservation.getReservationId());
@@ -52,7 +52,7 @@ public class CenterReservationMapper implements IMapper<Reservation, CenterReser
     }
 
     @Override
-    public List<Reservation> DtosToEntities(List<CenterReservationDTO> dto) {
+    public List<Reservation> DtosToEntities(List<ReservationCenterResponseDTO> dto) {
         // TODO Auto-generated method stub
         return null;
     }

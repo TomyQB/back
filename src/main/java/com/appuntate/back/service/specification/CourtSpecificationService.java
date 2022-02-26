@@ -33,7 +33,7 @@ public class CourtSpecificationService extends QueryService<Court> implements Sp
         if(criteria.getSport() != null)
             specification = specification.and(buildSpecification(criteria.getSport(), root -> root
                 .join(Court_.sport, JoinType.LEFT)
-                    .join(Sport_.sportsNames, JoinType.LEFT)
+                    .join(Sport_.sportName, JoinType.LEFT)
                         .get(SportsNames_.name)));
 
         if(criteria.getHour() != null)

@@ -6,6 +6,7 @@ import com.appuntate.back.service.HourConverter;
 
 import org.springframework.stereotype.Service;
 
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
@@ -17,20 +18,11 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
         CenterCriteria centerCriteria = new CenterCriteria();
 
         if(centerCriteria != null) {
-            centerCriteria = addTownFilter(centerCriteria, filterDTO);
             centerCriteria = addSportFilter(centerCriteria, filterDTO);
             centerCriteria = addHourFilter(centerCriteria, filterDTO);
-        }
-
-        return centerCriteria;
-    }
-    
-    private CenterCriteria addTownFilter(CenterCriteria centerCriteria, CenterFilterDTO filterDTO) {
-
-        if(filterDTO.getTown() != null) {
-            StringFilter filter = new StringFilter();
-            filter.setEquals(filterDTO.getTown());
-            centerCriteria.setTown(filter);
+            centerCriteria = addRatingFilter(centerCriteria, filterDTO);
+            centerCriteria = addLatitudeFilter(centerCriteria, filterDTO);
+            centerCriteria = addLongitudeFilter(centerCriteria, filterDTO);
         }
 
         return centerCriteria;
@@ -55,6 +47,43 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
             IntegerFilter filter = new IntegerFilter();
             filter.setGreaterThanOrEqual(hour);
             centerCriteria.setHour(filter);
+        }
+
+        return centerCriteria;
+    }
+        
+    private CenterCriteria addRatingFilter(CenterCriteria centerCriteria, CenterFilterDTO filterDTO) {
+        
+        if(filterDTO.getRating() != null) {            
+            DoubleFilter filter = new DoubleFilter();
+            filter.setGreaterThanOrEqual(filterDTO.getRating());
+            centerCriteria.setRating(filter);
+        }
+
+        return centerCriteria;
+    }
+        
+    private CenterCriteria addLatitudeFilter(CenterCriteria centerCriteria, CenterFilterDTO filterDTO) {
+        
+        if(filterDTO.getLatitude() != null) {
+            
+            DoubleFilter filter = new DoubleFilter();
+            filter.setGreaterThanOrEqual(filterDTO.getLatitude() - 0.14);
+            filter.setLessThanOrEqual(filterDTO.getLatitude() + 0.14);
+            centerCriteria.setLatitude(filter);
+        }
+
+        return centerCriteria;
+    }
+            
+    private CenterCriteria addLongitudeFilter(CenterCriteria centerCriteria, CenterFilterDTO filterDTO) {
+        
+        if(filterDTO.getLongitude() != null) {
+            
+            DoubleFilter filter = new DoubleFilter();
+            filter.setGreaterThanOrEqual(filterDTO.getLongitude() - 0.125);
+            filter.setLessThanOrEqual(filterDTO.getLongitude() + 0.125);
+            centerCriteria.setLongitude(filter);
         }
 
         return centerCriteria;

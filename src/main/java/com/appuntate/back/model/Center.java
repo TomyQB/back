@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,9 +23,13 @@ public class Center {
 
     private String name;
     private String adress;
+    private Double latitude;
+    private Double longitude;
+    private Double rating;
     private int startHour;
     private int endHour;
     private String image;
+    private Double minimumPrice;
 
     @OneToMany(mappedBy = "center")
     private List<Sport> sports;

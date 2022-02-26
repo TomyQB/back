@@ -18,7 +18,7 @@ public class SportService {
     }
 
     public Sport getSportBySportNameAndCodCenter(String sportName, long centerId) {
-        return sportRepository.findBySportsNamesNameAndCenterCenterId(sportName, centerId);
+        return sportRepository.findBySportNameNameAndCenterCenterId(sportName, centerId);
     }
     
 }

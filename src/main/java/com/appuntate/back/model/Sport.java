@@ -35,6 +35,6 @@ public class Sport {
 
     @ManyToOne
     @JoinColumn(name = "sportNameId")
-    private SportsNames sportsNames;
+    private SportsNames sportName;
 
 }

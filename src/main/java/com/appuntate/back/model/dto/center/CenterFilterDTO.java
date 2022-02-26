@@ -5,16 +5,21 @@ import lombok.Data;
 @Data
 public class CenterFilterDTO {
 
-    private String town;
     private String sport;
-    private String hour;
     private String date;
+    private String hour;
+    private Double latitude;
+    private Double longitude;
+    private Double rating;
 
-    public CenterFilterDTO(String town, String sport, String hour, String date) {
-        this.town = town;
+
+    public CenterFilterDTO(String sport, String date, String hour, Double latitude, Double longitude, Double rating) {
         this.sport = sport;
-        this.hour = hour;
         this.date = date;
+        this.hour = hour;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.rating = rating;
     }
-    
+
 }

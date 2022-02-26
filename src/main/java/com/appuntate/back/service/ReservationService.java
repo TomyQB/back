@@ -4,15 +4,14 @@ import java.util.List;
 
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
-import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
-import com.appuntate.back.mapper.center.CenterReservationMapper;
+import com.appuntate.back.mapper.reservation.ReservationCenterMapper;
 import com.appuntate.back.mapper.reservation.ReservationMapper;
 import com.appuntate.back.mapper.reservation.ReservationUserMapper;
 import com.appuntate.back.model.Reservation;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
-import com.appuntate.back.model.dto.center.CenterReservationDTO;
+import com.appuntate.back.model.dto.reservation.ReservationCenterResponseDTO;
 import com.appuntate.back.model.dto.reservation.ReservationDTO;
-import com.appuntate.back.model.dto.reservation.UserReservationResponseDTO;
+import com.appuntate.back.model.dto.reservation.ReservationUserResponseDTO;
 import com.appuntate.back.repository.ReservationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class ReservationService {
     private ReservationUserMapper userReservationMapper;
 
     @Autowired
-    private CenterReservationMapper centerReservationMapper;
+    private ReservationCenterMapper centerReservationMapper;
 
 
     public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) {
@@ -63,7 +62,7 @@ public class ReservationService {
         }
     }
 
-    public List<UserReservationResponseDTO> getReservationsByUser(long userId) throws ReservationUserNotFoundException {
+    public List<ReservationUserResponseDTO> getReservationsByUser(long userId) throws ReservationUserNotFoundException {
         List<Reservation> reservations = reservationRepository.findByUserUserId(userId);
 
         if(reservations.isEmpty()) throw new ReservationUserNotFoundException(Long.toString(userId));
@@ -71,7 +70,7 @@ public class ReservationService {
 
     }
 
-    public List<CenterReservationDTO> getReservationsByCenter(long userId) {
+    public List<ReservationCenterResponseDTO> getReservationsByCenter(long userId) {
         List<Reservation> reservations = reservationRepository.findByCourtSportCenterCenterId(userId);
         return centerReservationMapper.entitiesToDTOs(reservations);
     }

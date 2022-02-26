@@ -6,7 +6,7 @@ import com.appuntate.back.model.dto.timeInterval.TimeIntervalDTO;
 import lombok.Data;
 
 @Data
-public class UserReservationResponseDTO {
+public class ReservationUserResponseDTO {
 
     private long reservationId;
     private long courtId;

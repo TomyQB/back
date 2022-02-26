@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserAlreadyRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.CentersByFilterNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
@@ -22,7 +23,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({UserIdNotFoundException.class, ReservationIdNotFoundException.class, UserLoginNotFoundException.class, ReservationUserNotFoundException.class})
+    @ExceptionHandler({UserIdNotFoundException.class, ReservationIdNotFoundException.class, UserLoginNotFoundException.class, ReservationUserNotFoundException.class,
+                        CentersByFilterNotFoundException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, request.getRequestURI());

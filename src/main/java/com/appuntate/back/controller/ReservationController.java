@@ -6,9 +6,9 @@ import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotF
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
-import com.appuntate.back.model.dto.center.CenterReservationDTO;
+import com.appuntate.back.model.dto.reservation.ReservationCenterResponseDTO;
 import com.appuntate.back.model.dto.reservation.ReservationDTO;
-import com.appuntate.back.model.dto.reservation.UserReservationResponseDTO;
+import com.appuntate.back.model.dto.reservation.ReservationUserResponseDTO;
 import com.appuntate.back.service.ReservationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class ReservationController {
     }
 
     @GetMapping("/getUserReservations/{userId}")
-    public List<UserReservationResponseDTO> getReservationByUser(@PathVariable long userId) throws ReservationUserNotFoundException {
+    public List<ReservationUserResponseDTO> getReservationByUser(@PathVariable long userId) throws ReservationUserNotFoundException {
         return reservationService.getReservationsByUser(userId);
     }
     

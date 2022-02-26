@@ -24,23 +24,25 @@ public class CenterSpecificationService extends QueryService<Center> implements 
         
         Specification<Center> specification = (root, query, cb) -> { query.distinct(true); return null; };
 
-        // if(criteria.getTown() != null)
-        //     specification = specification.and(buildSpecification(criteria.getTown(), root -> root
-        //         .join(Center_.town, JoinType.LEFT)
-        //             .get(Town_.name)));
             
         if(criteria.getSport() != null)
             specification = specification.and(buildSpecification(criteria.getSport(), root -> root
                 .join(Center_.sports, JoinType.LEFT)
-                    .join(Sport_.sportsNames, JoinType.LEFT)
+                    .join(Sport_.sportName, JoinType.LEFT)
                         .get(SportsNames_.name)));
 
-        if(criteria.getHour() != null)
-            specification = specification.and(buildSpecification(criteria.getHour(), root -> root
-                .join(Center_.sports, JoinType.LEFT)
-                    .join(Sport_.courts, JoinType.LEFT)
-                        .join(Court_.timeIntervals, JoinType.LEFT)
-                            .get(TimeInterval_.startHour)));
+        // if(criteria.getHour() != null)
+        //     specification = specification.and(buildSpecification(criteria.getHour(), root -> root
+        //         .join(Center_.sports, JoinType.LEFT)
+        //             .join(Sport_.courts, JoinType.LEFT)
+        //                 .join(Court_.timeIntervals, JoinType.LEFT)
+        //                     .get(TimeInterval_.startHour)));
+
+        if(criteria.getLatitude() != null)
+            specification = specification.and(buildRangeSpecification(criteria.getLatitude(), Center_.latitude));
+            
+        if(criteria.getLongitude() != null)
+            specification = specification.and(buildRangeSpecification(criteria.getLongitude(), Center_.longitude));
 
 
         return specification;
