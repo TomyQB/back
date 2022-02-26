@@ -65,8 +65,8 @@ public class CenterService {
         for(Center center : centers) {
             CenterResponseDTO centerDTO = centerResponseMapper.entityToDTO(center);
             centerDTO.setDistance(calculateDistanceWithLongLat(center, centerFilterDTO));
-            centerDTO.setAvialableIntervals(getAvialableCenterIntervals(center, centerFilterDTO));
-            if(!centerDTO.getAvialableIntervals().isEmpty())
+            centerDTO.setAvailableIntervals(getAvialableCenterIntervals(center, centerFilterDTO));
+            if(!centerDTO.getAvailableIntervals().isEmpty())
                 centerResponseDTOs.add(centerDTO);
         }
 

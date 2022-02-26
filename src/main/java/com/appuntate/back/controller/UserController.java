@@ -5,9 +5,7 @@ import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterExc
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserLoginNotFoundException;
-import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.user.LoginRequestDTO;
-import com.appuntate.back.model.dto.user.UserDTO;
 import com.appuntate.back.model.dto.user.UserDTO;
 import com.appuntate.back.service.UserService;
 
