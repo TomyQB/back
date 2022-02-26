@@ -25,7 +25,7 @@ public class Court {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codCourt;
+    private long courtId;
 
     private String name;
     private int interval;
@@ -33,15 +33,15 @@ public class Court {
     private double valoration;
     
     @ManyToOne
-    @JoinColumn(name = "cod_sport")
+    @JoinColumn(name = "sportId")
     @JsonIgnore
     private Sport sport;
 
     @OneToMany(mappedBy = "court")
     @JsonIgnore
-    private List<Booking> bookings;
+    private List<Reservation> reservations;
     
-    @ManyToMany(mappedBy = "courts", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "court", cascade = CascadeType.ALL)
     private List<TimeInterval> timeIntervals;
     
 }

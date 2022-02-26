@@ -22,8 +22,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JoinColumn(name = "dni")
-    private long codUsuario;
+    private long userId;
 
     private String name;
     private String lastName;
@@ -37,6 +36,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Booking> bookings;
+    private List<Reservation> reservations;
     
 }

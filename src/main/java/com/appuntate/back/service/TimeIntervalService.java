@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
-import com.appuntate.back.model.dto.CourtSaveDTO;
+import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.repository.TimeIntervalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,17 @@ public class TimeIntervalService {
     @Autowired
     private TimeIntervalRepository timeIntervalRepository;
 
-    public TimeInterval getTimeIntervalByCodTimeInterval(long codTimeInterval) {
-        return timeIntervalRepository.getById(codTimeInterval);
+    public TimeInterval getTimeIntervalByCodTimeInterval(long timeIntervalId) {
+        return timeIntervalRepository.getById(timeIntervalId);
     }
 
     public List<TimeInterval> getTimeIntervalsReservedByCourtId(long courtId, String date) {
-        return timeIntervalRepository.findByBookingCourtCodCourtAndBookingDate(courtId, date);
+        return timeIntervalRepository.findByReservationCourtCourtIdAndReservationDate(courtId, date);
     }
 
     public void setCourtToTimeInterval(Court court) {
         for (TimeInterval timeInterval : court.getTimeIntervals()) {
-            timeInterval.addCourt(court);
+            timeInterval.setCourt(court);
         }
     }
 
@@ -40,7 +40,8 @@ public class TimeIntervalService {
 
         while(startHourInt < endHourInt) {
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);
-            TimeInterval timeInterval = timeIntervalRepository.findByStartHourAndEndHour(startHourInt, auxEnHour);
+            // TimeInterval timeInterval = timeIntervalRepository.findByStartHourAndEndHour(startHourInt, auxEnHour);
+            TimeInterval timeInterval = new TimeInterval(startHourInt, auxEnHour, court);
 
             if(timeInterval != null && timeInterval.getEndHour() < endHourInt)
                 timeIntervals.add(timeInterval);

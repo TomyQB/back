@@ -23,10 +23,10 @@ public class Sport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codSport;
+    private long sportId;
     
     @ManyToOne
-    @JoinColumn(name = "cod_center")
+    @JoinColumn(name = "centerId")
     @JsonIgnore
     private Center center;
 
@@ -34,7 +34,7 @@ public class Sport {
     private List<Court> courts;
 
     @ManyToOne
-    @JoinColumn(name = "cod_name")
+    @JoinColumn(name = "sportNameId")
     private SportsNames sportsNames;
 
 }

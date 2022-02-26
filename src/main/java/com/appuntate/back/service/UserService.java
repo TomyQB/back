@@ -1,10 +1,14 @@
 package com.appuntate.back.service;
 
-import com.appuntate.back.mapper.UserMapper;
+import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserAlreadyRegisterException;
+import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
+import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.UserLoginNotFoundException;
+import com.appuntate.back.mapper.user.UserDTOMapper;
 import com.appuntate.back.model.User;
-import com.appuntate.back.model.dto.ConfirmationOutputMap;
-import com.appuntate.back.model.dto.LoginDTO;
-import com.appuntate.back.model.dto.UserDTO;
+import com.appuntate.back.model.dto.user.LoginRequestDTO;
+import com.appuntate.back.model.dto.user.UserDTO;
 import com.appuntate.back.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,72 +21,45 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserDTOMapper userDTOMapper;
 
-    public User getUserByCodUser(long codUser) {
-        return userRepository.getById(codUser);
+    public User getUserByUserId(long userId) {
+        return userRepository.getById(userId);
     }
 
-    public UserDTO getUserDTOByCodUser(long codUser) {
-        return userMapper.entityToDTO(userRepository.getById(codUser));
+    public UserDTO getUserDTOByUserId(long userId) {
+        return userDTOMapper.entityToDTO(userRepository.getById(userId));
     }
 
-    public ConfirmationOutputMap login(LoginDTO loginDTO) {
+    public UserDTO login(LoginRequestDTO loginDTO) throws UserLoginNotFoundException {
+        User user = this.userRepository.findByUserNameAndPasswordAndAdmin(loginDTO.getUserName(), loginDTO.getPassword(), loginDTO.getIsAdmin());
         
-        User user = this.userRepository.findByEmailAndPasswordAndAdmin(loginDTO.getEmail(), loginDTO.getPassword(), loginDTO.getIsAdmin());
-
-        ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el inicio de sesión", 0);
-
-        if (user != null) {
-            confirmation.setId(user.getCodUsuario());
-            confirmation.setOk(true);
-            confirmation.setMessage("Inicio de sesión realizado correctamente");
-
-            return confirmation;
-        }
-
-        return confirmation;
+        if (user != null) return userDTOMapper.entityToDTO(user);
+        throw new UserLoginNotFoundException();
     }
 
-    public ConfirmationOutputMap register(UserDTO userDTO) {
-        ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error en el registro", 0);
+    public UserDTO register(UserDTO userDTO) throws UserRegisterException, UserAlreadyRegisterException {
 
         if (this.userRepository.findByEmail(userDTO.getEmail()) == null) {
+            User user = this.userRepository.save(userDTOMapper.DtoToEntity(userDTO));
 
-            User user = this.userRepository.save(userMapper.DtoToEntity(userDTO));
-
-            if (user != null) {
-                confirmation.setId(user.getCodUsuario());
-                confirmation.setOk(true);
-                confirmation.setMessage("Registro realizado correctamente");
-
-                return confirmation;
-            }
-
-            return confirmation;
+            if (user != null) return userDTOMapper.entityToDTO(user);
+            throw new UserRegisterException();
         }
-        return confirmation;
 
+        throw new UserAlreadyRegisterException(userDTO.getEmail());
     }
 
-    public ConfirmationOutputMap updateUser(UserDTO userDTO) {
-        ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error actualizando usuario", 0);
+    public UserDTO updateUser(UserDTO userDTO) throws UserUpdateException, UserIdNotFoundException {
 
-        if (this.userRepository.findById(userDTO.getId()) != null) {
+        if (this.userRepository.findById(userDTO.getUserId()).isPresent()) {
+            User user = this.userRepository.save(userDTOMapper.DtoToEntity(userDTO));
 
-            User user = this.userRepository.save(userMapper.DtoToEntity(userDTO));
-
-            if (user != null) {
-                confirmation.setId(user.getCodUsuario());
-                confirmation.setOk(true);
-                confirmation.setMessage("Usuario actualizado correctamente");
-
-                return confirmation;
-            }
-
-            return confirmation;
+            if (user != null) return userDTOMapper.entityToDTO(user);
+            throw new UserUpdateException();
         }
-        return confirmation;
+
+        throw new UserIdNotFoundException();
 
     }
 }

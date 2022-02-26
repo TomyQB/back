@@ -17,40 +17,38 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "timeinterval")
 public class TimeInterval {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codTimeInterval;
+    private long timeIntervalId;
 
     private int startHour;
     private int endHour;
 
     @OneToMany(mappedBy = "timeInterval")
     @JsonIgnore
-    private List<Booking> booking;
+    private List<Reservation> reservation;
 
-    @JoinTable(
-        name = "timeinterval_court",
-        joinColumns = @JoinColumn(name = "cod_timeinterval"),
-        inverseJoinColumns = @JoinColumn(name = "cod_court")
-    )
-    @ManyToMany
+    @ManyToOne
+    @JoinColumn(name = "court")
     @JsonIgnore
-    private List<Court> courts;
+    private Court court;
 
-    public void addCourt(Court court){
-        if(courts == null){
-            courts = new ArrayList<>();
-        }
-        
-        courts.add(court);
+    public TimeInterval(int startHour, int endHour, Court court) {
+        this.startHour = startHour;
+        this.endHour = endHour;
+        this.court = court;
     }
     
 }

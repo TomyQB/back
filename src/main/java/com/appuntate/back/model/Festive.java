@@ -18,14 +18,14 @@ public class Festive {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codFestive;
+    private long festiveId;
 
     private String day;
     private String month;
     private String year;
 
     @ManyToOne
-    @JoinColumn(name = "cod_center")
+    @JoinColumn(name = "centerId")
     private Center center;
     
 }

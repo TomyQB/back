@@ -1,7 +1,7 @@
 package com.appuntate.back.service.criteria;
 
 import com.appuntate.back.model.criteria.CenterCriteria;
-import com.appuntate.back.model.dto.CenterFilterDTO;
+import com.appuntate.back.model.dto.center.CenterFilterDTO;
 import com.appuntate.back.service.HourConverter;
 
 import org.springframework.stereotype.Service;

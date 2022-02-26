@@ -3,8 +3,8 @@ package com.appuntate.back.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.appuntate.back.mapper.SportsNamesMapper;
-import com.appuntate.back.model.dto.SportsNamesDTO;
+import com.appuntate.back.mapper.sportNames.SportsNamesMapper;
+import com.appuntate.back.model.dto.sportName.SportsNamesResponseDTO;
 import com.appuntate.back.repository.SportsNamesRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ public class SportsNamesService {
     @Autowired
     private SportsNamesMapper sportsNamesMapper;
 
-    private static List<SportsNamesDTO> instanceSingleton = new ArrayList<>();
+    private static List<SportsNamesResponseDTO> instanceSingleton = new ArrayList<>();
 
-    public List<SportsNamesDTO> getSportsNames() {
+    public List<SportsNamesResponseDTO> getSportsNames() {
         if(instanceSingleton != null)
-            instanceSingleton = sportsNamesMapper.entityToDTO(sportsNamesRepository.findAll());
+            instanceSingleton = sportsNamesMapper.entitiesToDTOs(sportsNamesRepository.findAll());
         
         return instanceSingleton;
     }

@@ -4,16 +4,16 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import com.appuntate.back.mapper.CourtMapper;
-import com.appuntate.back.mapper.CourtSaveMapper;
+import com.appuntate.back.mapper.court.CourtMapper;
+import com.appuntate.back.mapper.court.CourtSaveMapper;
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
-import com.appuntate.back.model.dto.CourtDTO;
-import com.appuntate.back.model.dto.CourtSaveDTO;
-import com.appuntate.back.model.dto.CourtFilterDTO;
-import com.appuntate.back.model.dto.CourtInputDTO;
+import com.appuntate.back.model.dto.court.CourtDTO;
+import com.appuntate.back.model.dto.court.CourtFilterDTO;
+import com.appuntate.back.model.dto.court.CourtInputDTO;
+import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.repository.CourtRepository;
 import com.appuntate.back.service.criteria.CourtCriteriaService;
 import com.appuntate.back.service.specification.CourtSpecificationService;
@@ -44,19 +44,19 @@ public class CourtService extends QueryService<Court> {
     @Autowired
     private CourtSpecificationService courtSpecificationService;
 
-    public Court getCourtByCodCourt(long codCourt) {
-        return courtRepository.getById(codCourt);
+    public Court getCourtByCodCourt(long courtId) {
+        return courtRepository.getById(courtId);
     }
 
     @Transactional
     public ConfirmationOutputMap saveCourt(CourtSaveDTO courtDTO) {
         Court court = courtSaveMapper.DtoToEntity(courtDTO);
-        ConfirmationOutputMap confirmationOutputMap = new ConfirmationOutputMap(false, "Error al crear la pista", 0);
+        ConfirmationOutputMap confirmationOutputMap = new ConfirmationOutputMap(false, "Error al crear la pistaset");
         
         if(!court.getTimeIntervals().isEmpty()) {
-            timeIntervalService.setCourtToTimeInterval(court);
+            // timeIntervalService.setCourtToTimeInterval(court);
             courtRepository.save(court);
-            confirmationOutputMap.setOk(true);
+            confirmationOutputMap.setSuccesfullyCompleted(true);
             confirmationOutputMap.setMessage("Pista creada correctamente");
         } else confirmationOutputMap.setMessage("Error en el horario de la pista");
 
@@ -71,15 +71,15 @@ public class CourtService extends QueryService<Court> {
         courts = deleteNotInterestedHours(courts, courtFilterDTO);
         courts = deleteReserveddHoursList(courts, courtFilterDTO);
 
-        return courtMapper.entityToDTO(courts);
+        return courtMapper.entitiesToDTOs(courts);
     }
 
     public CourtDTO getCourtByDate(CourtInputDTO courtInputDTO) {
-        Court court = courtRepository.getById(courtInputDTO.getCodCourt());
+        Court court = courtRepository.getById(courtInputDTO.getCourtId());
 
         court = deleteReservedHours(courtInputDTO.getDate(), court);
 
-        return courtMapper.eTd(court);
+        return courtMapper.entityToDTO(court);
     }
     
     private List<Court> deleteNotInterestedHours(List<Court> courts, CourtFilterDTO courtFilterDTO) {
@@ -103,7 +103,7 @@ public class CourtService extends QueryService<Court> {
     }
 
     private Court deleteReservedHours(String date, Court court) {
-        List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), date);
+        List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCourtId(), date);
         for (TimeInterval timeInterval : timeIntervals) {
             court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
         }

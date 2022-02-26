@@ -3,7 +3,7 @@ package com.appuntate.back.controller;
 import java.util.List;
 
 import com.appuntate.back.model.Center;
-import com.appuntate.back.model.dto.CenterFilterDTO;
+import com.appuntate.back.model.dto.center.CenterFilterDTO;
 import com.appuntate.back.service.CenterService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +21,19 @@ public class CenterController {
     @Autowired
     private CenterService centerService;
 
-    @PostMapping("/getCentersByFilters")
-    public List<Center> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) {
-        return this.centerService.getCentersByFilters(centerFilterDTO);
-    }
+    // @PostMapping("/getCentersByFilters")
+    // public List<Center> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) {
+    //     return this.centerService.getCentersByFilters(centerFilterDTO);
+    // }
 
-    @PostMapping("/getCenterByIdCourt")
-    public Center getCenterByIdCourt(@RequestBody long codCourt) {
-        return centerService.getCenterByCodCourt(codCourt);
-    }
+    // @PostMapping("/getCenterByIdCourt")
+    // public Center getCenterByIdCourt(@RequestBody long courtId) {
+    //     return centerService.getCenterByCodCourt(courtId);
+    // }
 
-    @GetMapping("admin/{centerId}")
-    public Center getCenterById(@PathVariable String centerId) {
-        return centerService.getCenterById(Integer.parseInt(centerId));
-    }
+    // @GetMapping("admin/{centerId}")
+    // public Center getCenterById(@PathVariable String centerId) {
+    //     return centerService.getCenterById(Integer.parseInt(centerId));
+    // }
 
 }

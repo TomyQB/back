@@ -2,7 +2,7 @@ package com.appuntate.back.service.criteria;
 
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.criteria.CourtCriteria;
-import com.appuntate.back.model.dto.CourtFilterDTO;
+import com.appuntate.back.model.dto.court.CourtFilterDTO;
 import com.appuntate.back.service.HourConverter;
 
 import org.springframework.stereotype.Service;

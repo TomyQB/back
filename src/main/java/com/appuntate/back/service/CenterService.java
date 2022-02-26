@@ -7,7 +7,7 @@ import com.appuntate.back.model.Court;
 import com.appuntate.back.model.Sport;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.criteria.CenterCriteria;
-import com.appuntate.back.model.dto.CenterFilterDTO;
+import com.appuntate.back.model.dto.center.CenterFilterDTO;
 import com.appuntate.back.repository.CenterRepository;
 import com.appuntate.back.service.criteria.CenterCriteriaService;
 import com.appuntate.back.service.specification.CenterSpecificationService;
@@ -35,8 +35,8 @@ public class CenterService {
         return centerRepository.getById(centerId);
     }
 
-    public Center getCenterByCodCourt(long codCourt) {
-        return centerRepository.findBySportsCourtsCodCourt(codCourt);
+    public Center getCenterByCodCourt(long courtId) {
+        return centerRepository.findBySportsCourtsCourtId(courtId);
     }
 
     public List<Center> getCentersByFilters(CenterFilterDTO centerFilterDTO) {
@@ -76,8 +76,7 @@ public class CenterService {
         
         for (Center center : centers) {
             for (Court court : center.getSports().get(0).getCourts()) {
-                List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCodCourt(), centerFilterDTO.getDate());
-                for (TimeInterval timeInterval : timeIntervals) {
+                for (TimeInterval timeInterval : court.getTimeIntervals()) {
                     court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
                 }
             }

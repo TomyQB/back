@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // @Query("select * FROM public.usuario where esAdmin = :isAdmin")
-    User findByEmailAndPasswordAndAdmin(String email, String password, String isAdmin);
+    User findByUserNameAndPasswordAndAdmin(String email, String password, String isAdmin);
  
     User findByEmail(String email);
 

@@ -9,8 +9,6 @@ import com.appuntate.back.model.Court_;
 import com.appuntate.back.model.Sport_;
 import com.appuntate.back.model.SportsNames_;
 import com.appuntate.back.model.TimeInterval_;
-import com.appuntate.back.model.TownHall_;
-import com.appuntate.back.model.Town_;
 import com.appuntate.back.model.criteria.CenterCriteria;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -26,11 +24,10 @@ public class CenterSpecificationService extends QueryService<Center> implements 
         
         Specification<Center> specification = (root, query, cb) -> { query.distinct(true); return null; };
 
-        if(criteria.getTown() != null)
-            specification = specification.and(buildSpecification(criteria.getTown(), root -> root
-                .join(Center_.townHall, JoinType.LEFT)
-                    .join(TownHall_.town, JoinType.LEFT)
-                        .get(Town_.name)));
+        // if(criteria.getTown() != null)
+        //     specification = specification.and(buildSpecification(criteria.getTown(), root -> root
+        //         .join(Center_.town, JoinType.LEFT)
+        //             .get(Town_.name)));
             
         if(criteria.getSport() != null)
             specification = specification.and(buildSpecification(criteria.getSport(), root -> root

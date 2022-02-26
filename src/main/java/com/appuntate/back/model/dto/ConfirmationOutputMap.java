@@ -5,15 +5,13 @@ import lombok.Data;
 @Data
 public class ConfirmationOutputMap {
 
-    private boolean isOk;
+    private boolean isSuccesfullyCompleted;
     private String message;
-    private long id;
 
 
-    public ConfirmationOutputMap(boolean isOk, String message, long id) {
-        this.isOk = isOk;
+    public ConfirmationOutputMap(boolean isSuccesfullyCompleted, String message) {
+        this.isSuccesfullyCompleted = isSuccesfullyCompleted;
         this.message = message;
-        this.id = id;
     }
     
 }
