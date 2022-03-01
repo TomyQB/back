@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
 import com.appuntate.back.mapper.court.CourtMapper;
 import com.appuntate.back.mapper.court.CourtSaveMapper;
 import com.appuntate.back.model.Court;
@@ -49,19 +50,14 @@ public class CourtService extends QueryService<Court> {
     }
 
     @Transactional
-    public ConfirmationOutputMap saveCourt(CourtSaveDTO courtDTO) {
+    public ConfirmationOutputMap saveCourt(CourtSaveDTO courtDTO) throws TimeIntervalCreateException {
         Court court = courtSaveMapper.DtoToEntity(courtDTO);
-        ConfirmationOutputMap confirmationOutputMap = new ConfirmationOutputMap(false, "Error al crear la pista");
         
         if(!court.getTimeIntervals().isEmpty()) {
-            // timeIntervalService.setCourtToTimeInterval(court);
+            timeIntervalService.setCourtToTimeInterval(court);
             courtRepository.save(court);
-            confirmationOutputMap.setSuccesfullyCompleted(true);
-            confirmationOutputMap.setMessage("Pista creada correctamente");
-        } else confirmationOutputMap.setMessage("Error en el horario de la pista");
-
-        return confirmationOutputMap;
-        
+            return new ConfirmationOutputMap(true, "Pista creada correctamente");
+        } else throw new TimeIntervalCreateException();
     }
 
     public List<CourtDTO> getCourtsByFilter(CourtFilterDTO courtFilterDTO) {

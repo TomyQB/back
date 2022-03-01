@@ -3,6 +3,7 @@ package com.appuntate.back.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.notFound.CenterWithAvailableCourtsNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CentersByFilterNotFoundException;
 import com.appuntate.back.mapper.center.CenterResponseMapper;
 import com.appuntate.back.mapper.timeInterval.TimeIntervalMapper;
@@ -51,7 +52,7 @@ public class CenterService {
         return centerRepository.findBySportsCourtsCourtId(courtId);
     }
 
-    public List<CenterResponseDTO> getCentersByFilters(CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException {
+    public List<CenterResponseDTO> getCentersByFilters(CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException, CenterWithAvailableCourtsNotFoundException {
         CenterCriteria centerCriteria = centerCriteriaService.createCriteria(centerFilterDTO);
         List<Center> centers = centerRepository.findAll(centerSpecificationService.createSpecification(centerCriteria));
         if(!centers.isEmpty()) return filterCenterQueryResult(centers, centerFilterDTO);
@@ -59,7 +60,7 @@ public class CenterService {
 
     }
 
-    private List<CenterResponseDTO> filterCenterQueryResult(List<Center> centers, CenterFilterDTO centerFilterDTO) {
+    private List<CenterResponseDTO> filterCenterQueryResult(List<Center> centers, CenterFilterDTO centerFilterDTO) throws CenterWithAvailableCourtsNotFoundException {
         List<CenterResponseDTO> centerResponseDTOs = new ArrayList<>();
 
         for(Center center : centers) {
@@ -70,7 +71,8 @@ public class CenterService {
                 centerResponseDTOs.add(centerDTO);
         }
 
-        return centerResponseDTOs;
+        if(!centerResponseDTOs.isEmpty()) return centerResponseDTOs;
+        throw new CenterWithAvailableCourtsNotFoundException();
     }
 
     private double calculateDistanceWithLongLat(Center center, CenterFilterDTO centerFilterDTO) {
@@ -91,6 +93,7 @@ public class CenterService {
     private List<TimeIntervalDTO> getAvialableCenterIntervals(Center center, CenterFilterDTO centerFilterDTO) {
         List<TimeIntervalDTO> timeIntervalDTOs = new ArrayList<>();
         timeIntervalDTOs = deleteNotInterestedHours(center, centerFilterDTO, timeIntervalDTOs);
+        // this.timeIntervalService.getDistinctTimeIntervalsByCenter(center.getCenterId());
         return timeIntervalDTOs;
     }
 
@@ -114,7 +117,7 @@ public class CenterService {
         }
 
         for (TimeInterval timeInterval : court.getTimeIntervals()) {
-            if (!timeIntervalDTOs.contains(timeInterval))
+            if (!timeIntervalDTOs.stream().anyMatch(t -> HourConverter.stringToHour(t.getStartHour()) == timeInterval.getStartHour()))
                 timeIntervalDTOs.add(timeIntervalMapper.entityToDTO(timeInterval));
         }
 

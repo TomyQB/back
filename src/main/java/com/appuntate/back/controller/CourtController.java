@@ -1,6 +1,7 @@
 package com.appuntate.back.controller;
 
 
+import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.service.CourtService;
@@ -20,7 +21,7 @@ public class CourtController {
     private CourtService courtService;
 
     @PutMapping("/saveCourt")
-    public ConfirmationOutputMap saveCourt(@RequestBody CourtSaveDTO courtDTO) {
+    public ConfirmationOutputMap saveCourt(@RequestBody CourtSaveDTO courtDTO) throws TimeIntervalCreateException {
         return courtService.saveCourt(courtDTO);
     }
 

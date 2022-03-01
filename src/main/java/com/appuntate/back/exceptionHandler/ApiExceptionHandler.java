@@ -4,9 +4,11 @@ import java.nio.file.AccessDeniedException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserAlreadyRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.CenterWithAvailableCourtsNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CentersByFilterNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
@@ -24,14 +26,14 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({UserIdNotFoundException.class, ReservationIdNotFoundException.class, UserLoginNotFoundException.class, ReservationUserNotFoundException.class,
-                        CentersByFilterNotFoundException.class})
+                        CentersByFilterNotFoundException.class, CenterWithAvailableCourtsNotFoundException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, request.getRequestURI());
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({UserUpdateException.class, UserRegisterException.class, UserAlreadyRegisterException.class})
+    @ExceptionHandler({UserUpdateException.class, UserRegisterException.class, UserAlreadyRegisterException.class, TimeIntervalCreateException.class})
     @ResponseBody
     public ErrorMessage badRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, "");

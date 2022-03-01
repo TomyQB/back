@@ -26,6 +26,15 @@ public class HourConverter {
         return s;
     }
 
+    public static String hourToDurationString(int hour) {
+        String s = hour + "";
+        String h = s.substring(0, 1);
+        String m = s.substring(1);
+        s = h + "h";
+        if(!m.equals("00")) s += " " + m + "m";
+        return s;
+    }
+
     public static int stringToHour(String hour) {
         hour = hour.replace(":", "");
         return Integer.parseInt(hour);

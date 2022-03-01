@@ -2,6 +2,7 @@ package com.appuntate.back.controller;
 
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.notFound.CenterWithAvailableCourtsNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CentersByFilterNotFoundException;
 import com.appuntate.back.model.dto.center.CenterFilterDTO;
 import com.appuntate.back.model.dto.center.CenterResponseDTO;
@@ -21,7 +22,7 @@ public class CenterController {
     private CenterService centerService;
 
     @PostMapping("/getCentersByFilters")
-    public List<CenterResponseDTO> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException {
+    public List<CenterResponseDTO> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException, CenterWithAvailableCourtsNotFoundException {
         return this.centerService.getCentersByFilters(centerFilterDTO);
     }
 

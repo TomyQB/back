@@ -42,7 +42,7 @@ public class ReservationUserMapper implements IMapper<Reservation, ReservationUs
             userReservationDTO.setCourtName(reservation.getCourt().getName());
             userReservationDTO.setCenterName(reservation.getCourt().getSport().getCenter().getName());
             userReservationDTO.setDate(reservation.getDate());
-            userReservationDTO.setDuration(HourConverter.hourToString(reservation.getCourt().getInterval()));
+            userReservationDTO.setDuration(HourConverter.hourToDurationString(reservation.getCourt().getInterval()));
             userReservationDTO.setPaid(reservation.isPaid());
             userReservationDTO.setTimeInterval(timeIntervalMapper.entityToDTO(reservation.getTimeInterval()));
 
