@@ -31,11 +31,11 @@ public class CourtSaveMapper implements IMapper<Court, CourtSaveDTO> {
     public Court DtoToEntity(CourtSaveDTO dto) {
         Court court = new Court();
 
-        if(dto.getId() != 0) court.setCourtId(dto.getId());
+        if(dto.getCourtId() != 0) court.setCourtId(dto.getCourtId());
         court.setPrice(dto.getPrice());
         court.setName(dto.getName());
-        court.setInterval(HourConverter.stringToHour(dto.getInterval()));
-        court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSportName(), dto.getCenterId()));
+        court.setInterval(HourConverter.stringToHour(dto.getDuration()));
+        court.setSport(sportService.getSportBySportNameAndCodCenter(dto.getSport(), dto.getCenterId()));
         court.setTimeIntervals(timeIntervalService.createTimeIntervalByHours(dto, court));
 
         return court;

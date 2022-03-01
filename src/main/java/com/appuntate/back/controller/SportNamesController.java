@@ -17,7 +17,7 @@ public class SportNamesController {
     @Autowired
     private SportsNamesService sportsNamesService;
 
-    @GetMapping("/getSportsNames")
+    @GetMapping("/getSportNames")
     public List<SportsNamesResponseDTO> getSportsNames() {
         return sportsNamesService.getSportsNames();
     }

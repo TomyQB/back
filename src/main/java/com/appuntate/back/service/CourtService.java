@@ -51,7 +51,7 @@ public class CourtService extends QueryService<Court> {
     @Transactional
     public ConfirmationOutputMap saveCourt(CourtSaveDTO courtDTO) {
         Court court = courtSaveMapper.DtoToEntity(courtDTO);
-        ConfirmationOutputMap confirmationOutputMap = new ConfirmationOutputMap(false, "Error al crear la pistaset");
+        ConfirmationOutputMap confirmationOutputMap = new ConfirmationOutputMap(false, "Error al crear la pista");
         
         if(!court.getTimeIntervals().isEmpty()) {
             // timeIntervalService.setCourtToTimeInterval(court);

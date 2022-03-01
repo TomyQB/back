@@ -27,6 +27,7 @@ public class CenterResponseMapper implements IMapper<Center, CenterResponseDTO>{
         centerResponseDTO.setName(entity.getName());
         centerResponseDTO.setMinimumPrice(entity.getMinimumPrice());
         centerResponseDTO.setLatitude(entity.getLatitude());
+        centerResponseDTO.setRating(entity.getRating());
         centerResponseDTO.setLongitude(entity.getLongitude());
 
         return centerResponseDTO;

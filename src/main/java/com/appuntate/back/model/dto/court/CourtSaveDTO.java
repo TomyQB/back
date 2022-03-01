@@ -8,13 +8,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class CourtSaveDTO {
 
-    private long id;
+    private long courtId;
     private long centerId;
     private double price;
-    private String sportName;
+    private String sport;
     private String name;
     private String startHour;
     private String endHour;
-    private String interval;
+    private String duration;
 
 }
