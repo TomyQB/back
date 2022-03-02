@@ -1,7 +1,6 @@
 package com.appuntate.back.model.criteria;
 
 import io.github.jhipster.service.filter.DoubleFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 import lombok.Data;
 
@@ -9,7 +8,6 @@ import lombok.Data;
 public class CenterCriteria {
     
     private StringFilter sport;
-    private IntegerFilter hour;
     private DoubleFilter latitude;
     private DoubleFilter longitude;
     private DoubleFilter rating;

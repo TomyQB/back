@@ -2,12 +2,10 @@ package com.appuntate.back.service.criteria;
 
 import com.appuntate.back.model.criteria.CenterCriteria;
 import com.appuntate.back.model.dto.center.CenterFilterDTO;
-import com.appuntate.back.service.HourConverter;
 
 import org.springframework.stereotype.Service;
 
 import io.github.jhipster.service.filter.DoubleFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 @Service
@@ -19,7 +17,6 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
 
         if(centerCriteria != null) {
             centerCriteria = addSportFilter(centerCriteria, filterDTO);
-            centerCriteria = addHourFilter(centerCriteria, filterDTO);
             centerCriteria = addRatingFilter(centerCriteria, filterDTO);
             centerCriteria = addLatitudeFilter(centerCriteria, filterDTO);
             centerCriteria = addLongitudeFilter(centerCriteria, filterDTO);
@@ -34,19 +31,6 @@ public class CenterCriteriaService implements CriteriaService<CenterCriteria, Ce
             StringFilter filter = new StringFilter();
             filter.setEquals(filterDTO.getSport());
             centerCriteria.setSport(filter);
-        }
-
-        return centerCriteria;
-    }
-    
-    private CenterCriteria addHourFilter(CenterCriteria centerCriteria, CenterFilterDTO filterDTO) {
-        
-        if(filterDTO.getHour() != null) {
-            int hour = HourConverter.stringToHour(filterDTO.getHour());
-            
-            IntegerFilter filter = new IntegerFilter();
-            filter.setGreaterThanOrEqual(hour);
-            centerCriteria.setHour(filter);
         }
 
         return centerCriteria;
