@@ -45,6 +45,9 @@ public class CourtService extends QueryService<Court> {
     @Autowired
     private CourtSpecificationService courtSpecificationService;
 
+    @Autowired
+    private CenterService centerService;
+
     public Court getCourtByCodCourt(long courtId) {
         return courtRepository.getById(courtId);
     }
@@ -56,6 +59,7 @@ public class CourtService extends QueryService<Court> {
         if(!court.getTimeIntervals().isEmpty()) {
             timeIntervalService.setCourtToTimeInterval(court);
             courtRepository.save(court);
+            centerService.updateCenterMinimumPrice(courtDTO.getCenterId(), courtDTO.getPrice());
             return new ConfirmationOutputMap(true, "Pista creada correctamente");
         } else throw new TimeIntervalCreateException();
     }

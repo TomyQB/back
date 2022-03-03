@@ -123,5 +123,16 @@ public class CenterService {
 
         return timeIntervalDTOs;
     }
+
+    public void updateCenterMinimumPrice(long centerId, double price) {
+        Center center = centerRepository.getById(centerId);
+        if(center.getMinimumPrice() == 0) updateMinimumPrice(center, price);
+        else if(center.getMinimumPrice() > price) updateMinimumPrice(center, price);
+    }
+
+    private void updateMinimumPrice(Center center, double price) {
+        center.setMinimumPrice(price);
+        centerRepository.save(center);
+    }
     
 }
