@@ -40,7 +40,7 @@ public class CenterController {
 
     @GetMapping("getCenter/{centerId}/{date}")
     public CenterCompleteResponseDTO getCenterById(@PathVariable String centerId, @PathVariable String date) {
-        return centerService.getCenterById(Integer.parseInt(centerId), date);
+        return centerService.getCenterAbailableCourtsById(Integer.parseInt(centerId), date);
     }
 
 }

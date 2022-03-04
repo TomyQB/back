@@ -29,8 +29,8 @@ public class TimeIntervalService {
         return t;
     }
     
-    public List<Integer> getInterestedTimeIntervals (long centerId, String date, int startHour) {
-        return timeIntervalRepository.findAllByCourtCourtIdAndReservationDateAndStartHour(centerId, date, startHour);
+    public List<String> getInterestedTimeIntervals (long centerId, String date, int startHour) {
+        return HourConverter.listHourToListString(timeIntervalRepository.findAllByCourtCourtIdAndReservationDateAndStartHour(centerId, date, startHour));
     }
 
     public List<TimeInterval> getNotReservedTimeIntervals (long courtId, String date) {

@@ -32,6 +32,7 @@ public class Event {
     private int endHour;
     private String photo;
     private Double price;
+    private int competitorAmount;
 
     @ManyToOne
     @JoinColumn(name = "centerId")

@@ -1,5 +1,8 @@
 package com.appuntate.back.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +27,17 @@ public class HourConverter {
         String m = s.substring(2);
         s = h + ":" + m;
         return s;
+    }
+
+    public static List<String> listHourToListString(List<Integer> hours) {
+        List<String> strings = new ArrayList<>();
+
+        for (Integer hour : hours) {
+            String string = hourToString(hour);
+            strings.add(string);
+        }
+
+        return strings;
     }
 
     public static String hourToDurationString(int hour) {

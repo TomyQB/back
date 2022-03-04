@@ -16,8 +16,6 @@ import com.appuntate.back.model.dto.court.CourtFilterDTO;
 import com.appuntate.back.model.dto.court.CourtInputDTO;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.repository.CourtRepository;
-import com.appuntate.back.service.criteria.CourtCriteriaService;
-import com.appuntate.back.service.specification.CourtSpecificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,12 +38,6 @@ public class CourtService extends QueryService<Court> {
     private CourtMapper courtMapper;
 
     @Autowired
-    private CourtCriteriaService courtCriteriaService;
-
-    @Autowired
-    private CourtSpecificationService courtSpecificationService;
-
-    @Autowired
     private CenterService centerService;
 
     public Court getCourtByCodCourt(long courtId) {
@@ -62,53 +54,6 @@ public class CourtService extends QueryService<Court> {
             centerService.updateCenterMinimumPrice(courtDTO.getCenterId(), courtDTO.getPrice());
             return new ConfirmationOutputMap(true, "Pista creada correctamente");
         } else throw new TimeIntervalCreateException();
-    }
-
-    public List<CourtDTO> getCourtsByFilter(CourtFilterDTO courtFilterDTO) {
-        CourtCriteria courtCriteria = courtCriteriaService.createCriteria(courtFilterDTO);
-        List<Court> courts = courtRepository.findAll(courtSpecificationService.createSpecification(courtCriteria));
-
-        courts = deleteNotInterestedHours(courts, courtFilterDTO);
-        courts = deleteReserveddHoursList(courts, courtFilterDTO);
-
-        return courtMapper.entitiesToDTOs(courts);
-    }
-
-    public CourtDTO getCourtByDate(CourtInputDTO courtInputDTO) {
-        Court court = courtRepository.getById(courtInputDTO.getCourtId());
-
-        court = deleteReservedHours(courtInputDTO.getDate(), court);
-
-        return courtMapper.entityToDTO(court);
-    }
-    
-    private List<Court> deleteNotInterestedHours(List<Court> courts, CourtFilterDTO courtFilterDTO) {
-        
-        for (Court court : courts) {
-            if(courtFilterDTO.getHour() != null)
-                court.getTimeIntervals().removeIf(t -> t.getStartHour() < HourConverter.stringToHour(courtFilterDTO.getHour()));                 
-        }
-
-        return courts;
-    }
-
-    private List<Court> deleteReserveddHoursList(List<Court> courts, CourtFilterDTO courtFilterDTO) {
-        
-        for (Court court : courts) {
-            deleteReservedHours(courtFilterDTO.getDate(), court);
-        }
-
-        return courts;
-
-    }
-
-    private Court deleteReservedHours(String date, Court court) {
-        List<TimeInterval> timeIntervals = timeIntervalService.getTimeIntervalsReservedByCourtId(court.getCourtId(), date);
-        for (TimeInterval timeInterval : timeIntervals) {
-            court.getTimeIntervals().removeIf(t -> t.getStartHour() == timeInterval.getStartHour());
-        }
-
-        return court;
     }
 
 }

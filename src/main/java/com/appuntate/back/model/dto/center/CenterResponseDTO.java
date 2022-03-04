@@ -2,7 +2,6 @@ package com.appuntate.back.model.dto.center;
 
 import java.util.List;
 
-import com.appuntate.back.model.dto.timeInterval.TimeIntervalDTO;
 
 import lombok.Data;
 
@@ -17,6 +16,6 @@ public class CenterResponseDTO {
     private double latitude;
     private double longitude;
     private double rating;
-    private List<Integer> availableIntervals;
+    private List<String> availableIntervals;
     
 }

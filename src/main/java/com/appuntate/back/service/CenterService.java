@@ -45,8 +45,11 @@ public class CenterService {
     @Autowired
     private CenterCompleteResponseMapper centerCompleteResponseMapper;
 
+    public Center getCenterById(long centerId) {
+        return centerRepository.getById(centerId);
+    }
 
-    public CenterCompleteResponseDTO getCenterById(long centerId, String date) {
+    public CenterCompleteResponseDTO getCenterAbailableCourtsById(long centerId, String date) {
         return centerCompleteResponseMapper.entityToDTONotReserved(centerRepository.getById(centerId), date);
     }
 
