@@ -9,7 +9,7 @@ import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 @Service
-public class CenterCriteriaService implements CriteriaService<CenterCriteria, CenterFilterDTO> {
+public class CenterCriteriaService implements ICriteriaService<CenterCriteria, CenterFilterDTO> {
 
     @Override
     public CenterCriteria createCriteria(CenterFilterDTO filterDTO) {

@@ -15,8 +15,10 @@ public class SportsNamesMapper implements IMapper<SportsNames, SportsNamesRespon
 
     @Override
     public SportsNamesResponseDTO entityToDTO(SportsNames entity) {
-        // TODO Auto-generated method stub
-        return null;
+
+        SportsNamesResponseDTO sportsNamesDTO = new SportsNamesResponseDTO(entity.getName(), entity.getPhoto());
+
+        return sportsNamesDTO;
     }
 
     @Override

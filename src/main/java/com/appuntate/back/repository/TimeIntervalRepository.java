@@ -3,11 +3,9 @@ package com.appuntate.back.repository;
 import java.util.List;
 
 import com.appuntate.back.model.TimeInterval;
-import com.appuntate.back.model.dto.timeInterval.TimeIntervalCenterDTO;
-import com.appuntate.back.model.dto.timeInterval.TimeIntervalDTO;
 
-import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface TimeIntervalRepository extends JpaRepository<TimeInterval, Long> {
@@ -16,13 +14,19 @@ public interface TimeIntervalRepository extends JpaRepository<TimeInterval, Long
     
     List<TimeInterval> findByReservationCourtCourtIdAndReservationDate(long courtId, String date);
 
-    // @Query("select * from TimeInterval t where t.court =" +
-    //         " (select c.courtId from Court c where c.sport =" +
-    //         " (select s.sportId from Sport c where s.center =" +
-    //         " (select ce.centerId from Center ce where ce.centerId = :centerId)))" +
-    //         " group by t.startHour")
+    List<TimeInterval> findReservedTimeIntervalByCourtCourtIdAndReservationDate(@Param("courtId") long courtId, @Param("date") String date);
 
-//     @Query("select new com.appuntate.back.model.TimeIntervalCenterDTO(t.startHour) from TimeInterval t, Court c, Sport c, Center ce" +
-//             " where t.court = c.courtId and c.sport = s.sportId and s.center = :centerId group by t.startHour")
-//     List<TimeIntervalCenterDTO> findDistinctByCourtSportCenterCenterId(@Param("centerId") long centerId);
+    List<TimeInterval> findNotReservedByCourtCourtIdAndTimeIntervalIdNotIn(long courtId, List<Long> timeIntervals);
+
+    List<TimeInterval> findNotReservedByCourtCourtId(long courtId);
+    
+    @Query("select distinct t.startHour from TimeInterval t, Court c, Sport s where t.court = c.courtId and c.sport = s.sportId and s.center.centerId = :centerId and" +
+            " t.startHour > :startHour and t.timeIntervalId not in (select r.timeInterval from Reservation r, Court c, Sport s" +
+            " where r.date = :date and r.court = c.courtId and c.sport = s.sportId and s.center.centerId = :centerId)")
+    List<Integer> findAllByCourtCourtIdAndReservationDateAndStartHour(@Param("centerId") long centerId, @Param("date") String date, @Param("startHour") int startHour);
+
+    @Query("select t from TimeInterval t where t.court.courtId = :courtId and t.timeIntervalId not in (select r.timeInterval from Reservation r where r.court = :courtId and r.date = :date)")
+    List<TimeInterval> findAllByCourtCourtIdAndReservationDate(@Param("courtId") long courtId, @Param("date") String date);
+
+
 }

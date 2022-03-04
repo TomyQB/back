@@ -3,12 +3,11 @@ package com.appuntate.back.service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.appuntate.back.mapper.timeInterval.TimeIntervalMapper;
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
-import com.appuntate.back.model.dto.timeInterval.TimeIntervalCenterDTO;
-import com.appuntate.back.model.dto.timeInterval.TimeIntervalDTO;
 import com.appuntate.back.repository.TimeIntervalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +19,23 @@ public class TimeIntervalService {
     @Autowired
     private TimeIntervalRepository timeIntervalRepository;
 
-    @Autowired
-    private TimeIntervalMapper timeIntervalMapper;
 
     public TimeInterval getTimeIntervalByCodTimeInterval(long timeIntervalId) {
         return timeIntervalRepository.getById(timeIntervalId);
     }
 
     public List<TimeInterval> getTimeIntervalsReservedByCourtId(long courtId, String date) {
-        return timeIntervalRepository.findByReservationCourtCourtIdAndReservationDate(courtId, date);
+        List<TimeInterval> t = timeIntervalRepository.findByReservationCourtCourtIdAndReservationDate(courtId, date);
+        return t;
+    }
+    
+    public List<Integer> getInterestedTimeIntervals (long centerId, String date, int startHour) {
+        return timeIntervalRepository.findAllByCourtCourtIdAndReservationDateAndStartHour(centerId, date, startHour);
     }
 
-    // public List<TimeIntervalCenterDTO> getDistinctTimeIntervalsByCenter(long centerId) {
-    //     return timeIntervalRepository.findDistinctByCourtSportCenterCenterId(centerId);
-    // }
+    public List<TimeInterval> getNotReservedTimeIntervals (long courtId, String date) {
+        return timeIntervalRepository.findAllByCourtCourtIdAndReservationDate(courtId, date);
+    }
 
     public void setCourtToTimeInterval(Court court) {
         for (TimeInterval timeInterval : court.getTimeIntervals()) {
@@ -50,10 +52,9 @@ public class TimeIntervalService {
 
         while(startHourInt < endHourInt) {
             int auxEnHour = calculateEndHour(startHourInt, intervalInt);
-            // TimeInterval timeInterval = timeIntervalRepository.findByStartHourAndEndHour(startHourInt, auxEnHour);
             TimeInterval timeInterval = new TimeInterval(startHourInt, auxEnHour, court);
 
-            if(/*timeInterval != null &&*/ timeInterval.getEndHour() < endHourInt)
+            if(timeInterval.getEndHour() < endHourInt)
                 timeIntervals.add(timeInterval);
 
             startHourInt = auxEnHour;

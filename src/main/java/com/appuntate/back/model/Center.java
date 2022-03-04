@@ -36,5 +36,8 @@ public class Center {
 
     @OneToMany(mappedBy = "center")
     private List<Festive> festives;
+
+    @OneToMany(mappedBy = "center")
+    private List<Event> events;
     
 }

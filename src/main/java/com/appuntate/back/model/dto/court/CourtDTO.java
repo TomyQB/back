@@ -2,7 +2,6 @@ package com.appuntate.back.model.dto.court;
 
 import java.util.List;
 
-import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.timeInterval.TimeIntervalDTO;
 
 import lombok.Data;
@@ -14,7 +13,7 @@ public class CourtDTO {
     private String name;
     private String interval;
     private Double valoration;
-    private String centerName;
+    private Double price;
     private List<TimeIntervalDTO> timeIntervals;
     
 }

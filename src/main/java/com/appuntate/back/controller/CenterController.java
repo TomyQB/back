@@ -8,6 +8,7 @@ import com.appuntate.back.model.dto.center.CenterCompleteResponseDTO;
 import com.appuntate.back.model.dto.center.CenterFilterDTO;
 import com.appuntate.back.model.dto.center.CenterResponseDTO;
 import com.appuntate.back.service.CenterService;
+import com.appuntate.back.service.TimeIntervalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,9 @@ public class CenterController {
     @Autowired
     private CenterService centerService;
 
+    @Autowired
+    private TimeIntervalService timeIntervalService;
+
     @PostMapping("/getCentersByFilters")
     public List<CenterResponseDTO> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException, CenterWithAvailableCourtsNotFoundException {
         return this.centerService.getCentersByFilters(centerFilterDTO);
@@ -34,9 +38,9 @@ public class CenterController {
     //     return centerService.getCenterByCodCourt(courtId);
     // }
 
-    // @GetMapping("getCenter/{centerId}")
-    // public CenterCompleteResponseDTO getCenterById(@PathVariable String centerId) {
-    //     return centerService.getCenterById(Integer.parseInt(centerId));
-    // }
+    @GetMapping("getCenter/{centerId}/{date}")
+    public CenterCompleteResponseDTO getCenterById(@PathVariable String centerId, @PathVariable String date) {
+        return centerService.getCenterById(Integer.parseInt(centerId), date);
+    }
 
 }

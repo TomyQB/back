@@ -10,6 +10,7 @@ import com.appuntate.back.model.dto.court.CourtDTO;
 import com.appuntate.back.repository.CenterRepository;
 import com.appuntate.back.service.CenterService;
 import com.appuntate.back.service.HourConverter;
+import com.appuntate.back.service.TimeIntervalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class CourtMapper implements IMapper<Court, CourtDTO> {
     private TimeIntervalMapper timeIntervalMapper;
 
     @Autowired
-    private CenterService centerService;
+    private TimeIntervalService timeIntervalService;
 
     @Override
     public CourtDTO entityToDTO(Court entity) {
@@ -53,7 +54,6 @@ public class CourtMapper implements IMapper<Court, CourtDTO> {
             courtDTO.setName(court.getName());
             courtDTO.setValoration(court.getValoration());
             courtDTO.setTimeIntervals(timeIntervalMapper.entitiesToDTOs(court.getTimeIntervals()));
-            courtDTO.setCenterName(centerService.getCenterByCodCourt(court.getCourtId()).getName());
             
             courtDTOs.add(courtDTO);
         }
@@ -65,6 +65,25 @@ public class CourtMapper implements IMapper<Court, CourtDTO> {
     public List<Court> DtosToEntities(List<CourtDTO> dto) {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    public List<CourtDTO> entitiesToDTOsNotReserved(List<Court> entity, String date) {
+        List<CourtDTO> courtDTOs = new ArrayList<>();
+
+        for (Court court : entity) {
+            CourtDTO courtDTO = new CourtDTO();
+    
+            courtDTO.setCourtId(court.getCourtId());
+            courtDTO.setInterval(HourConverter.hourToString(court.getInterval()));
+            courtDTO.setName(court.getName());
+            courtDTO.setValoration(court.getValoration());
+            courtDTO.setPrice(court.getPrice());
+            courtDTO.setTimeIntervals(timeIntervalMapper.entitiesToDTOs(timeIntervalService.getNotReservedTimeIntervals(court.getCourtId(), date)));
+            
+            courtDTOs.add(courtDTO);
+        }
+
+        return courtDTOs;
     }
     
 }

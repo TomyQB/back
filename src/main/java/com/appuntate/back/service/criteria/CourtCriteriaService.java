@@ -12,7 +12,7 @@ import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 @Service
-public class CourtCriteriaService implements CriteriaService<CourtCriteria, CourtFilterDTO> {
+public class CourtCriteriaService implements ICriteriaService<CourtCriteria, CourtFilterDTO> {
 
     @Override
     public CourtCriteria createCriteria(CourtFilterDTO filterDTO) {

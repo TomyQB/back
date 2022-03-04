@@ -3,8 +3,8 @@ package com.appuntate.back.model.dto.center;
 
 import java.util.List;
 
-import com.appuntate.back.model.Festive;
-import com.appuntate.back.model.Sport;
+import com.appuntate.back.model.dto.festive.FestiveDTO;
+import com.appuntate.back.model.dto.sport.SportDTO;
 
 import lombok.Data;
 
@@ -20,7 +20,7 @@ public class CenterCompleteResponseDTO {
     private int startHour;
     private int endHour;
     private String image;
-    // private List<SportDTO> sports;
-    // private List<FestiveDTO> festives;
+    private List<SportDTO> sports;
+    private List<FestiveDTO> festives;
     
 }

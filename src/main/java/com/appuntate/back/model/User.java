@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,5 +38,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Reservation> reservations;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Event> events;
     
 }

@@ -17,6 +17,6 @@ public class CenterResponseDTO {
     private double latitude;
     private double longitude;
     private double rating;
-    private List<TimeIntervalDTO> availableIntervals;
+    private List<Integer> availableIntervals;
     
 }
