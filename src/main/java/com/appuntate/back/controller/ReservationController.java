@@ -2,6 +2,7 @@ package com.appuntate.back.controller;
 
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.CourtAlreadyReservedForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
@@ -32,7 +33,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PutMapping("/makeReservation")
-    public ConfirmationOutputMap makeReservation(@RequestBody ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException {
+    public ConfirmationOutputMap makeReservation(@RequestBody ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException, CourtAlreadyReservedForbiddenException {
         return reservationService.saveReservation(reservationDTO);
     }
 

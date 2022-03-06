@@ -2,6 +2,7 @@ package com.appuntate.back.service;
 
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.CourtAlreadyReservedForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
@@ -35,7 +36,10 @@ public class ReservationService {
     private ReservationCenterMapper centerReservationMapper;
 
 
-    public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException {
+    public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException, CourtAlreadyReservedForbiddenException {
+        if(reservationRepository.findByDateAndTimeIntervalStartHour(reservationDTO.getDate(), HourConverter.stringToHour(reservationDTO.getHour())) != null)
+            throw new CourtAlreadyReservedForbiddenException(reservationDTO.getCourtId());
+
         Reservation reservation = reservationMapper.DtoToEntity(reservationDTO);
         if(reservation.getTimeInterval() == null) throw new NotAvailableReservationForbiddenException(reservationDTO.getDate(), reservationDTO.getHour());
         reservationRepository.save(reservation);

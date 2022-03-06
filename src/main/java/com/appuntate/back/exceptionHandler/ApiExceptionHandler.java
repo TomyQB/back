@@ -8,6 +8,7 @@ import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCre
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.UserAlreadyRegisterException;
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.CourtAlreadyReservedForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.UpdatePasswordForbiddenException;
@@ -47,7 +48,7 @@ public class ApiExceptionHandler {
     
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({AccessDeniedException.class, UserAlreadyRegisterException.class, SingUpEventForbiddenException.class, UpdatePasswordForbiddenException.class,
-                        NotAvailableReservationForbiddenException.class})
+                        NotAvailableReservationForbiddenException.class, CourtAlreadyReservedForbiddenException.class})
     @ResponseBody
     public ErrorMessage forbiddenRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, "");

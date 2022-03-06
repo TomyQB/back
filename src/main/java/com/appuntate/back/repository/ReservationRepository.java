@@ -15,4 +15,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByCourtSportCenterCenterId(long centerId);
 
     Reservation deleteById(long reservationId);
+
+    Reservation findByDateAndTimeIntervalStartHour(String date, int hour);
 }
