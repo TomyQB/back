@@ -35,15 +35,25 @@ public class ReservationService {
     @Autowired
     private ReservationCenterMapper centerReservationMapper;
 
+    @Autowired
+    private TimeIntervalService timeIntervalService;
+
 
     public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException, CourtAlreadyReservedForbiddenException {
-        if(reservationRepository.findByDateAndTimeIntervalStartHour(reservationDTO.getDate(), HourConverter.stringToHour(reservationDTO.getHour())) != null)
+        if(timeIntervalService.getAvailableTimeIntervalByCenterId(reservationDTO.getCenterId(), reservationDTO.getHour(), reservationDTO.getDate()).isEmpty() ||
+            checkReservationAlreadyExist(reservationDTO))
             throw new CourtAlreadyReservedForbiddenException(reservationDTO.getCourtId());
 
         Reservation reservation = reservationMapper.DtoToEntity(reservationDTO);
         if(reservation.getTimeInterval() == null) throw new NotAvailableReservationForbiddenException(reservationDTO.getDate(), reservationDTO.getHour());
         reservationRepository.save(reservation);
         return new ConfirmationOutputMap(true, "Pista reservada correctamente");
+    }
+
+    private boolean checkReservationAlreadyExist(ReservationDTO reservationDTO) {
+        return reservationRepository.findByCourtCourtIdAndDateAndTimeIntervalStartHour
+                                    (reservationDTO.getCourtId(), reservationDTO.getDate(), HourConverter.stringToHour(reservationDTO.getHour())) != null
+                                    ? true : false;
     }
 
     public ConfirmationOutputMap deleteReservation(long reservationId) throws ReservationIdNotFoundException {

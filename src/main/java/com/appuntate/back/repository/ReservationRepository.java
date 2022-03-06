@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     
-    Reservation findByCourtCourtIdAndDateAndTimeIntervalTimeIntervalId(long courtId, String date, long timeIntervalId);
+    Reservation findByCourtCourtIdAndDateAndTimeIntervalStartHour(long courtId, String date, int startHour);
 
     List<Reservation> findByUserUserId(long userId);
 
@@ -17,4 +17,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Reservation deleteById(long reservationId);
 
     Reservation findByDateAndTimeIntervalStartHour(String date, int hour);
+
 }

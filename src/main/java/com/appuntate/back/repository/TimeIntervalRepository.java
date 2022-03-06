@@ -24,7 +24,12 @@ public interface TimeIntervalRepository extends JpaRepository<TimeInterval, Long
     @Query("select distinct t from TimeInterval t, Court c, Sport s where t.court = c.courtId and c.sport = s.sportId and s.center.centerId = :centerId and" +
     " t.startHour = :startHour and t.timeIntervalId not in (select r.timeInterval from Reservation r, Court c, Sport s" +
     " where r.date = :date and r.court = c.courtId and c.sport = s.sportId and s.center.centerId = :centerId)")
-    List<TimeInterval> findFirstByCourtCourtIdAndReservationDateAndStartHour(@Param("centerId") long centerId, @Param("date") String date, @Param("startHour") int startHour);
+    List<TimeInterval> findByCourtCourtIdAndReservationDateAndStartHour(@Param("centerId") long centerId, @Param("date") String date, @Param("startHour") int startHour);
+
+    // @Query("select t from TimeInterval t, Court c where t.court.courtId = :courtId and" +
+    // " t.startHour = :startHour and t.timeIntervalId not in (select r.timeInterval from Reservation r, Court c" +
+    // " where r.date = :date and r.court.courtId = :courtId)")
+    // TimeInterval findByTimeIntervalIdAndReservationDateAndStartHour(@Param("courtId") long courtId, @Param("date") String date, @Param("startHour") int startHour);
 
 
 }

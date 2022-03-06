@@ -57,7 +57,7 @@ public class CourtService extends QueryService<Court> {
     }
 
     public List<CourtResponseDTO> getCourtByDate(CourtRequestDTO courtInputDTO) {
-        return courtResponseMapper.entitiesToDTOs(timeIntervalService.getTimeIntervalByCenterIdAndAvailableHour(courtInputDTO.getCenterId(), courtInputDTO.getHour(), courtInputDTO.getDate()));
+        return courtResponseMapper.entitiesToDTOs(timeIntervalService.getAvailableTimeIntervalByCenterId(courtInputDTO.getCenterId(), courtInputDTO.getHour(), courtInputDTO.getDate()));
     }
 
 }

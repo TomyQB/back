@@ -32,9 +32,13 @@ public class TimeIntervalService {
         return timeIntervalRepository.findAllByCourtCourtIdAndReservationDate(courtId, date);
     }
     
-    public List<TimeInterval> getTimeIntervalByCenterIdAndAvailableHour(long centerId, String hour, String date) {
-        return timeIntervalRepository.findFirstByCourtCourtIdAndReservationDateAndStartHour(centerId, date, HourConverter.stringToHour(hour));
+    public List<TimeInterval> getAvailableTimeIntervalByCenterId(long centerId, String hour, String date) {
+        return timeIntervalRepository.findByCourtCourtIdAndReservationDateAndStartHour(centerId, date, HourConverter.stringToHour(hour));
     }
+     
+    // public TimeInterval getAvailableTimeIntervalByCourtId(long courtId, String hour, String date) {
+    //     return timeIntervalRepository.findByTimeIntervalIdAndReservationDateAndStartHour(courtId, date, HourConverter.stringToHour(hour));
+    // }
 
     public TimeInterval getTimeIntervalByCourtIdAndHour(long courtId, String hour) {
         return timeIntervalRepository.findByCourtCourtIdAndStartHour(courtId, HourConverter.stringToHour(hour));
