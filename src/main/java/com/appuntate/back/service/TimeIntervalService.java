@@ -3,7 +3,7 @@ package com.appuntate.back.service;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.mapper.timeInterval.TimeIntervalMapper;
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
@@ -20,13 +20,8 @@ public class TimeIntervalService {
     private TimeIntervalRepository timeIntervalRepository;
 
 
-    public TimeInterval getTimeIntervalByCodTimeInterval(long timeIntervalId) {
+    public TimeInterval getTimeIntervalByTimeIntervalId(long timeIntervalId) {
         return timeIntervalRepository.getById(timeIntervalId);
-    }
-
-    public List<TimeInterval> getTimeIntervalsReservedByCourtId(long courtId, String date) {
-        List<TimeInterval> t = timeIntervalRepository.findByReservationCourtCourtIdAndReservationDate(courtId, date);
-        return t;
     }
     
     public List<String> getInterestedTimeIntervals (long centerId, String date, int startHour) {
@@ -35,6 +30,14 @@ public class TimeIntervalService {
 
     public List<TimeInterval> getNotReservedTimeIntervals (long courtId, String date) {
         return timeIntervalRepository.findAllByCourtCourtIdAndReservationDate(courtId, date);
+    }
+    
+    public TimeInterval getTimeIntervalByCenterIdAndAvailableHour(long centerId, String hour, String date) throws NotAvailableReservationForbiddenException {
+        try {
+            return timeIntervalRepository.findFirstByCourtCourtIdAndReservationDateAndStartHour(centerId, date, HourConverter.stringToHour(hour)).get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new NotAvailableReservationForbiddenException(date, hour);
+        }
     }
 
     public void setCourtToTimeInterval(Court court) {

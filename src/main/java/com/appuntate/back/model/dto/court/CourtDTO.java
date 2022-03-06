@@ -12,7 +12,6 @@ public class CourtDTO {
     private long courtId;
     private String name;
     private String interval;
-    private Double valoration;
     private Double price;
     private List<TimeIntervalDTO> timeIntervals;
     

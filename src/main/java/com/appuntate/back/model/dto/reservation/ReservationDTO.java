@@ -5,22 +5,10 @@ import lombok.Data;
 @Data
 public class ReservationDTO {
 
-    private String reservationDate;
-    private String playDate;
+    private long centerId;
+    private long userId;
+    private String date;
+    private String hour;
     private boolean isPaid;
-    private long courtId;
-    private long timeIntervalId;
-    private long dniUser;
 
-    
-    public ReservationDTO(String reservationDate, String playDate, boolean isPaid, long courtId, long timeIntervalId,
-            long dniUser) {
-        this.reservationDate = reservationDate;
-        this.playDate = playDate;
-        this.isPaid = isPaid;
-        this.courtId = courtId;
-        this.timeIntervalId = timeIntervalId;
-        this.dniUser = dniUser;
-    }
-    
 }

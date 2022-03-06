@@ -17,10 +17,10 @@ public class CenterCompleteResponseDTO {
     private Double latitude;
     private Double longitude;
     private Double rating;
-    private int startHour;
-    private int endHour;
+    private String openingHour;
+    private String closingHour;
     private String image;
-    private List<SportDTO> sports;
+    private List<SportDTO> centerSports;
     private List<FestiveDTO> festives;
     
 }

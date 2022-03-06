@@ -9,10 +9,8 @@ import com.appuntate.back.mapper.court.CourtMapper;
 import com.appuntate.back.mapper.court.CourtSaveMapper;
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
-import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.court.CourtDTO;
-import com.appuntate.back.model.dto.court.CourtFilterDTO;
 import com.appuntate.back.model.dto.court.CourtInputDTO;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.repository.CourtRepository;
@@ -35,9 +33,6 @@ public class CourtService extends QueryService<Court> {
     private CourtSaveMapper courtSaveMapper;
 
     @Autowired
-    private CourtMapper courtMapper;
-
-    @Autowired
     private CenterService centerService;
 
     public Court getCourtByCodCourt(long courtId) {
@@ -55,5 +50,6 @@ public class CourtService extends QueryService<Court> {
             return new ConfirmationOutputMap(true, "Pista creada correctamente");
         } else throw new TimeIntervalCreateException();
     }
+
 
 }

@@ -6,6 +6,7 @@ import com.appuntate.back.mapper.IMapper;
 import com.appuntate.back.mapper.sport.SportMapper;
 import com.appuntate.back.model.Center;
 import com.appuntate.back.model.dto.center.CenterCompleteResponseDTO;
+import com.appuntate.back.service.HourConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,10 @@ public class CenterCompleteResponseMapper implements IMapper<Center, CenterCompl
         centerCompleteResponseDTO.setLatitude(entity.getLatitude());
         centerCompleteResponseDTO.setLongitude(entity.getLongitude());
         centerCompleteResponseDTO.setRating(entity.getRating());
-        centerCompleteResponseDTO.setStartHour(entity.getStartHour());
-        centerCompleteResponseDTO.setEndHour(entity.getEndHour());
+        centerCompleteResponseDTO.setOpeningHour(HourConverter.hourToString(entity.getStartHour()));
+        centerCompleteResponseDTO.setClosingHour(HourConverter.hourToString(entity.getEndHour()));
         centerCompleteResponseDTO.setImage(entity.getImage());
-        centerCompleteResponseDTO.setSports(sportMapper.entitiesToDTOs(entity.getSports()));
+        centerCompleteResponseDTO.setCenterSports(sportMapper.entitiesToDTOs(entity.getSports()));
 
         return centerCompleteResponseDTO;
     }
@@ -61,10 +62,10 @@ public class CenterCompleteResponseMapper implements IMapper<Center, CenterCompl
         centerCompleteResponseDTO.setLatitude(entity.getLatitude());
         centerCompleteResponseDTO.setLongitude(entity.getLongitude());
         centerCompleteResponseDTO.setRating(entity.getRating());
-        centerCompleteResponseDTO.setStartHour(entity.getStartHour());
-        centerCompleteResponseDTO.setEndHour(entity.getEndHour());
+        centerCompleteResponseDTO.setOpeningHour(HourConverter.hourToString(entity.getStartHour()));
+        centerCompleteResponseDTO.setClosingHour(HourConverter.hourToString(entity.getEndHour()));
         centerCompleteResponseDTO.setImage(entity.getImage());
-        centerCompleteResponseDTO.setSports(sportMapper.entitiesToDTOsNotReserved(entity.getSports(), date));
+        centerCompleteResponseDTO.setCenterSports(sportMapper.entitiesToDTOsNotReserved(entity.getSports(), date));
 
         return centerCompleteResponseDTO;
     }

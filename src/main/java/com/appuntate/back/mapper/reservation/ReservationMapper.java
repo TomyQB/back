@@ -2,8 +2,10 @@ package com.appuntate.back.mapper.reservation;
 
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.mapper.IMapper;
 import com.appuntate.back.model.Reservation;
+import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.reservation.ReservationDTO;
 import com.appuntate.back.service.CourtService;
 import com.appuntate.back.service.TimeIntervalService;
@@ -14,9 +16,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationMapper implements IMapper<Reservation, ReservationDTO> {
-
-    @Autowired
-    private CourtService courtService;
 
     @Autowired
     private TimeIntervalService timeIntervalService;
@@ -31,15 +30,16 @@ public class ReservationMapper implements IMapper<Reservation, ReservationDTO> {
     }
 
     @Override
-    public Reservation DtoToEntity(ReservationDTO dto) {
+    public Reservation DtoToEntity(ReservationDTO dto) throws NotAvailableReservationForbiddenException {
         Reservation reservation = new Reservation();
 
-        reservation.setDate(dto.getPlayDate());
-        reservation.setReservationDate(dto.getReservationDate());
+        TimeInterval timeInterval = timeIntervalService.getTimeIntervalByCenterIdAndAvailableHour(dto.getCenterId(), dto.getHour(), dto.getDate());
+
+        reservation.setDate(dto.getDate());
         reservation.setPaid(dto.isPaid());
-        reservation.setCourt(courtService.getCourtByCodCourt(dto.getCourtId()));
-        reservation.setTimeInterval(timeIntervalService.getTimeIntervalByCodTimeInterval(dto.getTimeIntervalId()));
-        reservation.setUser(userService.getUserByUserId(dto.getDniUser()));
+        reservation.setCourt(timeInterval.getCourt());
+        reservation.setTimeInterval(timeInterval);
+        reservation.setUser(userService.getUserById(dto.getUserId()));
 
         return reservation;
     }

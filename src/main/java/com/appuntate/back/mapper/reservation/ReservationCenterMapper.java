@@ -36,7 +36,6 @@ public class ReservationCenterMapper implements IMapper<Reservation, Reservation
         for (Reservation reservation : entity) {
             ReservationCenterResponseDTO centerReservationDTO = new ReservationCenterResponseDTO();
 
-            centerReservationDTO.setReservationDate(reservation.getReservationDate());
             centerReservationDTO.setReservationId(reservation.getReservationId());
             centerReservationDTO.setDate(reservation.getDate());
             centerReservationDTO.setCourtName(reservation.getCourt().getName());

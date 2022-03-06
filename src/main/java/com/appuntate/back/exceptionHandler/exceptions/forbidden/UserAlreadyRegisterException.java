@@ -1,4 +1,4 @@
-package com.appuntate.back.exceptionHandler.exceptions.badRequest;
+package com.appuntate.back.exceptionHandler.exceptions.forbidden;
 
 public class UserAlreadyRegisterException extends Exception {
     

@@ -2,6 +2,7 @@ package com.appuntate.back.controller;
 
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,10 +31,10 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    // @PostMapping("/makeReservation")
-    // public ConfirmationOutputMap madeReservation(@RequestBody ReservationDTO reservationDTO) {
-    //     return reservationService.saveReservation(reservationDTO);
-    // }
+    @PutMapping("/makeReservation")
+    public ConfirmationOutputMap madeReservation(@RequestBody ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException {
+        return reservationService.saveReservation(reservationDTO);
+    }
 
     @DeleteMapping("/cancelReservation/{reservationId}")
     public ConfirmationOutputMap cancelReservation(@PathVariable long reservationId) throws ReservationIdNotFoundException {

@@ -19,6 +19,9 @@ public class EventRequestMapper implements IMapper<Event, EventRequestDTO> {
     @Autowired
     private CenterService centerService;
 
+    @Autowired
+    private EventPhotoMapper eventPhotoMapper;
+
     @Override
     public EventRequestDTO entityToDTO(Event entity) {
         // TODO Auto-generated method stub
@@ -37,8 +40,8 @@ public class EventRequestMapper implements IMapper<Event, EventRequestDTO> {
         event.setEndDate(dto.getEndDate());
         event.setStartHour(HourConverter.stringToHour(dto.getStartHour()));
         event.setEndHour(HourConverter.stringToHour(dto.getEndHour()));
-        event.setPhoto(dto.getPhoto());
         event.setPrice(dto.getPrice());
+        event.setPhotos(eventPhotoMapper.DtosToEntities(dto.getPhotos()));
         event.setCompetitorAmount(dto.getCompetitorAmount());
 
         return event;

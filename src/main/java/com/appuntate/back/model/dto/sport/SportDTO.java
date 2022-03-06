@@ -11,7 +11,8 @@ import lombok.Data;
 public class SportDTO {
 
     private long sportId;
+    private String name;
+    private String photo;
     private List<CourtDTO> courts;
-    private SportsNamesResponseDTO sportNames;
     
 }

@@ -22,7 +22,6 @@ public class Reservation {
     private long reservationId;
 
     private String date;
-    private String reservationDate;
     private boolean paid;
 
     @ManyToOne

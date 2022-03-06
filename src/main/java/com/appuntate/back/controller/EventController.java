@@ -1,11 +1,13 @@
 package com.appuntate.back.controller;
 
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.event.EventRequestDTO;
 import com.appuntate.back.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,11 @@ public class EventController {
     @PutMapping("/saveEvent")
     public ConfirmationOutputMap saveEvent(@RequestBody EventRequestDTO eventRequestDTO) {
         return eventService.saveEvent(eventRequestDTO);        
+    }
+
+    @PutMapping("/singUp/{eventId}/{userId}")
+    public ConfirmationOutputMap singUp(@PathVariable long eventId, @PathVariable long userId) throws SingUpEventForbiddenException {
+        return eventService.singUp(eventId, userId);
     }
     
 }

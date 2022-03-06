@@ -5,9 +5,12 @@ import java.nio.file.AccessDeniedException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
-import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserAlreadyRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.UserAlreadyRegisterException;
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.UpdatePasswordForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CenterWithAvailableCourtsNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CentersByFilterNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
@@ -33,14 +36,15 @@ public class ApiExceptionHandler {
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({UserUpdateException.class, UserRegisterException.class, UserAlreadyRegisterException.class, TimeIntervalCreateException.class})
+    @ExceptionHandler({UserUpdateException.class, UserRegisterException.class, TimeIntervalCreateException.class})
     @ResponseBody
     public ErrorMessage badRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, "");
     }
     
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler({AccessDeniedException.class})
+    @ExceptionHandler({AccessDeniedException.class, UserAlreadyRegisterException.class, SingUpEventForbiddenException.class, UpdatePasswordForbiddenException.class,
+                        NotAvailableReservationForbiddenException.class})
     @ResponseBody
     public ErrorMessage forbiddenRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, "");

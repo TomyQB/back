@@ -40,4 +40,7 @@ public class Center {
     @OneToMany(mappedBy = "center")
     private List<Event> events;
     
+    @OneToMany(mappedBy = "center")
+    private List<CenterPhoto> photos;
+    
 }

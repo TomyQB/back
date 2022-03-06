@@ -2,6 +2,7 @@ package com.appuntate.back.service;
 
 import java.util.List;
 
+import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
 import com.appuntate.back.mapper.reservation.ReservationCenterMapper;
@@ -34,23 +35,11 @@ public class ReservationService {
     private ReservationCenterMapper centerReservationMapper;
 
 
-    public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) {
-        ConfirmationOutputMap confirmation = new ConfirmationOutputMap(false, "Error al reservar pista");
-        if (isCourtEmpty(reservationDTO)) {
-            reservationRepository.save(reservationMapper.DtoToEntity(reservationDTO));
-            confirmation.setSuccesfullyCompleted(true);
-            confirmation.setMessage("Pista reservada correctamente");
-        }
-        
-        return confirmation;
-    }
-
-    private boolean isCourtEmpty(ReservationDTO reservationDTO) {
-        if (reservationRepository.findByCourtCourtIdAndDateAndTimeIntervalTimeIntervalId(reservationDTO.getCourtId(),
-                reservationDTO.getPlayDate(), reservationDTO.getTimeIntervalId()) != null)
-            return false;
-
-        return true;
+    public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException {
+        Reservation reservation = reservationMapper.DtoToEntity(reservationDTO);
+        if(reservation.getTimeInterval() == null) throw new NotAvailableReservationForbiddenException(reservationDTO.getDate(), reservationDTO.getHour());
+        reservationRepository.save(reservation);
+        return new ConfirmationOutputMap(true, "Pista reservada correctamente");
     }
 
     public ConfirmationOutputMap deleteReservation(long reservationId) throws ReservationIdNotFoundException {

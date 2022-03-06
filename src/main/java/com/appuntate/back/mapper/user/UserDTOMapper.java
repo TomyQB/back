@@ -38,9 +38,10 @@ public class UserDTOMapper implements IMapper<User, UserDTO> {
         user.setLastName(dto.getSurnames());
         user.setUserName((dto.getUserName()));
         user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
         user.setPhone(dto.getPhoneNumber());
         user.setImage(dto.getPhoto());
-        user.setAdmin(dto.getIsAdmin());
+        user.setAdmin("false");
 
         return user; 
     }
