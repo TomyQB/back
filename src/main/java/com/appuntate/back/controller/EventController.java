@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventByFilterNotFoundException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.EventNotFoundException;
 import com.appuntate.back.model.Event;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.event.EventFilterDTO;
@@ -32,7 +33,7 @@ public class EventController {
     }
 
     @PutMapping("/singUp/{eventId}/{userId}")
-    public ConfirmationOutputMap singUp(@PathVariable long eventId, @PathVariable long userId) throws SingUpEventForbiddenException {
+    public ConfirmationOutputMap singUp(@PathVariable long eventId, @PathVariable long userId) throws SingUpEventForbiddenException, EventNotFoundException {
         return eventService.singUp(eventId, userId);
     }
 

@@ -14,6 +14,7 @@ import com.appuntate.back.exceptionHandler.exceptions.forbidden.UpdatePasswordFo
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CenterWithAvailableCourtsNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.CentersByFilterNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventByFilterNotFoundException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.EventNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
@@ -30,7 +31,8 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({UserIdNotFoundException.class, ReservationIdNotFoundException.class, UserLoginNotFoundException.class, ReservationUserNotFoundException.class,
-                        CentersByFilterNotFoundException.class, CenterWithAvailableCourtsNotFoundException.class, EventByFilterNotFoundException.class})
+                        CentersByFilterNotFoundException.class, CenterWithAvailableCourtsNotFoundException.class, EventByFilterNotFoundException.class,
+                        EventNotFoundException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(HttpServletRequest request, Exception exception) {
         return new ErrorMessage(exception, request.getRequestURI());

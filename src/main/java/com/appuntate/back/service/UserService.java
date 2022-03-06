@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public UserDTO login(LoginRequestDTO loginDTO) throws UserLoginNotFoundException {
-        User user = this.userRepository.findByUserNameAndPasswordAndAdmin(loginDTO.getUserName(), loginDTO.getPassword(), loginDTO.getIsAdmin());
+        User user = userRepository.findByUserNameAndPasswordAndAdmin(loginDTO.getUserName(), loginDTO.getPassword(), loginDTO.getIsAdmin());
         
         if (user != null) return userDTOMapper.entityToDTO(user);
         throw new UserLoginNotFoundException();
@@ -42,8 +42,8 @@ public class UserService {
 
     public UserDTO register(UserDTO userDTO) throws UserRegisterException, UserAlreadyRegisterException {
 
-        if (this.userRepository.findByEmail(userDTO.getEmail()) == null) {
-            User user = this.userRepository.save(userDTOMapper.DtoToEntity(userDTO));
+        if (userRepository.findByEmail(userDTO.getEmail()) == null) {
+            User user = userRepository.save(userDTOMapper.DtoToEntity(userDTO));
 
             if (user != null) return userDTOMapper.entityToDTO(user);
             throw new UserRegisterException();
@@ -53,9 +53,11 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO userDTO) throws UserUpdateException, UserIdNotFoundException {
+        User user = userRepository.findById(userDTO.getUserId()).get();
 
-        if (this.userRepository.findById(userDTO.getUserId()).isPresent()) {
-            User user = this.userRepository.save(userDTOMapper.DtoToEntity(userDTO));
+        if (user != null) {
+            userDTO.setPassword(user.getPassword());
+            user = userRepository.save(userDTOMapper.DtoToEntity(userDTO));
 
             if (user != null) return userDTOMapper.entityToDTO(user);
             throw new UserUpdateException();

@@ -2,8 +2,11 @@ package com.appuntate.back.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventByFilterNotFoundException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.EventNotFoundException;
 import com.appuntate.back.mapper.event.EventRequestMapper;
 import com.appuntate.back.model.Event;
 import com.appuntate.back.model.User;
@@ -46,16 +49,22 @@ public class EventService {
         return new ConfirmationOutputMap(true, "Evento creado correctamente");
     }
 
-    public ConfirmationOutputMap singUp(long eventId, long userId) throws SingUpEventForbiddenException {
-        Event event = eventRepository.getById(eventId);
-        User user = userService.getUserById(userId);
+    public ConfirmationOutputMap singUp(long eventId, long userId) throws SingUpEventForbiddenException, EventNotFoundException {
         
-        if(event.getUsers().contains(user)) throw new SingUpEventForbiddenException(Long.toString(userId));
+        try {
+            Event event = eventRepository.getById(eventId);
+            User user = userService.getUserById(userId);
+        
+            if(event.getUsers().contains(user)) throw new SingUpEventForbiddenException(Long.toString(userId));
 
-        event.getUsers().add(user);
-        event.setUsers(event.getUsers());
-        eventRepository.save(event);
-        return new ConfirmationOutputMap(true, "Usuario inscrito correctamente al evento '" + event.getName());
+            event.getUsers().add(user);
+            event.setUsers(event.getUsers());
+            eventRepository.save(event);
+            return new ConfirmationOutputMap(true, "Usuario inscrito correctamente al evento '" + event.getName());
+        } catch (EntityNotFoundException e) {
+            throw new EventNotFoundException(eventId);
+        }
+            
     }
 
     public List<Event> getEventsByFilters(EventFilterDTO eventFilterDTO) throws EventByFilterNotFoundException {
