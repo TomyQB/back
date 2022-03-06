@@ -32,6 +32,9 @@ public class Sport {
 
     @OneToMany(mappedBy = "sport")
     private List<Court> courts;
+    
+    @OneToMany(mappedBy = "sport")
+    private List<Event> events;
 
     @ManyToOne
     @JoinColumn(name = "sportNameId")

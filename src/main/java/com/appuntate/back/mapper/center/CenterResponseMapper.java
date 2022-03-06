@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CenterResponseMapper implements IMapper<Center, CenterResponseDTO>{
-
+    
     @Autowired
-    private TimeIntervalMapper timeIntervalMapper;
+    private CenterPhotoMapper centerPhotoMapper;
 
     @Override
     public CenterResponseDTO entityToDTO(Center entity) {
@@ -23,7 +23,7 @@ public class CenterResponseMapper implements IMapper<Center, CenterResponseDTO>{
         CenterResponseDTO centerResponseDTO = new CenterResponseDTO();
 
         centerResponseDTO.setCenterId(entity.getCenterId());
-        centerResponseDTO.setPhoto(entity.getImage());
+        centerResponseDTO.setPhoto(entity.getPhotos().get(0).getPhoto());
         centerResponseDTO.setName(entity.getName());
         centerResponseDTO.setMinimumPrice(entity.getMinimumPrice());
         centerResponseDTO.setLatitude(entity.getLatitude());

@@ -20,7 +20,7 @@ public class TimeIntervalService {
     private TimeIntervalRepository timeIntervalRepository;
 
 
-    public TimeInterval getTimeIntervalByTimeIntervalId(long timeIntervalId) {
+    public TimeInterval getTimeIntervalById(long timeIntervalId) {
         return timeIntervalRepository.getById(timeIntervalId);
     }
     
@@ -32,12 +32,12 @@ public class TimeIntervalService {
         return timeIntervalRepository.findAllByCourtCourtIdAndReservationDate(courtId, date);
     }
     
-    public TimeInterval getTimeIntervalByCenterIdAndAvailableHour(long centerId, String hour, String date) throws NotAvailableReservationForbiddenException {
-        try {
-            return timeIntervalRepository.findFirstByCourtCourtIdAndReservationDateAndStartHour(centerId, date, HourConverter.stringToHour(hour)).get(0);
-        } catch (IndexOutOfBoundsException e) {
-            throw new NotAvailableReservationForbiddenException(date, hour);
-        }
+    public List<TimeInterval> getTimeIntervalByCenterIdAndAvailableHour(long centerId, String hour, String date) {
+        return timeIntervalRepository.findFirstByCourtCourtIdAndReservationDateAndStartHour(centerId, date, HourConverter.stringToHour(hour));
+    }
+
+    public TimeInterval getTimeIntervalByCourtIdAndHour(long courtId, String hour) {
+        return timeIntervalRepository.findByCourtCourtIdAndStartHour(courtId, HourConverter.stringToHour(hour));
     }
 
     public void setCourtToTimeInterval(Court court) {

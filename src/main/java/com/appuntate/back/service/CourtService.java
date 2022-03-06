@@ -6,12 +6,14 @@ import javax.transaction.Transactional;
 
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
 import com.appuntate.back.mapper.court.CourtMapper;
+import com.appuntate.back.mapper.court.CourtResponseMapper;
 import com.appuntate.back.mapper.court.CourtSaveMapper;
 import com.appuntate.back.model.Court;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.court.CourtDTO;
-import com.appuntate.back.model.dto.court.CourtInputDTO;
+import com.appuntate.back.model.dto.court.CourtRequestDTO;
+import com.appuntate.back.model.dto.court.CourtResponseDTO;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.repository.CourtRepository;
 
@@ -35,7 +37,10 @@ public class CourtService extends QueryService<Court> {
     @Autowired
     private CenterService centerService;
 
-    public Court getCourtByCodCourt(long courtId) {
+    @Autowired
+    private CourtResponseMapper courtResponseMapper;
+
+    public Court getCourtById(long courtId) {
         return courtRepository.getById(courtId);
     }
 
@@ -51,5 +56,8 @@ public class CourtService extends QueryService<Court> {
         } else throw new TimeIntervalCreateException();
     }
 
+    public List<CourtResponseDTO> getCourtByDate(CourtRequestDTO courtInputDTO) {
+        return courtResponseMapper.entitiesToDTOs(timeIntervalService.getTimeIntervalByCenterIdAndAvailableHour(courtInputDTO.getCenterId(), courtInputDTO.getHour(), courtInputDTO.getDate()));
+    }
 
 }

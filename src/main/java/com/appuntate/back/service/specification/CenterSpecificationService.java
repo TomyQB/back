@@ -5,10 +5,8 @@ import javax.persistence.criteria.JoinType;
 
 import com.appuntate.back.model.Center;
 import com.appuntate.back.model.Center_;
-import com.appuntate.back.model.Court_;
 import com.appuntate.back.model.Sport_;
 import com.appuntate.back.model.SportsNames_;
-import com.appuntate.back.model.TimeInterval_;
 import com.appuntate.back.model.criteria.CenterCriteria;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -17,7 +15,7 @@ import org.springframework.stereotype.Service;
 import io.github.jhipster.service.QueryService;
 
 @Service
-public class CenterSpecificationService extends QueryService<Center> implements SpecificationService<Center, CenterCriteria> {
+public class CenterSpecificationService extends QueryService<Center> implements ISpecificationService<Center, CenterCriteria> {
 
     @Override
     public Specification<Center> createSpecification(CenterCriteria criteria) {

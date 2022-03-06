@@ -17,6 +17,9 @@ public class CenterCompleteResponseMapper implements IMapper<Center, CenterCompl
     @Autowired
     private SportMapper sportMapper;
 
+    @Autowired
+    private CenterPhotoMapper centerPhotoMapper;
+
     @Override
     public CenterCompleteResponseDTO entityToDTO(Center entity) {
         CenterCompleteResponseDTO centerCompleteResponseDTO = new CenterCompleteResponseDTO();
@@ -29,7 +32,7 @@ public class CenterCompleteResponseMapper implements IMapper<Center, CenterCompl
         centerCompleteResponseDTO.setRating(entity.getRating());
         centerCompleteResponseDTO.setOpeningHour(HourConverter.hourToString(entity.getStartHour()));
         centerCompleteResponseDTO.setClosingHour(HourConverter.hourToString(entity.getEndHour()));
-        centerCompleteResponseDTO.setImage(entity.getImage());
+        centerCompleteResponseDTO.setImages(centerPhotoMapper.entitiesToDTOs(entity.getPhotos()));
         centerCompleteResponseDTO.setCenterSports(sportMapper.entitiesToDTOs(entity.getSports()));
 
         return centerCompleteResponseDTO;
@@ -64,7 +67,7 @@ public class CenterCompleteResponseMapper implements IMapper<Center, CenterCompl
         centerCompleteResponseDTO.setRating(entity.getRating());
         centerCompleteResponseDTO.setOpeningHour(HourConverter.hourToString(entity.getStartHour()));
         centerCompleteResponseDTO.setClosingHour(HourConverter.hourToString(entity.getEndHour()));
-        centerCompleteResponseDTO.setImage(entity.getImage());
+        centerCompleteResponseDTO.setImages(centerPhotoMapper.entitiesToDTOs(entity.getPhotos()));
         centerCompleteResponseDTO.setCenterSports(sportMapper.entitiesToDTOsNotReserved(entity.getSports(), date));
 
         return centerCompleteResponseDTO;

@@ -32,7 +32,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PutMapping("/makeReservation")
-    public ConfirmationOutputMap madeReservation(@RequestBody ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException {
+    public ConfirmationOutputMap makeReservation(@RequestBody ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException {
         return reservationService.saveReservation(reservationDTO);
     }
 

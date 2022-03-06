@@ -19,7 +19,7 @@ public class CenterCompleteResponseDTO {
     private Double rating;
     private String openingHour;
     private String closingHour;
-    private String image;
+    private List<String> images;
     private List<SportDTO> centerSports;
     private List<FestiveDTO> festives;
     

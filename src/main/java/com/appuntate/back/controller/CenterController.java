@@ -24,9 +24,7 @@ public class CenterController {
 
     @Autowired
     private CenterService centerService;
-
-    @Autowired
-    private TimeIntervalService timeIntervalService;
+    
 
     @PostMapping("/getCentersByFilters")
     public List<CenterResponseDTO> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException, CenterWithAvailableCourtsNotFoundException {

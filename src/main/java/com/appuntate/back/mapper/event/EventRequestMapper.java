@@ -9,6 +9,7 @@ import com.appuntate.back.model.Event;
 import com.appuntate.back.model.dto.event.EventRequestDTO;
 import com.appuntate.back.service.CenterService;
 import com.appuntate.back.service.HourConverter;
+import com.appuntate.back.service.SportService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class EventRequestMapper implements IMapper<Event, EventRequestDTO> {
 
     @Autowired
-    private CenterService centerService;
+    private SportService sportService;
 
     @Autowired
     private EventPhotoMapper eventPhotoMapper;
@@ -33,7 +34,7 @@ public class EventRequestMapper implements IMapper<Event, EventRequestDTO> {
         Event event = new Event();
 
         if (dto.getEventId() != 0) event.setEventId(dto.getEventId());
-        event.setCenter(centerService.getCenterById(dto.getCenterId()));
+        event.setSport(sportService.getSportById(dto.getSportId()));
         event.setName(dto.getName());
         event.setDescription(dto.getDescription());
         event.setStartDate(dto.getStartDate());

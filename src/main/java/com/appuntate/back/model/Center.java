@@ -28,7 +28,6 @@ public class Center {
     private Double rating;
     private int startHour;
     private int endHour;
-    private String image;
     private Double minimumPrice;
 
     @OneToMany(mappedBy = "center")
@@ -37,9 +36,6 @@ public class Center {
     @OneToMany(mappedBy = "center")
     private List<Festive> festives;
 
-    @OneToMany(mappedBy = "center")
-    private List<Event> events;
-    
     @OneToMany(mappedBy = "center")
     private List<CenterPhoto> photos;
     

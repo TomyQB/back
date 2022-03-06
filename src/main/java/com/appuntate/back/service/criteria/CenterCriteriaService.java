@@ -15,7 +15,7 @@ public class CenterCriteriaService implements ICriteriaService<CenterCriteria, C
     public CenterCriteria createCriteria(CenterFilterDTO filterDTO) {
         CenterCriteria centerCriteria = new CenterCriteria();
 
-        if(centerCriteria != null) {
+        if(filterDTO != null) {
             centerCriteria = addSportFilter(centerCriteria, filterDTO);
             centerCriteria = addRatingFilter(centerCriteria, filterDTO);
             centerCriteria = addLatitudeFilter(centerCriteria, filterDTO);

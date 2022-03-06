@@ -52,17 +52,12 @@ public class CenterService {
     public CenterCompleteResponseDTO getCenterAbailableCourtsById(long centerId, String date) {
         return centerCompleteResponseMapper.entityToDTONotReserved(centerRepository.getById(centerId), date);
     }
-
-    public Center getCenterByCodCourt(long courtId) {
-        return centerRepository.findBySportsCourtsCourtId(courtId);
-    }
-
+    
     public List<CenterResponseDTO> getCentersByFilters(CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException, CenterWithAvailableCourtsNotFoundException {
         CenterCriteria centerCriteria = centerCriteriaService.createCriteria(centerFilterDTO);
         List<Center> centers = centerRepository.findAll(centerSpecificationService.createSpecification(centerCriteria));
         if(!centers.isEmpty()) return setDistanceAndAbailableHours(centers, centerFilterDTO);
         throw new CentersByFilterNotFoundException();
-
     }
 
     private List<CenterResponseDTO> setDistanceAndAbailableHours(List<Center> centers, CenterFilterDTO centerFilterDTO) throws CenterWithAvailableCourtsNotFoundException {

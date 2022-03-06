@@ -3,8 +3,9 @@ package com.appuntate.back.model.dto.court;
 import lombok.Data;
 
 @Data
-public class CourtInputDTO {
+public class CourtRequestDTO {
     
-    private long courtId;
+    private long centerId;
+    private String hour;
     private String date;
 }

@@ -23,6 +23,9 @@ public class ReservationMapper implements IMapper<Reservation, ReservationDTO> {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CourtService courtService;
+
     @Override
     public ReservationDTO entityToDTO(Reservation entity) {
         // TODO Auto-generated method stub
@@ -30,15 +33,13 @@ public class ReservationMapper implements IMapper<Reservation, ReservationDTO> {
     }
 
     @Override
-    public Reservation DtoToEntity(ReservationDTO dto) throws NotAvailableReservationForbiddenException {
+    public Reservation DtoToEntity(ReservationDTO dto) {
         Reservation reservation = new Reservation();
-
-        TimeInterval timeInterval = timeIntervalService.getTimeIntervalByCenterIdAndAvailableHour(dto.getCenterId(), dto.getHour(), dto.getDate());
 
         reservation.setDate(dto.getDate());
         reservation.setPaid(dto.isPaid());
-        reservation.setCourt(timeInterval.getCourt());
-        reservation.setTimeInterval(timeInterval);
+        reservation.setCourt(courtService.getCourtById(dto.getCourtId()));
+        reservation.setTimeInterval(timeIntervalService.getTimeIntervalByCourtIdAndHour(dto.getCourtId(), dto.getHour()));
         reservation.setUser(userService.getUserById(dto.getUserId()));
 
         return reservation;

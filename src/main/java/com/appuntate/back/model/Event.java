@@ -39,8 +39,8 @@ public class Event {
     private List<EventPhoto> photos;
 
     @ManyToOne
-    @JoinColumn(name = "centerId")
-    private Center center;
+    @JoinColumn(name = "sportId")
+    private Sport sport;
 
     @ManyToMany
     @JoinTable(name = "eventUser", 

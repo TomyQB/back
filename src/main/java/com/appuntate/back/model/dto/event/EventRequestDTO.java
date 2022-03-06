@@ -8,7 +8,7 @@ import lombok.Data;
 public class EventRequestDTO {
 
     private long eventId;
-    private long centerId;
+    private long sportId;
     private String name;
     private String description;
     private String startDate;

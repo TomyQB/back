@@ -19,7 +19,7 @@ public class EventPhotoMapper implements IMapper<EventPhoto, String> {
     }
 
     @Override
-    public EventPhoto DtoToEntity(String dto) throws NotAvailableReservationForbiddenException {
+    public EventPhoto DtoToEntity(String dto) {
         // TODO Auto-generated method stub
         return null;
     }

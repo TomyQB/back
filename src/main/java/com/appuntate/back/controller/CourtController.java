@@ -1,8 +1,12 @@
 package com.appuntate.back.controller;
 
 
+import java.util.List;
+
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
+import com.appuntate.back.model.dto.court.CourtRequestDTO;
+import com.appuntate.back.model.dto.court.CourtResponseDTO;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
 import com.appuntate.back.service.CourtService;
 
@@ -24,14 +28,9 @@ public class CourtController {
     public ConfirmationOutputMap saveCourt(@RequestBody CourtSaveDTO courtDTO) throws TimeIntervalCreateException {
         return courtService.saveCourt(courtDTO);
     }
-
-    // @PostMapping("/getCourtsByFilters")
-    // public List<CourtDTO> getCourtsByFilter(@RequestBody CourtFilterDTO courtFilterDTO) {
-    //     return courtService.getCourtsByFilter(courtFilterDTO);
-    // }
     
-    // @PostMapping("/getCourtByDate")
-    // public CourtDTO getCourtByDate(@RequestBody CourtInputDTO courtInputDTO) {
-    //     return courtService.getCourtByDate(courtInputDTO);
-    // }
+    @PostMapping("/getAvailableCourts")
+    public List<CourtResponseDTO> getCourtByDate(@RequestBody CourtRequestDTO courtInputDTO) {
+        return courtService.getCourtByDate(courtInputDTO);
+    }
 }
