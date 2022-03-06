@@ -10,6 +10,7 @@ import com.appuntate.back.model.Event;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.event.EventFilterDTO;
 import com.appuntate.back.model.dto.event.EventRequestDTO;
+import com.appuntate.back.model.dto.event.EventResponseDTO;
 import com.appuntate.back.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class EventController {
     }
 
     @PostMapping("/getEvents")
-    public List<Event> getEvents(@RequestBody EventFilterDTO eventFilterDTO) throws EventByFilterNotFoundException {
+    public List<EventResponseDTO> getEvents(@RequestBody EventFilterDTO eventFilterDTO) throws EventByFilterNotFoundException {
         return eventService.getEventsByFilters(eventFilterDTO);
     }
     

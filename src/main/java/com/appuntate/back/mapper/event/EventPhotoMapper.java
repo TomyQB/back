@@ -26,8 +26,13 @@ public class EventPhotoMapper implements IMapper<EventPhoto, String> {
 
     @Override
     public List<String> entitiesToDTOs(List<EventPhoto> entities) {
-        // TODO Auto-generated method stub
-        return null;
+        List<String> photos = new ArrayList<>();
+
+        for (EventPhoto eventPhoto : entities) {
+            String photo = eventPhoto.getPhoto();
+            photos.add(photo);
+        }
+        return photos;
     }
 
     @Override

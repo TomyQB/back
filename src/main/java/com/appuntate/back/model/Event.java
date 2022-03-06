@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -40,12 +42,14 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "sportId")
+    @JsonIgnore
     private Sport sport;
 
     @ManyToMany
     @JoinTable(name = "eventUser", 
         joinColumns = @JoinColumn(name = "eventId"), 
         inverseJoinColumns = @JoinColumn(name = "userId"))
+    @JsonIgnore
     private List<User> users;
 
 }
