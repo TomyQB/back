@@ -3,10 +3,11 @@ package com.appuntate.back.model.dto.court;
 import lombok.Data;
 
 @Data
-public class CourtRequestDTO {
-    
+public class CourtFilterDTO {
+
     private long centerId;
-    private String sport;
-    private String hour;
     private String date;
+    private String hour;
+    private String sport;
+    
 }

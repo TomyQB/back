@@ -24,16 +24,24 @@ public class TimeIntervalService {
         return timeIntervalRepository.getById(timeIntervalId);
     }
     
-    public List<String> getInterestedTimeIntervals (long centerId, String date, int startHour) {
-        return HourConverter.listHourToListString(timeIntervalRepository.findAllByCourtCourtIdAndReservationDateAndStartHour(centerId, date, startHour));
+    public List<String> getInterestedTimeIntervals (long centerId, String sport, String date, int startHour) {
+        return HourConverter.listHourToListString(timeIntervalRepository.findAllByCourtCourtIdAndCourtNameAndReservationDateAndStartHour(centerId, sport, date, startHour));
     }
 
-    public List<TimeInterval> getNotReservedTimeIntervals (long courtId, String date) {
+    public List<TimeInterval> getAvailableTimeIntervalsByDate (long courtId, String date) {
         return timeIntervalRepository.findAllByCourtCourtIdAndReservationDate(courtId, date);
+    }
+    
+    public List<TimeInterval> getAvailableTimeIntervalsByDateAndHour (long courtId, String date, String hour) {
+        return timeIntervalRepository.findAllByCourtCourtIdAndReservationDateAndStartHour(courtId, date, HourConverter.stringToHour(hour));
     }
     
     public List<TimeInterval> getAvailableTimeIntervalByCenterId(long centerId, String hour, String date) {
         return timeIntervalRepository.findByCourtCourtIdAndReservationDateAndStartHour(centerId, date, HourConverter.stringToHour(hour));
+    }
+    
+    public List<TimeInterval> getAvailableTimeIntervalByCenterIdAndSport(long centerId, String sport, String hour, String date) {
+        return timeIntervalRepository.findByCourtCourtIdAndCourtNameAndReservationDateAndStartHour(centerId, sport, date, HourConverter.stringToHour(hour));
     }
      
     // public TimeInterval getAvailableTimeIntervalByCourtId(long courtId, String hour, String date) {

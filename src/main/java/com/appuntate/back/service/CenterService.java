@@ -66,7 +66,7 @@ public class CenterService {
         for(Center center : centers) {
             CenterResponseDTO centerDTO = centerResponseMapper.entityToDTO(center);
             centerDTO.setDistance(calculateDistanceWithLongLat(center, centerFilterDTO));
-            centerDTO.setAvailableIntervals(timeIntervalService.getInterestedTimeIntervals(center.getCenterId(), centerFilterDTO.getDate(), HourConverter.stringToHour(centerFilterDTO.getHour())));
+            centerDTO.setAvailableIntervals(timeIntervalService.getInterestedTimeIntervals(center.getCenterId(), centerFilterDTO.getSport(), centerFilterDTO.getDate(), HourConverter.stringToHour(centerFilterDTO.getHour())));
             if(!centerDTO.getAvailableIntervals().isEmpty())
                 centerResponseDTOs.add(centerDTO);
         }

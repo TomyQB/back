@@ -6,6 +6,7 @@ import com.appuntate.back.model.dto.event.EventFilterDTO;
 import org.springframework.stereotype.Service;
 
 import io.github.jhipster.service.filter.DoubleFilter;
+import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 @Service
@@ -16,9 +17,21 @@ public class EventCriteriaService implements ICriteriaService<EventCriteria, Eve
         EventCriteria eventCriteria = new EventCriteria();
         
         if(filterDTO != null) {
+            eventCriteria = addUserFilter(eventCriteria, filterDTO);
             eventCriteria = addSportFilter(eventCriteria, filterDTO);
             eventCriteria = addLatitudeFilter(eventCriteria, filterDTO);
             eventCriteria = addLongitudeFilter(eventCriteria, filterDTO);
+        }
+
+        return eventCriteria;
+    }
+
+    private EventCriteria addUserFilter(EventCriteria eventCriteria, EventFilterDTO filterDTO) {
+        
+        if(filterDTO.getUserId() != 0) {
+            LongFilter filter = new LongFilter();
+            filter.setEquals(filterDTO.getUserId());
+            eventCriteria.setUserId(filter);
         }
 
         return eventCriteria;

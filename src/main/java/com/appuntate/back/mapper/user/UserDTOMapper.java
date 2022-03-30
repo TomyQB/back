@@ -1,6 +1,7 @@
 package com.appuntate.back.mapper.user;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.appuntate.back.mapper.IMapper;
 import com.appuntate.back.model.User;
@@ -13,7 +14,7 @@ public class UserDTOMapper implements IMapper<User, UserDTO> {
 
     @Override
     public UserDTO entityToDTO(User entity) {
-        if(entity == null) return null;
+        if(Objects.isNull(entity)) return null;
 
         UserDTO userDTO = new UserDTO();
 

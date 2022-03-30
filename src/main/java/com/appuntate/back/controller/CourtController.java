@@ -4,7 +4,10 @@ package com.appuntate.back.controller;
 import java.util.List;
 
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.TimeIntervalCreateException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.CourtByFilterNotFoundException;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
+import com.appuntate.back.model.dto.court.CourtDTO;
+import com.appuntate.back.model.dto.court.CourtFilterDTO;
 import com.appuntate.back.model.dto.court.CourtRequestDTO;
 import com.appuntate.back.model.dto.court.CourtResponseDTO;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
@@ -32,5 +35,10 @@ public class CourtController {
     @PostMapping("/getAvailableCourts")
     public List<CourtResponseDTO> getCourtByDate(@RequestBody CourtRequestDTO courtInputDTO) {
         return courtService.getCourtByDate(courtInputDTO);
+    }
+
+    @PostMapping("/getCenterCourtsByFilter")
+    public List<CourtDTO> getCenterCourtsByFilter(@RequestBody CourtFilterDTO courtFilterDTO) throws CourtByFilterNotFoundException {
+       return courtService.getCourtByFilters(courtFilterDTO);
     }
 }

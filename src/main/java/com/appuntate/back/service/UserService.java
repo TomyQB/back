@@ -63,7 +63,7 @@ public class UserService {
             throw new UserUpdateException();
         }
 
-        throw new UserIdNotFoundException();
+        throw new UserIdNotFoundException(userDTO.getUserId());
 
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.appuntate.back.mapper.IMapper;
+import com.appuntate.back.mapper.center.CenterPhotoMapper;
 import com.appuntate.back.mapper.timeInterval.TimeIntervalMapper;
 import com.appuntate.back.model.Reservation;
 import com.appuntate.back.model.dto.reservation.ReservationUserResponseDTO;
@@ -17,6 +18,9 @@ public class ReservationUserMapper implements IMapper<Reservation, ReservationUs
 
     @Autowired
     private TimeIntervalMapper timeIntervalMapper;
+
+    @Autowired
+    private CenterPhotoMapper centerPhotoMapper;
 
     @Override
     public ReservationUserResponseDTO entityToDTO(Reservation entity) {
@@ -45,6 +49,8 @@ public class ReservationUserMapper implements IMapper<Reservation, ReservationUs
             userReservationDTO.setDuration(HourConverter.hourToDurationString(reservation.getCourt().getInterval()));
             userReservationDTO.setPaid(reservation.isPaid());
             userReservationDTO.setTimeInterval(timeIntervalMapper.entityToDTO(reservation.getTimeInterval()));
+            userReservationDTO.setCenterPhoto(centerPhotoMapper.entityToDTO(reservation.getCourt().getSport().getCenter().getPhotos().get(0)));
+            userReservationDTO.setCenterId(reservation.getCourt().getSport().getCenter().getCenterId());
 
             userReservationsDTO.add(userReservationDTO);
         }

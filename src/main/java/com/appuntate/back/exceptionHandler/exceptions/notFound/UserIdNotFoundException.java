@@ -8,7 +8,7 @@ public class UserIdNotFoundException extends Exception {
         super(DESCRIPTION);
     }
 
-    public UserIdNotFoundException(String detail) {
+    public UserIdNotFoundException(long detail) {
         super(DESCRIPTION + ": " + detail);
     }
     

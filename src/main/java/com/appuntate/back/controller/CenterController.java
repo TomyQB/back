@@ -8,7 +8,6 @@ import com.appuntate.back.model.dto.center.CenterCompleteResponseDTO;
 import com.appuntate.back.model.dto.center.CenterFilterDTO;
 import com.appuntate.back.model.dto.center.CenterResponseDTO;
 import com.appuntate.back.service.CenterService;
-import com.appuntate.back.service.TimeIntervalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,10 +30,6 @@ public class CenterController {
         return this.centerService.getCentersByFilters(centerFilterDTO);
     }
 
-    // @PostMapping("/getCenterByIdCourt")
-    // public Center getCenterByIdCourt(@RequestBody long courtId) {
-    //     return centerService.getCenterByCodCourt(courtId);
-    // }
 
     @GetMapping("getCenter/{centerId}/{date}")
     public CenterCompleteResponseDTO getCenterById(@PathVariable String centerId, @PathVariable String date) {

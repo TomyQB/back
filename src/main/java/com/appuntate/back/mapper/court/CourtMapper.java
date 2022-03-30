@@ -65,8 +65,8 @@ public class CourtMapper implements IMapper<Court, CourtDTO> {
         // TODO Auto-generated method stub
         return null;
     }
-    
-    public List<CourtDTO> entitiesToDTOsNotReserved(List<Court> entity, String date) {
+        
+    public List<CourtDTO> entitiesToDTOsDateAndHour(List<Court> entity, String date, String hour) {
         List<CourtDTO> courtDTOs = new ArrayList<>();
 
         for (Court court : entity) {
@@ -76,7 +76,25 @@ public class CourtMapper implements IMapper<Court, CourtDTO> {
             courtDTO.setInterval(HourConverter.hourToString(court.getInterval()));
             courtDTO.setName(court.getName());
             courtDTO.setPrice(court.getPrice());
-            courtDTO.setTimeIntervals(timeIntervalMapper.entitiesToDTOs(timeIntervalService.getNotReservedTimeIntervals(court.getCourtId(), date)));
+            courtDTO.setTimeIntervals(timeIntervalMapper.entitiesToDTOs(timeIntervalService.getAvailableTimeIntervalsByDateAndHour(court.getCourtId(), date, hour)));
+            
+            courtDTOs.add(courtDTO);
+        }
+
+        return courtDTOs;
+    }
+    
+    public List<CourtDTO> entitiesToDTOsDate(List<Court> entity, String date) {
+        List<CourtDTO> courtDTOs = new ArrayList<>();
+
+        for (Court court : entity) {
+            CourtDTO courtDTO = new CourtDTO();
+    
+            courtDTO.setCourtId(court.getCourtId());
+            courtDTO.setInterval(HourConverter.hourToString(court.getInterval()));
+            courtDTO.setName(court.getName());
+            courtDTO.setPrice(court.getPrice());
+            courtDTO.setTimeIntervals(timeIntervalMapper.entitiesToDTOs(timeIntervalService.getAvailableTimeIntervalsByDate(court.getCourtId(), date)));
             
             courtDTOs.add(courtDTO);
         }

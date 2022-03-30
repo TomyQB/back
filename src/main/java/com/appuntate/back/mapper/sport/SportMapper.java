@@ -66,7 +66,7 @@ public class SportMapper implements IMapper<Sport, SportDTO> {
             sportDTO.setSportId(sport.getSportId());
             sportDTO.setName(sport.getSportName().getName());
             sportDTO.setPhoto(sport.getSportName().getPhoto());
-            sportDTO.setCourts(courtMapper.entitiesToDTOsNotReserved(sport.getCourts(), date));
+            sportDTO.setCourts(courtMapper.entitiesToDTOsDate(sport.getCourts(), date));
 
             sportDTOs.add(sportDTO);
         }

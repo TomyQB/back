@@ -1,24 +1,21 @@
 package com.appuntate.back.mapper.center;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.appuntate.back.mapper.IMapper;
-import com.appuntate.back.mapper.timeInterval.TimeIntervalMapper;
 import com.appuntate.back.model.Center;
 import com.appuntate.back.model.dto.center.CenterResponseDTO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CenterResponseMapper implements IMapper<Center, CenterResponseDTO>{
-    
-    @Autowired
-    private CenterPhotoMapper centerPhotoMapper;
+
 
     @Override
     public CenterResponseDTO entityToDTO(Center entity) {
-        if(entity == null) return null;
+        if(Objects.isNull(entity)) return null;
 
         CenterResponseDTO centerResponseDTO = new CenterResponseDTO();
 

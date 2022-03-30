@@ -1,6 +1,8 @@
 package com.appuntate.back.service.specification;
 
 
+import java.util.Objects;
+
 import javax.persistence.criteria.JoinType;
 
 import com.appuntate.back.model.Center;
@@ -23,19 +25,19 @@ public class CenterSpecificationService extends QueryService<Center> implements 
         Specification<Center> specification = (root, query, cb) -> { query.distinct(true); return null; };
 
             
-        if(criteria.getSport() != null)
+        if(Objects.nonNull(criteria.getSport()))
             specification = specification.and(buildSpecification(criteria.getSport(), root -> root
                 .join(Center_.sports, JoinType.LEFT)
                     .join(Sport_.sportName, JoinType.LEFT)
                         .get(SportsNames_.name)));
 
-        if(criteria.getLatitude() != null)
+        if(Objects.nonNull(criteria.getLatitude()))
             specification = specification.and(buildRangeSpecification(criteria.getLatitude(), Center_.latitude));
             
-        if(criteria.getLongitude() != null)
+        if(Objects.nonNull(criteria.getLongitude()))
             specification = specification.and(buildRangeSpecification(criteria.getLongitude(), Center_.longitude));
 
-        if(criteria.getRating() != null)
+        if(Objects.nonNull(criteria.getRating()))
             specification = specification.and(buildRangeSpecification(criteria.getRating(), Center_.rating));
 
 

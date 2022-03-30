@@ -44,12 +44,20 @@ public class Event {
     @JoinColumn(name = "sportId")
     @JsonIgnore
     private Sport sport;
+    
+    @OneToMany(mappedBy = "event")
+    private List<EventUser> eventUser;
 
-    @ManyToMany
-    @JoinTable(name = "eventUser", 
-        joinColumns = @JoinColumn(name = "eventId"), 
-        inverseJoinColumns = @JoinColumn(name = "userId"))
-    @JsonIgnore
-    private List<User> users;
+    // @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH})
+    // @JoinTable(name = "eventUser", 
+    //     joinColumns = @JoinColumn(name = "eventId"), 
+    //     inverseJoinColumns = @JoinColumn(name = "userId"))
+    // @JsonIgnore
+    // private List<User> users;
+
+    // public void removeUser(User user) {
+    //     users.remove(user);
+    //     user.getEvents().remove(this);
+    // }
 
 }

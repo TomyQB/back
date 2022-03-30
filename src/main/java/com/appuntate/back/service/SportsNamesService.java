@@ -2,6 +2,7 @@ package com.appuntate.back.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.appuntate.back.mapper.sportNames.SportsNamesMapper;
 import com.appuntate.back.model.dto.sportName.SportsNamesResponseDTO;
@@ -22,7 +23,7 @@ public class SportsNamesService {
     private static List<SportsNamesResponseDTO> instanceSingleton = new ArrayList<>();
 
     public List<SportsNamesResponseDTO> getSportsNames() {
-        if(instanceSingleton != null)
+        if(Objects.nonNull(instanceSingleton))
             instanceSingleton = sportsNamesMapper.entitiesToDTOs(sportsNamesRepository.findAll());
         
         return instanceSingleton;

@@ -1,12 +1,14 @@
 package com.appuntate.back.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityNotFoundException;
 
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventByFilterNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventNotFoundException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
 import com.appuntate.back.mapper.event.EventRequestMapper;
 import com.appuntate.back.mapper.event.EventResponseMapper;
 import com.appuntate.back.model.Event;
@@ -47,29 +49,16 @@ public class EventService {
     @Autowired
     private EventResponseMapper eventResponseMapper;
 
+
+    public Event getByEventId(long eventId) {
+        return eventRepository.getById(eventId);
+    }
+
     public ConfirmationOutputMap saveEvent(EventRequestDTO eventRequestDTO) {
         Event event = eventRequestMapper.DtoToEntity(eventRequestDTO);
         eventPhotoService.setEventToEventPhoto(event);
         eventRepository.save(event);
         return new ConfirmationOutputMap(true, "Evento creado correctamente");
-    }
-
-    public ConfirmationOutputMap singUp(long eventId, long userId) throws SingUpEventForbiddenException, EventNotFoundException {
-        
-        try {
-            Event event = eventRepository.getById(eventId);
-            User user = userService.getUserById(userId);
-        
-            if(event.getUsers().contains(user)) throw new SingUpEventForbiddenException(Long.toString(userId));
-
-            event.getUsers().add(user);
-            event.setUsers(event.getUsers());
-            eventRepository.save(event);
-            return new ConfirmationOutputMap(true, "Usuario inscrito correctamente al evento '" + event.getName());
-        } catch (EntityNotFoundException e) {
-            throw new EventNotFoundException(eventId);
-        }
-            
     }
 
     public List<EventResponseDTO> getEventsByFilters(EventFilterDTO eventFilterDTO) throws EventByFilterNotFoundException {
@@ -78,4 +67,11 @@ public class EventService {
         if(!events.isEmpty()) return eventResponseMapper.entitiesToDTOs(events);
         throw new EventByFilterNotFoundException();
     }
+
+    public List<EventResponseDTO> getUserEvents(long userId) throws UserIdNotFoundException {
+        List<Event> events = eventRepository.findByEventUserUserId(userId);
+        if(events.isEmpty()) throw new UserIdNotFoundException(userId);
+        return eventResponseMapper.entitiesToDTOs(events);
+    }
+
 }

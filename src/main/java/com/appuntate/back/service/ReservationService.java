@@ -1,6 +1,7 @@
 package com.appuntate.back.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.CourtAlreadyReservedForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
@@ -45,7 +46,7 @@ public class ReservationService {
             throw new CourtAlreadyReservedForbiddenException(reservationDTO.getCourtId());
 
         Reservation reservation = reservationMapper.DtoToEntity(reservationDTO);
-        if(reservation.getTimeInterval() == null) throw new NotAvailableReservationForbiddenException(reservationDTO.getDate(), reservationDTO.getHour());
+        if(Objects.isNull(reservation.getTimeInterval())) throw new NotAvailableReservationForbiddenException(reservationDTO.getDate(), reservationDTO.getHour());
         reservationRepository.save(reservation);
         return new ConfirmationOutputMap(true, "Pista reservada correctamente");
     }
