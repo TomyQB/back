@@ -39,6 +39,10 @@ public class TimeInterval {
     @OneToMany(mappedBy = "timeInterval")
     @JsonIgnore
     private List<Reservation> reservation;
+    
+    @OneToMany(mappedBy = "timeInterval")
+    @JsonIgnore
+    private List<History> histories;
 
     @ManyToOne
     @JoinColumn(name = "court")

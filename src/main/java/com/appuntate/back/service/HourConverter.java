@@ -1,5 +1,7 @@
 package com.appuntate.back.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,13 +56,22 @@ public class HourConverter {
         return Integer.parseInt(hour);
     }
 
-    public static String dateToHours(String date){
+    public static String dateToStringHour(String date){
         int ini = date.indexOf("T");
         return date.substring(ini + 1, ini + 6);
+    }
+    
+    public static int dateToHour(String date){
+        return stringToHour(dateToStringHour(date));
     }
 
     public static String dateToDate(String date) {
         return date.substring(0, 10);
+    }
+
+    public static LocalDate stringToDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        return LocalDate.parse(date, formatter);
     }
     
 }

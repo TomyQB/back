@@ -39,6 +39,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Reservation> reservations;
+    
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<History> histories;
 
     @OneToMany(mappedBy = "user")
     private List<EventUser> eventUser;

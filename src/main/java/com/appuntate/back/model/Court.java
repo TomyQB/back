@@ -40,6 +40,10 @@ public class Court {
     @JsonIgnore
     private List<Reservation> reservations;
     
+    @OneToMany(mappedBy = "court")
+    @JsonIgnore
+    private List<History> histories;
+    
     @OneToMany(mappedBy = "court", cascade = CascadeType.ALL)
     private List<TimeInterval> timeIntervals;
     

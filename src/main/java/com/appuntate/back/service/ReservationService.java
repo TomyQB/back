@@ -40,6 +40,10 @@ public class ReservationService {
     private TimeIntervalService timeIntervalService;
 
 
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+
     public ConfirmationOutputMap saveReservation(ReservationDTO reservationDTO) throws NotAvailableReservationForbiddenException, CourtAlreadyReservedForbiddenException {
         if(timeIntervalService.getAvailableTimeIntervalByCenterId(reservationDTO.getCenterId(), reservationDTO.getHour(), reservationDTO.getDate()).isEmpty() ||
             checkReservationAlreadyExist(reservationDTO))
