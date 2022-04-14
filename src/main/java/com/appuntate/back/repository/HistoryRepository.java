@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HistoryRepository extends JpaRepository<History, Long> {
 
-    List<History> findByUserUserIdOrderByDateAsc(long userId);
+    List<History> findByUserUserId(long userId);
     
 }
