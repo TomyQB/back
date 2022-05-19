@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.appuntate.back.security.model.User;
+
 import lombok.Data;
 
 

@@ -1,4 +1,6 @@
-package com.appuntate.back.model.dto.user;
+package com.appuntate.back.security.dto;
+
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,7 +14,7 @@ public class UserDTO {
     private String photo;
     private String email;
     private String phoneNumber;
-    private String isAdmin;
     private String password;
+    private List<String> rols;
     
 }

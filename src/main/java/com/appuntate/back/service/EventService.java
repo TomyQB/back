@@ -12,13 +12,14 @@ import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundExc
 import com.appuntate.back.mapper.event.EventRequestMapper;
 import com.appuntate.back.mapper.event.EventResponseMapper;
 import com.appuntate.back.model.Event;
-import com.appuntate.back.model.User;
 import com.appuntate.back.model.criteria.EventCriteria;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.event.EventFilterDTO;
 import com.appuntate.back.model.dto.event.EventRequestDTO;
 import com.appuntate.back.model.dto.event.EventResponseDTO;
 import com.appuntate.back.repository.EventRepository;
+import com.appuntate.back.security.model.User;
+import com.appuntate.back.security.service.UserService;
 import com.appuntate.back.service.criteria.EventCriteriaService;
 import com.appuntate.back.service.specification.EventSpecificationService;
 

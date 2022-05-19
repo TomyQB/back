@@ -7,9 +7,9 @@ import com.appuntate.back.mapper.IMapper;
 import com.appuntate.back.model.Reservation;
 import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.dto.reservation.ReservationDTO;
+import com.appuntate.back.security.service.UserService;
 import com.appuntate.back.service.CourtService;
 import com.appuntate.back.service.TimeIntervalService;
-import com.appuntate.back.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

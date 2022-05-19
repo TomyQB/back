@@ -23,7 +23,7 @@ public class SportsNamesService {
     private static List<SportsNamesResponseDTO> instanceSingleton = new ArrayList<>();
 
     public List<SportsNamesResponseDTO> getSportsNames() {
-        if(Objects.nonNull(instanceSingleton))
+        if(Objects.isNull(instanceSingleton))
             instanceSingleton = sportsNamesMapper.entitiesToDTOs(sportsNamesRepository.findAll());
         
         return instanceSingleton;

@@ -1,5 +1,4 @@
-package com.appuntate.back.model.dto.user;
-
+package com.appuntate.back.security.dto;
 import lombok.Data;
 
 @Data

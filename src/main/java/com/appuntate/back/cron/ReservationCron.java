@@ -29,11 +29,10 @@ public class ReservationCron {
     @Autowired
     private HistoryToReservationMapper historyToReservationMapper;
     
-    private static final long MINUTO = 1000 * 60;
+    private static final long MINUTE = 1000 * 60;
 
-    @Scheduled(fixedDelay = MINUTO * 5)
+    @Scheduled(fixedDelay = MINUTE * 5)
     public void deletePastReservations() throws ReservationIdNotFoundException {
-        System.out.println("HOLA");
         List<Reservation> reservations = reservationService.getAllReservations();
         
         for (Reservation reservation : reservations) {

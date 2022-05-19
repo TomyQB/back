@@ -9,9 +9,10 @@ import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbi
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventNotFoundException;
 import com.appuntate.back.model.Event;
 import com.appuntate.back.model.EventUser;
-import com.appuntate.back.model.User;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.repository.EventUserRepository;
+import com.appuntate.back.security.model.User;
+import com.appuntate.back.security.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

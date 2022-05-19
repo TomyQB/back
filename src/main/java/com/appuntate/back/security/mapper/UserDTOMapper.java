@@ -1,16 +1,26 @@
-package com.appuntate.back.mapper.user;
+package com.appuntate.back.security.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import com.appuntate.back.mapper.IMapper;
-import com.appuntate.back.model.User;
-import com.appuntate.back.model.dto.user.UserDTO;
+import com.appuntate.back.security.dto.UserDTO;
+import com.appuntate.back.security.model.Rol;
+import com.appuntate.back.security.model.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserDTOMapper implements IMapper<User, UserDTO> {
+
+    @Autowired
+    private RolMapper rolMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDTO entityToDTO(User entity) {
@@ -25,7 +35,6 @@ public class UserDTOMapper implements IMapper<User, UserDTO> {
         userDTO.setEmail(entity.getEmail());
         userDTO.setPhoneNumber(entity.getPhone());
         userDTO.setPhoto(entity.getImage());
-        userDTO.setIsAdmin(entity.getAdmin());
 
         return userDTO;
     }
@@ -39,10 +48,13 @@ public class UserDTOMapper implements IMapper<User, UserDTO> {
         user.setLastName(dto.getSurnames());
         user.setUserName((dto.getUserName()));
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setPhone(dto.getPhoneNumber());
         user.setImage(dto.getPhoto());
-        user.setAdmin("false");
+
+        List<Rol> rols = new ArrayList<>();
+        rols.addAll(rolMapper.DtosToEntities(dto.getRols()));
+        user.setRols(rols);
 
         return user; 
     }
