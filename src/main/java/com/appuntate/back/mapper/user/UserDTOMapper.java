@@ -25,7 +25,6 @@ public class UserDTOMapper implements IMapper<User, UserDTO> {
         userDTO.setEmail(entity.getEmail());
         userDTO.setPhoneNumber(entity.getPhone());
         userDTO.setPhoto(entity.getImage());
-        userDTO.setIsAdmin(entity.getAdmin());
 
         return userDTO;
     }
@@ -42,7 +41,6 @@ public class UserDTOMapper implements IMapper<User, UserDTO> {
         user.setPassword(dto.getPassword());
         user.setPhone(dto.getPhoneNumber());
         user.setImage(dto.getPhoto());
-        user.setAdmin("false");
 
         return user; 
     }

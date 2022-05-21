@@ -7,6 +7,5 @@ public class LoginRequestDTO {
 
     private String userName;
     private String password;
-    private String isAdmin;
     
 }

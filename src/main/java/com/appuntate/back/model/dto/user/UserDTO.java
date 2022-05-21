@@ -12,7 +12,6 @@ public class UserDTO {
     private String photo;
     private String email;
     private String phoneNumber;
-    private String isAdmin;
     private String password;
     
 }

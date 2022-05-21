@@ -34,7 +34,6 @@ public class User {
     private String password;
     private String image;
     private String userName;
-    private String admin;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore

@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public UserDTO login(LoginRequestDTO loginDTO) throws UserLoginNotFoundException {
-        User user = userRepository.findByUserNameAndPasswordAndAdmin(loginDTO.getUserName(), loginDTO.getPassword(), loginDTO.getIsAdmin());
+        User user = userRepository.findByUserNameAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
         
         if (user != null) return userDTOMapper.entityToDTO(user);
         throw new UserLoginNotFoundException();
