@@ -1,5 +1,7 @@
 package com.appuntate.back.controller;
 
+import java.util.List;
+
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.UpdatePasswordForbiddenException;
@@ -9,10 +11,12 @@ import com.appuntate.back.exceptionHandler.exceptions.notFound.UserLoginNotFound
 import com.appuntate.back.model.dto.user.LoginRequestDTO;
 import com.appuntate.back.model.dto.user.UserDTO;
 import com.appuntate.back.model.dto.user.UserPasswordRequestDTO;
+import com.appuntate.back.model.dto.user.UserResponseDTO;
 import com.appuntate.back.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +47,11 @@ public class UserController {
     @PutMapping("/updatePassword")
     public UserDTO updatePassword(@RequestBody UserPasswordRequestDTO userPasswordRequestDTO) throws UpdatePasswordForbiddenException {
         return userService.updatePassword(userPasswordRequestDTO);
+    }
+
+    @GetMapping("/getUsers")
+    public List<UserResponseDTO> getUsers() {
+        return userService.getUsers();
     }
 
     // @PostMapping("/getUserInfo")

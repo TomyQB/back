@@ -77,6 +77,7 @@ public class CourtMapper implements IMapper<Court, CourtDTO> {
             courtDTO.setName(court.getName());
             courtDTO.setPrice(court.getPrice());
             courtDTO.setTimeIntervals(timeIntervalMapper.entitiesToDTOs(timeIntervalService.getAvailableTimeIntervalsByDateAndHour(court.getCourtId(), date, hour)));
+            courtDTO.setSport(court.getSport().getSportName().getName());
             
             courtDTOs.add(courtDTO);
         }

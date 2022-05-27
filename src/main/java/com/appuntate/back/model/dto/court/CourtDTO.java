@@ -13,6 +13,7 @@ public class CourtDTO {
     private String name;
     private String interval;
     private Double price;
+    private String sport;
     private List<TimeIntervalDTO> timeIntervals;
     
 }

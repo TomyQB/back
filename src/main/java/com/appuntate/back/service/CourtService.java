@@ -12,11 +12,9 @@ import com.appuntate.back.mapper.court.CourtMapper;
 import com.appuntate.back.mapper.court.CourtResponseMapper;
 import com.appuntate.back.mapper.court.CourtSaveMapper;
 import com.appuntate.back.model.Court;
-import com.appuntate.back.model.TimeInterval;
 import com.appuntate.back.model.criteria.CourtCriteria;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
 import com.appuntate.back.model.dto.court.CourtDTO;
-import com.appuntate.back.model.dto.court.CourtFilterDTO;
 import com.appuntate.back.model.dto.court.CourtRequestDTO;
 import com.appuntate.back.model.dto.court.CourtResponseDTO;
 import com.appuntate.back.model.dto.court.CourtSaveDTO;
@@ -78,17 +76,22 @@ public class CourtService extends QueryService<Court> {
                                                                                                          courtInputDTO.getHour(), courtInputDTO.getDate()));
     }
  
-    public List<CourtDTO> getCourtByFilters(CourtFilterDTO courtFilterDTO) throws CourtByFilterNotFoundException {
+    public List<CourtDTO> getCourtByFilters(CourtRequestDTO courtFilterDTO) throws CourtByFilterNotFoundException {
         CourtCriteria courtCriteria = courtCriteriaService.createCriteria(courtFilterDTO);
         List<Court> courts = courtRepository.findAll(courtSpecificationService.createSpecification(courtCriteria));
         if(!courts.isEmpty()) return setAbailableHours(courts, courtFilterDTO);
         throw new CourtByFilterNotFoundException();
     }
 
-    private List<CourtDTO> setAbailableHours(List<Court> courts, CourtFilterDTO courtFilterDTO) throws CourtByFilterNotFoundException {
+    private List<CourtDTO> setAbailableHours(List<Court> courts, CourtRequestDTO courtFilterDTO) throws CourtByFilterNotFoundException {
         List<CourtDTO> courtDTOs = courtMapper.entitiesToDTOsDateAndHour(courts, courtFilterDTO.getDate(), courtFilterDTO.getHour());
         if(!courtDTOs.isEmpty()) return courtDTOs;
         throw new CourtByFilterNotFoundException();
+    }
+
+    public ConfirmationOutputMap deleteCourt(long courtId) {
+        courtRepository.deleteById(courtId);
+        return new ConfirmationOutputMap(true, "Pista eliminada correctamente");
     }
 
 }

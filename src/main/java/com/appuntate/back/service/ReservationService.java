@@ -5,16 +5,15 @@ import java.util.Objects;
 
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.CourtAlreadyReservedForbiddenException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.NotAvailableReservationForbiddenException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationCourtNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.ReservationUserNotFoundException;
-import com.appuntate.back.mapper.reservation.ReservationCenterMapper;
 import com.appuntate.back.mapper.reservation.ReservationMapper;
-import com.appuntate.back.mapper.reservation.ReservationUserMapper;
+import com.appuntate.back.mapper.reservation.ReservationResponseMapper;
 import com.appuntate.back.model.Reservation;
 import com.appuntate.back.model.dto.ConfirmationOutputMap;
-import com.appuntate.back.model.dto.reservation.ReservationCenterResponseDTO;
 import com.appuntate.back.model.dto.reservation.ReservationDTO;
-import com.appuntate.back.model.dto.reservation.ReservationUserResponseDTO;
+import com.appuntate.back.model.dto.reservation.ReservationResponseDTO;
 import com.appuntate.back.repository.ReservationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,7 @@ public class ReservationService {
     private ReservationMapper reservationMapper;
 
     @Autowired
-    private ReservationUserMapper userReservationMapper;
-
-    @Autowired
-    private ReservationCenterMapper centerReservationMapper;
+    private ReservationResponseMapper userReservationMapper;
 
     @Autowired
     private TimeIntervalService timeIntervalService;
@@ -70,7 +66,7 @@ public class ReservationService {
         }
     }
 
-    public List<ReservationUserResponseDTO> getReservationsByUser(long userId) throws ReservationUserNotFoundException {
+    public List<ReservationResponseDTO> getReservationsByUser(long userId) throws ReservationUserNotFoundException {
         List<Reservation> reservations = reservationRepository.findByUserUserId(userId);
 
         if(reservations.isEmpty()) throw new ReservationUserNotFoundException(Long.toString(userId));
@@ -78,8 +74,19 @@ public class ReservationService {
 
     }
 
-    public List<ReservationCenterResponseDTO> getReservationsByCenter(long userId) {
-        List<Reservation> reservations = reservationRepository.findByCourtSportCenterCenterId(userId);
-        return centerReservationMapper.entitiesToDTOs(reservations);
+    public List<ReservationResponseDTO> getReservationsByCourt(long centerId) throws ReservationCourtNotFoundException {
+        List<Reservation> reservations = reservationRepository.findByCourtCourtId(centerId);
+
+        if(reservations.isEmpty()) throw new ReservationCourtNotFoundException(Long.toString(centerId));
+        return userReservationMapper.entitiesToDTOs(reservations);
     }
+
+    public ConfirmationOutputMap checkAvailableModification(ReservationDTO reservationDTO) {
+        if(timeIntervalService.getAvailableTimeIntervalByCenterId(reservationDTO.getCenterId(), reservationDTO.getHour(), reservationDTO.getDate()).isEmpty() ||
+            checkReservationAlreadyExist(reservationDTO))
+            return new ConfirmationOutputMap(false, "Cambio de reserva no disponible");
+
+        return new ConfirmationOutputMap(true, "Cambio de reserva disponible");
+    }
+
 }

@@ -12,7 +12,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByUserUserId(long userId);
 
-    List<Reservation> findByCourtSportCenterCenterId(long centerId);
+    List<Reservation> findByCourtCourtId(long centerId);
 
     Reservation deleteById(long reservationId);
 

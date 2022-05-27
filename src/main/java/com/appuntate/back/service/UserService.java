@@ -1,5 +1,7 @@
 package com.appuntate.back.service;
 
+import java.util.List;
+
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserRegisterException;
 import com.appuntate.back.exceptionHandler.exceptions.badRequest.UserUpdateException;
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.UpdatePasswordForbiddenException;
@@ -7,10 +9,12 @@ import com.appuntate.back.exceptionHandler.exceptions.forbidden.UserAlreadyRegis
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserLoginNotFoundException;
 import com.appuntate.back.mapper.user.UserDTOMapper;
+import com.appuntate.back.mapper.user.UserResponseDTOMapper;
 import com.appuntate.back.model.User;
 import com.appuntate.back.model.dto.user.LoginRequestDTO;
 import com.appuntate.back.model.dto.user.UserDTO;
 import com.appuntate.back.model.dto.user.UserPasswordRequestDTO;
+import com.appuntate.back.model.dto.user.UserResponseDTO;
 import com.appuntate.back.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,10 @@ public class UserService {
 
     @Autowired
     private UserDTOMapper userDTOMapper;
+
+    @Autowired
+    private UserResponseDTOMapper userResponseDTOMapper;
+
 
     public User getUserById(long userId) {
         return userRepository.getById(userId);
@@ -76,5 +84,9 @@ public class UserService {
         userRepository.save(user);
 
         return userDTOMapper.entityToDTO(user);
+    }
+
+    public List<UserResponseDTO> getUsers() {
+        return userResponseDTOMapper.entitiesToDTOs(userRepository.findAll());
     }
 }

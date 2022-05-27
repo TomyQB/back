@@ -7,9 +7,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TimeIntervalCenterDTO {
+public class TimeIntervalRequestDTO {
     
-    // private Court court;
-    private int startHour;
+    private long courtId;
+    private String date;
     
 }
