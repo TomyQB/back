@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,8 +38,8 @@ public class Event {
     private Double price;
     private int competitorAmount;
     
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<EventPhoto> photos;
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
+    private EventPhoto photo;
 
     @ManyToOne
     @JoinColumn(name = "sportId")

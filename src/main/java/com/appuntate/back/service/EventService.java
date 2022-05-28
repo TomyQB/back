@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.EntityNotFoundException;
 
 import com.appuntate.back.exceptionHandler.exceptions.forbidden.SingUpEventForbiddenException;
+import com.appuntate.back.exceptionHandler.exceptions.notFound.CenterIdNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventByFilterNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.EventNotFoundException;
 import com.appuntate.back.exceptionHandler.exceptions.notFound.UserIdNotFoundException;
@@ -61,6 +62,11 @@ public class EventService {
         return new ConfirmationOutputMap(true, "Evento creado correctamente");
     }
 
+    public ConfirmationOutputMap deleteEvent(long eventId) {
+        eventRepository.deleteById(eventId);
+        return new ConfirmationOutputMap(true, "Evento eliminado correctamente");
+    }
+
     public List<EventResponseDTO> getEventsByFilters(EventFilterDTO eventFilterDTO) throws EventByFilterNotFoundException {
         EventCriteria eventCriteria = eventCriteriaService.createCriteria(eventFilterDTO);
         List<Event> events = eventRepository.findAll(eventSpecificationService.createSpecification(eventCriteria));
@@ -71,6 +77,12 @@ public class EventService {
     public List<EventResponseDTO> getUserEvents(long userId) throws UserIdNotFoundException {
         List<Event> events = eventRepository.findByEventUserUserId(userId);
         if(events.isEmpty()) throw new UserIdNotFoundException(userId);
+        return eventResponseMapper.entitiesToDTOs(events);
+    }
+
+    public List<EventResponseDTO> getCenterEvents(long centerId) throws CenterIdNotFoundException {
+        List<Event> events = eventRepository.findBySportCenterCenterId(centerId);
+        if(events.isEmpty()) throw new CenterIdNotFoundException(centerId);
         return eventResponseMapper.entitiesToDTOs(events);
     }
 

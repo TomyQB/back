@@ -2,6 +2,8 @@ package com.appuntate.back.model.dto.event;
 
 import java.util.List;
 
+import com.appuntate.back.model.dto.cloudinary.CloudinaryDTO;
+
 import lombok.Data;
 
 @Data
@@ -15,7 +17,7 @@ public class EventRequestDTO {
     private String endDate;
     private String startHour;
     private String endHour;
-    private List<String> photos;
+    private CloudinaryDTO photo;
     private Double price;
     private int competitorAmount;
 

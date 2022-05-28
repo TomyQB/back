@@ -23,7 +23,11 @@ public class CenterController {
 
     @Autowired
     private CenterService centerService;
-    
+
+    @GetMapping("/getCenter/{centerId}")
+    public CenterCompleteResponseDTO getCenterById(@PathVariable long centerId) {
+        return this.centerService.getCenterById(centerId);
+    }
 
     @PostMapping("/getCentersByFilters")
     public List<CenterResponseDTO> getCenterssByFilters(@RequestBody CenterFilterDTO centerFilterDTO) throws CentersByFilterNotFoundException, CenterWithAvailableCourtsNotFoundException {
@@ -31,8 +35,8 @@ public class CenterController {
     }
 
 
-    @GetMapping("getCenter/{centerId}/{date}")
-    public CenterCompleteResponseDTO getCenterById(@PathVariable String centerId, @PathVariable String date) {
+    @GetMapping("/getCenter/{centerId}/{date}")
+    public CenterCompleteResponseDTO getCenterByIdAndDate(@PathVariable String centerId, @PathVariable String date) {
         return centerService.getCenterAbailableCourtsById(Integer.parseInt(centerId), date);
     }
 

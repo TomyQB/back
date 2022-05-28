@@ -17,5 +17,5 @@ public class EventResponseDTO {
     private String endHour;
     private int capacity;
     private int signedUpPeople;
-    private List<String> photos;
+    private String photo;
 }

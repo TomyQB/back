@@ -42,7 +42,7 @@ public class EventRequestMapper implements IMapper<Event, EventRequestDTO> {
         event.setStartHour(HourConverter.stringToHour(dto.getStartHour()));
         event.setEndHour(HourConverter.stringToHour(dto.getEndHour()));
         event.setPrice(dto.getPrice());
-        event.setPhotos(eventPhotoMapper.DtosToEntities(dto.getPhotos()));
+        event.setPhoto(eventPhotoMapper.DtoToEntity(dto.getPhoto()));
         event.setCompetitorAmount(dto.getCompetitorAmount());
 
         return event;

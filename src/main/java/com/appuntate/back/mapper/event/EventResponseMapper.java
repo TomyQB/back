@@ -46,7 +46,7 @@ public class EventResponseMapper implements IMapper<Event, EventResponseDTO> {
             eventResponseDTO.setEndHour(HourConverter.hourToString(event.getEndHour()));
             eventResponseDTO.setCapacity(event.getCompetitorAmount());
             eventResponseDTO.setSignedUpPeople(event.getEventUser().size());
-            eventResponseDTO.setPhotos(eventPhotoMapper.entitiesToDTOs(event.getPhotos()));
+            eventResponseDTO.setPhoto(event.getPhoto().getPhoto());
 
             eventResponseDTOs.add(eventResponseDTO);
         }
