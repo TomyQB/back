@@ -33,7 +33,7 @@ public class EventController {
 
     @PutMapping("/saveEvent")
     public ConfirmationOutputMap saveEvent(@RequestBody EventRequestDTO eventRequestDTO) {
-        return eventService.saveEvent(eventRequestDTO);        
+        return eventService.saveEvent(eventRequestDTO);
     }
 
     @DeleteMapping("/deleteEvent/{eventId}")

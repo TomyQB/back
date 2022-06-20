@@ -11,6 +11,7 @@ public class ReservationResponseDTO {
     private long reservationId;
     private long courtId;
     private long centerId;
+    private long userId;
     private String courtName;
     private String centerName;
     private String centerPhoto;

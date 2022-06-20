@@ -52,6 +52,7 @@ public class ReservationResponseMapper implements IMapper<Reservation, Reservati
             // userReservationDTO.setCenterPhoto(centerPhotoMapper.entityToDTO(reservation.getCourt().getSport().getCenter().getPhotos().get(0)));
             reservationResponseDTO.setCenterId(reservation.getCourt().getSport().getCenter().getCenterId());
             reservationResponseDTO.setUserName(reservation.getUser().getUserName());
+            reservationResponseDTO.setUserId(reservation.getUser().getUserId());
 
             userReservationsDTO.add(reservationResponseDTO);
         }
